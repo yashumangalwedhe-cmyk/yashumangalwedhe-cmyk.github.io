@@ -36,7 +36,7 @@
       position: fixed; width: 8px; height: 8px; background: var(--red); 
       border-radius: 50%; pointer-events: none; z-index: 10000; 
       transform: translate(-50%,-50%); 
-      display: none; /* Only shown via JS for desktop */
+      display: none; 
     }
     .cursor-ring { 
       position: fixed; width: 34px; height: 34px; border: 1px solid rgba(232,0,45,0.45); 
@@ -66,7 +66,7 @@
       text-align: center; padding: 0 2rem;
       position: relative; overflow: hidden;
     }
-    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 55%, rgba(232,0,45,0.07) 0%, transparent 65%); }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 55%, rgba(232,0,45,0.07) 0%, transparent 65%); pointer-events: none; }
     .hero-lines { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
     .speed-line { position: absolute; height: 1px; background: linear-gradient(to right, transparent, rgba(232,0,45,0.5), transparent); animation: speedLine 2.5s linear infinite; opacity: 0; }
     @keyframes speedLine { 0%{transform:translateX(-100%);opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{transform:translateX(200%);opacity:0} }
@@ -175,7 +175,12 @@
 
     /* CONTACT */
     #contact { background: var(--dark); text-align: center; }
-    .contact-link { display: flex; align-items: center; gap: 1rem; color: #777; text-decoration: none; border: 1px solid var(--border); padding: 1rem 2rem; justify-content: center; margin-bottom: 1rem; transition: 0.3s; font-family: 'Inter', sans-serif; }
+    .contact-link { 
+      display: flex; align-items: center; gap: 1rem; color: #777; text-decoration: none; 
+      border: 1px solid var(--border); padding: 1rem 2rem; justify-content: center; 
+      margin-bottom: 1rem; transition: 0.3s; font-family: 'Inter', sans-serif;
+      position: relative; z-index: 10; cursor: pointer;
+    }
     .contact-link:hover { border-color: var(--red); color: white; background: rgba(232,0,45,0.05); }
 
     footer { padding: 2rem 5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 0.65rem; color: #444; }
