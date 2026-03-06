@@ -31,16 +31,16 @@
       line-height: 1.6;
     }
 
-    .cursor { 
-      position: fixed; width: 8px; height: 8px; background: var(--red); 
-      border-radius: 50%; pointer-events: none; z-index: 10000; 
-      transform: translate(-50%,-50%); display: none; 
+    .cursor {
+      position: fixed; width: 8px; height: 8px; background: var(--red);
+      border-radius: 50%; pointer-events: none; z-index: 10000;
+      transform: translate(-50%,-50%); display: none;
     }
-    .cursor-ring { 
-      position: fixed; width: 34px; height: 34px; border: 1px solid rgba(232,0,45,0.45); 
-      border-radius: 50%; pointer-events: none; z-index: 9999; 
+    .cursor-ring {
+      position: fixed; width: 34px; height: 34px; border: 1px solid rgba(232,0,45,0.45);
+      border-radius: 50%; pointer-events: none; z-index: 9999;
       transform: translate(-50%,-50%); transition: width 0.2s, height 0.2s, border-color 0.2s;
-      display: none; 
+      display: none;
     }
 
     nav {
@@ -141,67 +141,38 @@
     .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
     .tag { border: 1px solid var(--border); color: var(--muted); font-size: 0.62rem; padding: 0.35rem 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; transition: all 0.3s; }
     .tag:hover { border-color: var(--red); color: var(--white); }
-
     .about-side { display: flex; flex-direction: column; gap: 1rem; }
 
     /* PHOTO */
-    .profile-photo-wrap {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-    }
+    .profile-photo-wrap { position: relative; display: inline-block; width: 100%; }
     .profile-photo-wrap::before {
-      content: '';
-      position: absolute;
-      top: -6px; left: -6px;
-      width: 50%; height: 50%;
-      border-top: 2px solid var(--red);
-      border-left: 2px solid var(--red);
-      z-index: 2;
-      pointer-events: none;
+      content: ''; position: absolute; top: -6px; left: -6px;
+      width: 50%; height: 50%; border-top: 2px solid var(--red); border-left: 2px solid var(--red);
+      z-index: 2; pointer-events: none;
     }
     .profile-photo-wrap::after {
-      content: '';
-      position: absolute;
-      bottom: -6px; right: -6px;
-      width: 50%; height: 50%;
-      border-bottom: 2px solid var(--red);
-      border-right: 2px solid var(--red);
-      z-index: 2;
-      pointer-events: none;
+      content: ''; position: absolute; bottom: -6px; right: -6px;
+      width: 50%; height: 50%; border-bottom: 2px solid var(--red); border-right: 2px solid var(--red);
+      z-index: 2; pointer-events: none;
     }
     .profile-photo {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      object-position: top center;
-      display: block;
-      filter: grayscale(20%) contrast(1.05);
-      transition: filter 0.4s, transform 0.4s;
-      border: 1px solid var(--border);
+      width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: top center;
+      display: block; filter: grayscale(20%) contrast(1.05);
+      transition: filter 0.4s, transform 0.4s; border: 1px solid var(--border);
     }
-    .profile-photo:hover {
-      filter: grayscale(0%) contrast(1.1);
-      transform: scale(1.02);
-    }
+    .profile-photo:hover { filter: grayscale(0%) contrast(1.1); transform: scale(1.02); }
     .photo-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.3em;
-      color: var(--red);
-      text-transform: uppercase;
-      margin-top: 0.8rem;
-      text-align: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+      letter-spacing: 0.3em; color: var(--red); text-transform: uppercase;
+      margin-top: 0.8rem; text-align: center;
     }
 
     /* EDUCATION */
     #education { background: var(--mid); }
     .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-
     .info-card { background: var(--card); border: 1px solid var(--border); padding: 1.8rem; position: relative; overflow: hidden; }
     .info-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, var(--red), transparent); }
     .info-card-title { font-family: 'JetBrains Mono', monospace; font-size: 0.56rem; letter-spacing: 0.4em; color: var(--red); text-transform: uppercase; margin-bottom: 1.2rem; }
-
     .lang-row { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.88rem; }
     .lang-name { color: var(--white); font-weight: 500; }
     .lang-level { font-size: 0.65rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
@@ -221,16 +192,117 @@
     /* PROJECTS */
     #projects { background: var(--mid); }
     .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .project-card { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; transition: border-color 0.3s; }
-    .project-card:hover { border-color: var(--red); }
+    .project-card {
+      background: var(--card); border: 1px solid var(--border); padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      cursor: pointer; position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, var(--red), transparent);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+    }
+    .project-card:hover { border-color: var(--red); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(232,0,45,0.15); }
+    .project-card:hover::before { transform: scaleX(1); }
     .project-name { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; color: var(--red); margin-bottom: 1rem; }
-    .project-desc { font-size: 0.85rem; color: #888; margin-bottom: 1.5rem; }
+    .project-desc { font-size: 0.85rem; color: #888; margin-bottom: 1.2rem; line-height: 1.7; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
+    .project-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: var(--muted); border: 1px solid var(--border); padding: 0.2rem 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .project-view-hint {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+      color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 0.4rem; transition: color 0.3s;
+    }
+    .project-card:hover .project-view-hint { color: var(--red); }
+    .project-view-hint::after { content: '→'; transition: transform 0.3s; }
+    .project-card:hover .project-view-hint::after { transform: translateX(4px); }
+
+    /* PROJECT MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(7,7,9,0.92);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-box {
+      background: var(--mid); border: 1px solid var(--border);
+      max-width: 760px; width: 100%; max-height: 88vh;
+      overflow-y: auto; position: relative;
+      transform: scale(0.94) translateY(16px);
+      transition: transform 0.3s ease;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
+    .modal-box::-webkit-scrollbar { width: 4px; }
+    .modal-box::-webkit-scrollbar-track { background: transparent; }
+    .modal-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .modal-header {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--mid); border-bottom: 1px solid var(--border);
+      padding: 1.6rem 2rem 1.4rem;
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .modal-header::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, var(--red), transparent);
+    }
+    .modal-title-wrap {}
+    .modal-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.4em; color: var(--red); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .modal-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 900; color: var(--white); }
+    .modal-close {
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1.1rem; flex-shrink: 0; margin-left: 1rem;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .modal-close:hover { border-color: var(--red); color: var(--white); background: rgba(232,0,45,0.1); }
+
+    .modal-body { padding: 2rem; }
+    .modal-section { margin-bottom: 2rem; }
+    .modal-section-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+      letter-spacing: 0.4em; color: var(--red); text-transform: uppercase;
+      margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .modal-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .modal-overview { font-size: 0.9rem; color: #999; line-height: 1.9; }
+    .modal-overview strong { color: var(--white); }
+
+    .modal-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .modal-highlights li {
+      font-size: 0.85rem; color: #888; line-height: 1.7;
+      padding-left: 1.2rem; position: relative;
+    }
+    .modal-highlights li::before { content: '▸'; position: absolute; left: 0; color: var(--red); font-size: 0.7rem; top: 0.15rem; }
+
+    .modal-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
+    .modal-metric {
+      background: var(--card); border: 1px solid var(--border);
+      padding: 1rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .modal-metric::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, var(--red), transparent); }
+    .modal-metric-val { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 900; color: var(--red); line-height: 1; margin-bottom: 0.4rem; }
+    .modal-metric-label { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    .modal-tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .modal-tech-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.58rem;
+      color: var(--muted); border: 1px solid var(--border);
+      padding: 0.3rem 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .modal-tech-tag:hover { border-color: var(--red); color: var(--white); }
 
     /* CONTACT */
     #contact { background: var(--dark); text-align: center; }
-    .contact-link { 
-      display: flex; align-items: center; gap: 1rem; color: #777; text-decoration: none; 
-      border: 1px solid var(--border); padding: 1rem 2rem; justify-content: center; 
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem; color: #777; text-decoration: none;
+      border: 1px solid var(--border); padding: 1rem 2rem; justify-content: center;
       margin-bottom: 1rem; transition: 0.3s; font-family: 'Inter', sans-serif;
       position: relative; z-index: 10; cursor: pointer;
     }
@@ -238,10 +310,7 @@
 
     footer { padding: 2rem 5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 0.65rem; color: #444; }
 
-    /* Animations */
     @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
-
-    /* CRITICAL: reveal animation for scroll sections */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
@@ -253,6 +322,8 @@
       .projects-grid{grid-template-columns:1fr}
       .hero-stats{flex-direction:column; padding: 1rem;}
       .stat-item{border-right:none; border-bottom: 1px solid var(--border); padding: 1rem;}
+      .modal-metrics{grid-template-columns:repeat(2,1fr)}
+      .modal-body{padding:1.4rem}
     }
   </style>
 </head>
@@ -260,6 +331,37 @@
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box" id="modalBox">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <div class="modal-tag" id="modalTag">// Project</div>
+        <div class="modal-title" id="modalTitle">Project Name</div>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-label">Overview</div>
+        <p class="modal-overview" id="modalOverview"></p>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Key Highlights</div>
+        <ul class="modal-highlights" id="modalHighlights"></ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Metrics</div>
+        <div class="modal-metrics" id="modalMetrics"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Technologies &amp; Skills</div>
+        <div class="modal-tech-tags" id="modalTech"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <nav>
   <a href="#hero" class="nav-logo">YM<span>.</span></a>
@@ -282,7 +384,7 @@
     <div class="hero-cta">
       <a href="#projects" class="btn-primary">Explore Projects</a>
       <a href="#contact" class="btn-outline">Get In Touch</a>
-      <a href="/YashovardhanM_Resume.pdf" download class="btn-outline">&#8595; &nbsp;Download CV</a>
+      <a href="/YashovardhanM_Resume.pdf" download class="btn-outline">&#8595;&nbsp;Download CV</a>
     </div>
   </div>
   <div class="hero-stats">
@@ -355,18 +457,40 @@
   <p class="section-tag">// 04 — Projects</p>
   <h2 class="section-title">Engineering Work</h2>
   <div class="projects-grid">
-    <div class="project-card">
+
+    <div class="project-card" data-project="conveyor">
       <div class="project-name">Vibrating Conveyor Analysis</div>
       <p class="project-desc">Redesigned food-grade conveyor. Performed FEM simulations to resolve resonance and buckling issues. Achieved 0.17mm deflection.</p>
+      <div class="project-tags">
+        <span class="project-tag">FEM</span>
+        <span class="project-tag">SolidWorks</span>
+        <span class="project-tag">Structural</span>
+      </div>
+      <div class="project-view-hint">// View Details</div>
     </div>
-    <div class="project-card">
+
+    <div class="project-card" data-project="robotics">
       <div class="project-name">Competitive Robotics</div>
       <p class="project-desc">Mechanical design and component selection for high-performance robot chassis and transmission systems.</p>
+      <div class="project-tags">
+        <span class="project-tag">CAD</span>
+        <span class="project-tag">Drivetrain</span>
+        <span class="project-tag">Chassis</span>
+      </div>
+      <div class="project-view-hint">// View Details</div>
     </div>
-    <div class="project-card">
+
+    <div class="project-card" data-project="photography">
       <div class="project-name">Automotive Photography</div>
       <p class="project-desc">Blending technical automotive knowledge with high-end visual storytelling and media production of high-performance vehicles.</p>
+      <div class="project-tags">
+        <span class="project-tag">Photography</span>
+        <span class="project-tag">Automotive</span>
+        <span class="project-tag">Media</span>
+      </div>
+      <div class="project-view-hint">// View Details</div>
     </div>
+
   </div>
 </section>
 
@@ -374,9 +498,9 @@
   <div style="max-width: 600px; margin: 0 auto;">
     <p class="section-tag">// 05 — Contact</p>
     <h2 class="section-title">Let's Connect</h2>
-    <a href="mailto:yashovardhanm28@gmail.com" class="contact-link">&#9993; &nbsp; yashovardhanm28@gmail.com</a>
+    <a href="mailto:yashovardhanm28@gmail.com" class="contact-link">&#9993;&nbsp; yashovardhanm28@gmail.com</a>
     <a href="https://www.linkedin.com/in/yashovardhan-mangalwedhe" target="_blank" class="contact-link">in &nbsp; linkedin.com/in/yashovardhan-mangalwedhe</a>
-    <a href="https://github.com/yashumangalwedhe-cmyk" target="_blank" class="contact-link">&#8997; &nbsp; github.com/yashumangalwedhe-cmyk</a>
+    <a href="https://github.com/yashumangalwedhe-cmyk" target="_blank" class="contact-link">&#8997;&nbsp; github.com/yashumangalwedhe-cmyk</a>
   </div>
 </section>
 
@@ -386,7 +510,124 @@
 </footer>
 
 <script>
-  // Custom cursor
+  // ── Project Data ──────────────────────────────────────────────
+  const projects = {
+    conveyor: {
+      tag: '// Engineering · FEM',
+      title: 'Vibrating Conveyor Analysis',
+      overview: `A full structural redesign of a <strong>food-grade vibrating conveyor</strong> used in industrial processing environments. The project involved identifying failure modes through dynamic load analysis, then iteratively redesigning key structural members to eliminate resonance and buckling risks while complying with food-safety standards.`,
+      highlights: [
+        'Conducted full FEM simulation pipeline in SolidWorks Simulation — mesh generation, load application, and post-processing',
+        'Identified critical resonance frequencies causing fatigue failure in the original design',
+        'Redesigned cross-member geometry, reducing peak stress concentration by over 40%',
+        'Achieved a final maximum deflection of <strong>0.17mm</strong> under full operational load',
+        'Verified buckling safety factor exceeded the required 2.0× threshold across all load cases',
+        'Documented full engineering report with simulation evidence and design justification'
+      ],
+      metrics: [
+        { val: '0.17mm', label: 'Max Deflection' },
+        { val: '2.3×', label: 'Safety Factor' },
+        { val: '40%', label: 'Stress Reduction' },
+        { val: 'FEM', label: 'Method' }
+      ],
+      tech: ['SolidWorks', 'FEM Simulation', 'Structural Analysis', 'Fatigue Analysis', 'Buckling Analysis', 'Technical Reporting', 'Food-Grade Standards']
+    },
+    robotics: {
+      tag: '// Robotics · Mechanical Design',
+      title: 'Competitive Robotics — HAN',
+      overview: `As <strong>Drivetrain & Chassis Engineer</strong> at HAN Competitive Robotics, I am responsible for the full mechanical design of the robot's structural and propulsion systems. This involves translating competition requirements into reliable, high-performance hardware under tight time and weight constraints.`,
+      highlights: [
+        'Designed modular chassis architecture in SolidWorks, enabling rapid reconfiguration between competition formats',
+        'Performed load path analysis to optimise material distribution and minimise weight without sacrificing rigidity',
+        'Selected and integrated drivetrain components — motors, gearboxes, bearings, and couplings — based on torque and speed requirements',
+        'Collaborated cross-functionally with electronics and software teams to ensure mechanical–electrical integration',
+        'Manufactured and assembled prototypes, iterating based on real-world test results',
+        'Competed in high-pressure environments, applying field diagnostics and rapid mechanical troubleshooting'
+      ],
+      metrics: [
+        { val: 'CAD', label: 'Design Tool' },
+        { val: '4WD', label: 'Drive Config' },
+        { val: 'Live', label: 'Competition' },
+        { val: 'HAN', label: 'Team' }
+      ],
+      tech: ['SolidWorks', 'CAD Design', 'Drivetrain Engineering', 'Chassis Design', 'Component Selection', 'Rapid Prototyping', 'Team Collaboration']
+    },
+    photography: {
+      tag: '// Creative · Automotive',
+      title: 'Automotive Photography',
+      overview: `A personal creative project merging <strong>deep automotive technical knowledge</strong> with professional photography and visual media production. Focused on high-performance and motorsport vehicles, the work goes beyond aesthetics — every shot is composed with an engineer's understanding of the machine being captured.`,
+      highlights: [
+        'Specialised in capturing motorsport and high-performance road cars at circuits and events',
+        'Applied engineering knowledge to frame technically meaningful compositions — highlighting aero elements, suspension geometry, and powertrain detail',
+        'Developed full post-production workflow including RAW processing, colour grading, and retouching',
+        'Produced content for social media and personal portfolio, growing an audience of automotive enthusiasts',
+        'Shot at multiple live motorsport events including track days and competitive racing meetings',
+        'Continuously studying the intersection of mechanical design and visual communication'
+      ],
+      metrics: [
+        { val: 'RAW', label: 'Format' },
+        { val: 'F1', label: 'Focus' },
+        { val: 'Live', label: 'Events' },
+        { val: 'OEM', label: 'Detail' }
+      ],
+      tech: ['Photography', 'Lightroom', 'Colour Grading', 'Automotive Knowledge', 'Motorsport', 'Visual Storytelling', 'Content Production']
+    }
+  };
+
+  // ── Modal Logic ──────────────────────────────────────────────
+  const overlay = document.getElementById('projectModal');
+  const modalClose = document.getElementById('modalClose');
+
+  function openModal(key) {
+    const p = projects[key];
+    if (!p) return;
+
+    document.getElementById('modalTag').textContent = p.tag;
+    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalOverview').innerHTML = p.overview;
+
+    const hl = document.getElementById('modalHighlights');
+    hl.innerHTML = p.highlights.map(h => `<li>${h}</li>`).join('');
+
+    const mx = document.getElementById('modalMetrics');
+    mx.innerHTML = p.metrics.map(m => `
+      <div class="modal-metric">
+        <div class="modal-metric-val">${m.val}</div>
+        <div class="modal-metric-label">${m.label}</div>
+      </div>`).join('');
+
+    const tc = document.getElementById('modalTech');
+    tc.innerHTML = p.tech.map(t => `<span class="modal-tech-tag">${t}</span>`).join('');
+
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    modalClose.focus();
+  }
+
+  function closeModal() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Card click
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.project));
+  });
+
+  // Close button
+  modalClose.addEventListener('click', closeModal);
+
+  // Click outside modal box
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeModal();
+  });
+
+  // Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // ── Custom Cursor ────────────────────────────────────────────
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = -100, my = -100, rx = -100, ry = -100;
@@ -394,28 +635,19 @@
   if (window.matchMedia('(pointer: fine)').matches) {
     document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
     function animCursor() {
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
-      rx += (mx - rx) * 0.15;
-      ry += (my - ry) * 0.15;
-      ring.style.left = rx + 'px';
-      ring.style.top = ry + 'px';
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+      rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
       requestAnimationFrame(animCursor);
     }
     animCursor();
-    document.querySelectorAll('a, button, .tag').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        ring.style.width = '60px'; ring.style.height = '60px';
-        ring.style.borderColor = 'rgba(232,0,45,1)';
-      });
-      el.addEventListener('mouseleave', () => {
-        ring.style.width = '34px'; ring.style.height = '34px';
-        ring.style.borderColor = 'rgba(232,0,45,0.45)';
-      });
+    document.querySelectorAll('a, button, .tag, .project-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { ring.style.width = '60px'; ring.style.height = '60px'; ring.style.borderColor = 'rgba(232,0,45,1)'; });
+      el.addEventListener('mouseleave', () => { ring.style.width = '34px'; ring.style.height = '34px'; ring.style.borderColor = 'rgba(232,0,45,0.45)'; });
     });
   }
 
-  // Speed lines
+  // ── Speed Lines ───────────────────────────────────────────────
   const linesEl = document.getElementById('heroLines');
   setInterval(() => {
     const l = document.createElement('div');
@@ -427,7 +659,7 @@
     setTimeout(() => l.remove(), 2500);
   }, 200);
 
-  // Typing effect
+  // ── Typing Effect ─────────────────────────────────────────────
   const phrases = ['Drivetrain & Chassis Engineer', 'F1 & Automotive Enthusiast', 'Photographer & Videographer', 'FEM & SolidWorks Analyst'];
   let pi = 0, ci = 0, isDeleting = false;
   const tEl = document.getElementById('typingText');
@@ -442,13 +674,9 @@
   }
   type();
 
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
+  // ── Scroll Reveal ─────────────────────────────────────────────
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
