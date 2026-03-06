@@ -18,7 +18,6 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
-    /* Custom Cursor Styles */
     @media (pointer: fine) {
       body { cursor: none !important; }
       .cursor, .cursor-ring { display: block !important; }
@@ -35,8 +34,7 @@
     .cursor { 
       position: fixed; width: 8px; height: 8px; background: var(--red); 
       border-radius: 50%; pointer-events: none; z-index: 10000; 
-      transform: translate(-50%,-50%); 
-      display: none; 
+      transform: translate(-50%,-50%); display: none; 
     }
     .cursor-ring { 
       position: fixed; width: 34px; height: 34px; border: 1px solid rgba(232,0,45,0.45); 
@@ -137,7 +135,7 @@
 
     /* ABOUT */
     #about { background: var(--mid); }
-    .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6rem; align-items: start; }
+    .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: start; }
     .about-text p { color: #999; line-height: 1.9; font-size: 0.9rem; margin-bottom: 1.4rem; }
     .about-text p strong { color: var(--white); }
     .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
@@ -145,6 +143,61 @@
     .tag:hover { border-color: var(--red); color: var(--white); }
 
     .about-side { display: flex; flex-direction: column; gap: 1rem; }
+
+    /* PHOTO */
+    .profile-photo-wrap {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+    .profile-photo-wrap::before {
+      content: '';
+      position: absolute;
+      top: -6px; left: -6px;
+      width: 50%; height: 50%;
+      border-top: 2px solid var(--red);
+      border-left: 2px solid var(--red);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .profile-photo-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -6px; right: -6px;
+      width: 50%; height: 50%;
+      border-bottom: 2px solid var(--red);
+      border-right: 2px solid var(--red);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .profile-photo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      filter: grayscale(20%) contrast(1.05);
+      transition: filter 0.4s, transform 0.4s;
+      border: 1px solid var(--border);
+    }
+    .profile-photo:hover {
+      filter: grayscale(0%) contrast(1.1);
+      transform: scale(1.02);
+    }
+    .photo-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-top: 0.8rem;
+      text-align: center;
+    }
+
+    /* EDUCATION */
+    #education { background: var(--mid); }
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+
     .info-card { background: var(--card); border: 1px solid var(--border); padding: 1.8rem; position: relative; overflow: hidden; }
     .info-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, var(--red), transparent); }
     .info-card-title { font-family: 'JetBrains Mono', monospace; font-size: 0.56rem; letter-spacing: 0.4em; color: var(--red); text-transform: uppercase; margin-bottom: 1.2rem; }
@@ -153,9 +206,6 @@
     .lang-name { color: var(--white); font-weight: 500; }
     .lang-level { font-size: 0.65rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
     .lang-featured { color: var(--red) !important; font-weight: 600; }
-
-    /* EDUCATION */
-    #education { background: var(--mid); }
 
     /* EXPERIENCE */
     #experience { background: var(--dark); }
@@ -188,15 +238,13 @@
 
     footer { padding: 2rem 5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 0.65rem; color: #444; }
 
-    /* Animations */
     @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
     .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
     @media(max-width:900px){
       nav{padding:1.2rem 1.5rem} .nav-links{display:none}
       section{padding:5rem 1.5rem}
       .about-grid{grid-template-columns:1fr}
+      .edu-grid{grid-template-columns:1fr}
       .projects-grid{grid-template-columns:1fr}
       .hero-stats{flex-direction:column; padding: 1rem;}
       .stat-item{border-right:none; border-bottom: 1px solid var(--border); padding: 1rem;}
@@ -251,12 +299,10 @@
       </div>
     </div>
     <div class="about-side">
-      <div class="info-card">
-        <p class="info-card-title">// Languages</p>
-        <div class="lang-row"><span class="lang-name lang-featured">English</span><span class="lang-level">Native</span></div>
-        <div class="lang-row"><span class="lang-name">Dutch &#127475;&#127473;</span><span class="lang-level">Learning</span></div>
-        <div class="lang-row"><span class="lang-name">Hindi</span><span class="lang-level">Native</span></div>
+      <div class="profile-photo-wrap">
+        <img src="/IMG_1974.jpg" alt="Yashovardhan Mangalwedhe" class="profile-photo"/>
       </div>
+      <p class="photo-tag">// Yashovardhan Mangalwedhe</p>
     </div>
   </div>
 </section>
@@ -264,15 +310,23 @@
 <section id="education" class="reveal">
   <p class="section-tag">// 02 — Education</p>
   <h2 class="section-title">Academic<br/>Background</h2>
-  <div class="timeline">
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-header">
-        <div class="timeline-role">Bachelor of Mechanical Engineering</div>
-        <div class="timeline-date">Sep 2024 — Jun 2028</div>
+  <div class="edu-grid">
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <div class="timeline-role">Bachelor of Mechanical Engineering</div>
+          <div class="timeline-date">Sep 2024 — Jun 2028</div>
+        </div>
+        <p class="timeline-desc">HAN University of Applied Sciences &middot; Arnhem, The Netherlands</p>
+        <p class="timeline-desc" style="margin-top:0.5rem;">Grade Average: <span style="color:var(--red);font-weight:600;">8.0 / 10</span></p>
       </div>
-      <p class="timeline-desc">HAN University of Applied Sciences &middot; Arnhem, The Netherlands</p>
-      <p class="timeline-desc" style="margin-top:0.5rem;">Grade Average: <span style="color:var(--red);font-weight:600;">8.0 / 10</span></p>
+    </div>
+    <div class="info-card">
+      <p class="info-card-title">// Languages</p>
+      <div class="lang-row"><span class="lang-name lang-featured">English</span><span class="lang-level">Native</span></div>
+      <div class="lang-row"><span class="lang-name">Dutch &#127475;&#127473;</span><span class="lang-level">Learning</span></div>
+      <div class="lang-row"><span class="lang-name">Hindi</span><span class="lang-level">Native</span></div>
     </div>
   </div>
 </section>
