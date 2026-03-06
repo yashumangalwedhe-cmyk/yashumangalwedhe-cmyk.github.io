@@ -238,8 +238,13 @@
 
     footer { padding: 2rem 5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 0.65rem; color: #444; }
 
+    /* Animations */
     @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+
+    /* CRITICAL: reveal animation for scroll sections */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
     @media(max-width:900px){
       nav{padding:1.2rem 1.5rem} .nav-links{display:none}
       section{padding:5rem 1.5rem}
@@ -377,54 +382,40 @@
 
 <footer>
   <div>YM. Yashovardhan Mangalwedhe</div>
-  <div>&#169; 2025 · Built with precision for the fast lane.</div>
+  <div>&#169; 2026 · Built with precision for the fast lane.</div>
 </footer>
 
 <script>
+  // Custom cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = -100, my = -100, rx = -100, ry = -100;
 
-  const isTouchDevice = () => {
-    return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
-  };
-
-  if (!isTouchDevice()) {
-    cursor.style.display = 'block';
-    ring.style.display = 'block';
-
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX;
-      my = e.clientY;
-    });
-
-    function anim() {
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animCursor() {
       cursor.style.left = mx + 'px';
       cursor.style.top = my + 'px';
       rx += (mx - rx) * 0.15;
       ry += (my - ry) * 0.15;
       ring.style.left = rx + 'px';
       ring.style.top = ry + 'px';
-      requestAnimationFrame(anim);
+      requestAnimationFrame(animCursor);
     }
-    anim();
-
-    document.querySelectorAll('a, button, .tag, .contact-link').forEach(el => {
+    animCursor();
+    document.querySelectorAll('a, button, .tag').forEach(el => {
       el.addEventListener('mouseenter', () => {
-        ring.style.width = '60px';
-        ring.style.height = '60px';
+        ring.style.width = '60px'; ring.style.height = '60px';
         ring.style.borderColor = 'rgba(232,0,45,1)';
-        ring.style.backgroundColor = 'rgba(232,0,45,0.05)';
       });
       el.addEventListener('mouseleave', () => {
-        ring.style.width = '34px';
-        ring.style.height = '34px';
+        ring.style.width = '34px'; ring.style.height = '34px';
         ring.style.borderColor = 'rgba(232,0,45,0.45)';
-        ring.style.backgroundColor = 'transparent';
       });
     });
   }
 
+  // Speed lines
   const linesEl = document.getElementById('heroLines');
   setInterval(() => {
     const l = document.createElement('div');
@@ -436,24 +427,29 @@
     setTimeout(() => l.remove(), 2500);
   }, 200);
 
+  // Typing effect
   const phrases = ['Drivetrain & Chassis Engineer', 'F1 & Automotive Enthusiast', 'Photographer & Videographer', 'FEM & SolidWorks Analyst'];
   let pi = 0, ci = 0, isDeleting = false;
   const tEl = document.getElementById('typingText');
-
   function type() {
-    const currentPhrase = phrases[pi];
-    tEl.textContent = isDeleting ? currentPhrase.substring(0, ci - 1) : currentPhrase.substring(0, ci + 1);
+    const cur = phrases[pi];
+    tEl.textContent = isDeleting ? cur.substring(0, ci - 1) : cur.substring(0, ci + 1);
     ci = isDeleting ? ci - 1 : ci + 1;
-    let typeSpeed = isDeleting ? 40 : 80;
-    if (!isDeleting && ci === currentPhrase.length) { isDeleting = true; typeSpeed = 2000; }
-    else if (isDeleting && ci === 0) { isDeleting = false; pi = (pi + 1) % phrases.length; typeSpeed = 500; }
-    setTimeout(type, typeSpeed);
+    let speed = isDeleting ? 40 : 80;
+    if (!isDeleting && ci === cur.length) { isDeleting = true; speed = 2000; }
+    else if (isDeleting && ci === 0) { isDeleting = false; pi = (pi + 1) % phrases.length; speed = 500; }
+    setTimeout(type, speed);
   }
   type();
 
+  // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 
