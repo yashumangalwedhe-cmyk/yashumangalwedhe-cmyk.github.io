@@ -214,89 +214,48 @@
       display: flex; align-items: center; gap: 0.4rem; transition: color 0.3s;
     }
     .project-card:hover .project-view-hint { color: var(--red); }
-    .project-view-hint::after { content: '→'; transition: transform 0.3s; }
-    .project-card:hover .project-view-hint::after { transform: translateX(4px); }
+    .project-view-hint::after { content: ' →'; transition: transform 0.3s; }
+    .project-card:hover:not(.expanded) .project-view-hint::after { transform: translateX(4px); }
+    .project-card.expanded .project-view-hint { color: var(--red); }
+    .project-card.expanded .project-view-hint::after { content: ' ↑'; transform: none; }
 
-    /* PROJECT MODAL */
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 1000;
-      background: rgba(7,7,9,0.92);
-      backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 2rem;
-      opacity: 0; visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
+    /* PROJECT INLINE DETAIL */
+    .project-card.expanded { border-color: var(--red); transform: none; box-shadow: 0 12px 40px rgba(232,0,45,0.15); }
+    .project-card.expanded::before { transform: scaleX(1); }
+    .project-detail { max-height: 0; overflow: hidden; transition: max-height 0.55s ease; }
+    .project-card.expanded .project-detail { max-height: 2000px; }
+    .project-detail-inner {
+      border-top: 1px solid var(--border);
+      margin-top: 1.2rem; padding-top: 1.4rem;
+      display: flex; flex-direction: column; gap: 1.4rem;
     }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal-box {
-      background: var(--mid); border: 1px solid var(--border);
-      max-width: 760px; width: 100%; max-height: 88vh;
-      overflow-y: auto; position: relative;
-      transform: scale(0.94) translateY(16px);
-      transition: transform 0.3s ease;
-      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
-    }
-    .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
-    .modal-box::-webkit-scrollbar { width: 4px; }
-    .modal-box::-webkit-scrollbar-track { background: transparent; }
-    .modal-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    .modal-header {
-      position: sticky; top: 0; z-index: 10;
-      background: var(--mid); border-bottom: 1px solid var(--border);
-      padding: 1.6rem 2rem 1.4rem;
-      display: flex; justify-content: space-between; align-items: flex-start;
-    }
-    .modal-header::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(to right, var(--red), transparent);
-    }
-    .modal-title-wrap {}
-    .modal-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.4em; color: var(--red); text-transform: uppercase; margin-bottom: 0.5rem; }
-    .modal-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 900; color: var(--white); }
-    .modal-close {
-      background: none; border: 1px solid var(--border); color: var(--muted);
-      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 1.1rem; flex-shrink: 0; margin-left: 1rem;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .modal-close:hover { border-color: var(--red); color: var(--white); background: rgba(232,0,45,0.1); }
-
-    .modal-body { padding: 2rem; }
-    .modal-section { margin-bottom: 2rem; }
-    .modal-section-label {
+    .detail-section-label {
       font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
       letter-spacing: 0.4em; color: var(--red); text-transform: uppercase;
       margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.6rem;
     }
-    .modal-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-    .modal-overview { font-size: 0.9rem; color: #999; line-height: 1.9; }
-    .modal-overview strong { color: var(--white); }
-
-    .modal-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-    .modal-highlights li {
-      font-size: 0.85rem; color: #888; line-height: 1.7;
-      padding-left: 1.2rem; position: relative;
+    .detail-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .detail-overview { font-size: 0.9rem; color: #999; line-height: 1.9; }
+    .detail-overview strong { color: var(--white); }
+    .detail-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .detail-highlights li { font-size: 0.85rem; color: #888; line-height: 1.7; padding-left: 1.2rem; position: relative; }
+    .detail-highlights li::before { content: '▸'; position: absolute; left: 0; color: var(--red); font-size: 0.7rem; top: 0.15rem; }
+    .detail-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.8rem; }
+    .detail-metric {
+      background: var(--dark); border: 1px solid var(--border);
+      padding: 0.8rem; text-align: center; position: relative; overflow: hidden;
     }
-    .modal-highlights li::before { content: '▸'; position: absolute; left: 0; color: var(--red); font-size: 0.7rem; top: 0.15rem; }
-
-    .modal-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
-    .modal-metric {
-      background: var(--card); border: 1px solid var(--border);
-      padding: 1rem; text-align: center; position: relative; overflow: hidden;
-    }
-    .modal-metric::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, var(--red), transparent); }
-    .modal-metric-val { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 900; color: var(--red); line-height: 1; margin-bottom: 0.4rem; }
-    .modal-metric-label { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
-
-    .modal-tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .modal-tech-tag {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.58rem;
+    .detail-metric::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, var(--red), transparent); }
+    .detail-metric-val { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 900; color: var(--red); line-height: 1; margin-bottom: 0.4rem; }
+    .detail-metric-label { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .detail-tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .detail-tech-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
       color: var(--muted); border: 1px solid var(--border);
-      padding: 0.3rem 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.3rem 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
       transition: border-color 0.2s, color 0.2s;
     }
-    .modal-tech-tag:hover { border-color: var(--red); color: var(--white); }
+    .detail-tech-tag:hover { border-color: var(--red); color: var(--white); }
 
     /* CONTACT */
     #contact { background: var(--dark); text-align: center; }
@@ -322,8 +281,7 @@
       .projects-grid{grid-template-columns:1fr}
       .hero-stats{flex-direction:column; padding: 1rem;}
       .stat-item{border-right:none; border-bottom: 1px solid var(--border); padding: 1rem;}
-      .modal-metrics{grid-template-columns:repeat(2,1fr)}
-      .modal-body{padding:1.4rem}
+      .detail-metrics{grid-template-columns:repeat(2,1fr)}
     }
   </style>
 </head>
@@ -332,36 +290,6 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- PROJECT MODAL -->
-<div class="modal-overlay" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal-box" id="modalBox">
-    <div class="modal-header">
-      <div class="modal-title-wrap">
-        <div class="modal-tag" id="modalTag">// Project</div>
-        <div class="modal-title" id="modalTitle">Project Name</div>
-      </div>
-      <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-section">
-        <div class="modal-section-label">Overview</div>
-        <p class="modal-overview" id="modalOverview"></p>
-      </div>
-      <div class="modal-section">
-        <div class="modal-section-label">Key Highlights</div>
-        <ul class="modal-highlights" id="modalHighlights"></ul>
-      </div>
-      <div class="modal-section">
-        <div class="modal-section-label">Metrics</div>
-        <div class="modal-metrics" id="modalMetrics"></div>
-      </div>
-      <div class="modal-section">
-        <div class="modal-section-label">Technologies &amp; Skills</div>
-        <div class="modal-tech-tags" id="modalTech"></div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <nav>
   <a href="#hero" class="nav-logo">YM<span>.</span></a>
@@ -574,57 +502,56 @@
     }
   };
 
-  // ── Modal Logic ──────────────────────────────────────────────
-  const overlay = document.getElementById('projectModal');
-  const modalClose = document.getElementById('modalClose');
-
-  function openModal(key) {
-    const p = projects[key];
-    if (!p) return;
-
-    document.getElementById('modalTag').textContent = p.tag;
-    document.getElementById('modalTitle').textContent = p.title;
-    document.getElementById('modalOverview').innerHTML = p.overview;
-
-    const hl = document.getElementById('modalHighlights');
-    hl.innerHTML = p.highlights.map(h => `<li>${h}</li>`).join('');
-
-    const mx = document.getElementById('modalMetrics');
-    mx.innerHTML = p.metrics.map(m => `
-      <div class="modal-metric">
-        <div class="modal-metric-val">${m.val}</div>
-        <div class="modal-metric-label">${m.label}</div>
+  // ── Inline Project Detail ────────────────────────────────────
+  function buildDetailHTML(p) {
+    const highlights = p.highlights.map(h => `<li>${h}</li>`).join('');
+    const metrics = p.metrics.map(m => `
+      <div class="detail-metric">
+        <div class="detail-metric-val">${m.val}</div>
+        <div class="detail-metric-label">${m.label}</div>
       </div>`).join('');
-
-    const tc = document.getElementById('modalTech');
-    tc.innerHTML = p.tech.map(t => `<span class="modal-tech-tag">${t}</span>`).join('');
-
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    modalClose.focus();
+    const tech = p.tech.map(t => `<span class="detail-tech-tag">${t}</span>`).join('');
+    return `<div class="project-detail"><div class="project-detail-inner">
+      <div class="detail-section">
+        <div class="detail-section-label">Overview</div>
+        <p class="detail-overview">${p.overview}</p>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-label">Key Highlights</div>
+        <ul class="detail-highlights">${highlights}</ul>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-label">Metrics</div>
+        <div class="detail-metrics">${metrics}</div>
+      </div>
+      <div class="detail-section">
+        <div class="detail-section-label">Technologies &amp; Skills</div>
+        <div class="detail-tech-tags">${tech}</div>
+      </div>
+    </div></div>`;
   }
 
-  function closeModal() {
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  // Card click
+  // Inject detail panels into each card
   document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('click', () => openModal(card.dataset.project));
+    const p = projects[card.dataset.project];
+    if (p) card.insertAdjacentHTML('beforeend', buildDetailHTML(p));
   });
 
-  // Close button
-  modalClose.addEventListener('click', closeModal);
-
-  // Click outside modal box
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) closeModal();
-  });
-
-  // Escape key
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
+  // Toggle expand/collapse on card click
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const isExpanded = card.classList.contains('expanded');
+      // Collapse all cards
+      document.querySelectorAll('.project-card.expanded').forEach(c => {
+        c.classList.remove('expanded');
+        c.querySelector('.project-view-hint').textContent = '// View Details';
+      });
+      // If this card was not expanded, expand it
+      if (!isExpanded) {
+        card.classList.add('expanded');
+        card.querySelector('.project-view-hint').textContent = '// Collapse';
+      }
+    });
   });
 
   // ── Custom Cursor ────────────────────────────────────────────
