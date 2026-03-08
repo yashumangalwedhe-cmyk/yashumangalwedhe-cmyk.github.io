@@ -44,13 +44,15 @@
     }
 
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; justify-content: space-between; align-items: center;
       padding: 1.4rem 5rem;
       background: rgba(7,7,9,0.96);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
+      transition: opacity 0.4s, transform 0.4s;
     }
+    nav.hide { opacity: 0; pointer-events: none; transform: translateY(-100%); }
     .nav-logo { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1rem; letter-spacing: 0.25em; color: var(--white); text-decoration: none; }
     .nav-logo span { color: var(--red); }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
@@ -84,7 +86,7 @@
       margin-bottom: 1.5rem;
       opacity: 0; animation: fadeUp 0.8s ease forwards 0.5s;
     }
-    h1 .line2 { color: var(--red); display: block; }
+    h1 .line2 { color: var(--red); }
 
     .hero-typing-wrap {
       font-family: 'JetBrains Mono', monospace;
@@ -217,87 +219,6 @@
     .project-view-hint::after { content: '→'; transition: transform 0.3s; }
     .project-card:hover .project-view-hint::after { transform: translateX(4px); }
 
-    /* PROJECT MODAL */
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 1000;
-      background: rgba(7,7,9,0.92);
-      backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 2rem;
-      opacity: 0; visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal-box {
-      background: var(--mid); border: 1px solid var(--border);
-      max-width: 760px; width: 100%; max-height: 88vh;
-      overflow-y: auto; position: relative;
-      transform: scale(0.94) translateY(16px);
-      transition: transform 0.3s ease;
-      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
-    }
-    .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
-    .modal-box::-webkit-scrollbar { width: 4px; }
-    .modal-box::-webkit-scrollbar-track { background: transparent; }
-    .modal-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    .modal-header {
-      position: sticky; top: 0; z-index: 10;
-      background: var(--mid); border-bottom: 1px solid var(--border);
-      padding: 1.6rem 2rem 1.4rem;
-      display: flex; justify-content: space-between; align-items: flex-start;
-    }
-    .modal-header::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(to right, var(--red), transparent);
-    }
-    .modal-title-wrap {}
-    .modal-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.4em; color: var(--red); text-transform: uppercase; margin-bottom: 0.5rem; }
-    .modal-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 900; color: var(--white); }
-    .modal-close {
-      background: none; border: 1px solid var(--border); color: var(--muted);
-      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 1.1rem; flex-shrink: 0; margin-left: 1rem;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .modal-close:hover { border-color: var(--red); color: var(--white); background: rgba(232,0,45,0.1); }
-
-    .modal-body { padding: 2rem; }
-    .modal-section { margin-bottom: 2rem; }
-    .modal-section-label {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
-      letter-spacing: 0.4em; color: var(--red); text-transform: uppercase;
-      margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.6rem;
-    }
-    .modal-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-    .modal-overview { font-size: 0.9rem; color: #999; line-height: 1.9; }
-    .modal-overview strong { color: var(--white); }
-
-    .modal-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-    .modal-highlights li {
-      font-size: 0.85rem; color: #888; line-height: 1.7;
-      padding-left: 1.2rem; position: relative;
-    }
-    .modal-highlights li::before { content: '▸'; position: absolute; left: 0; color: var(--red); font-size: 0.7rem; top: 0.15rem; }
-
-    .modal-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
-    .modal-metric {
-      background: var(--card); border: 1px solid var(--border);
-      padding: 1rem; text-align: center; position: relative; overflow: hidden;
-    }
-    .modal-metric::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, var(--red), transparent); }
-    .modal-metric-val { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 900; color: var(--red); line-height: 1; margin-bottom: 0.4rem; }
-    .modal-metric-label { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
-
-    .modal-tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .modal-tech-tag {
-      font-family: 'JetBrains Mono', monospace; font-size: 0.58rem;
-      color: var(--muted); border: 1px solid var(--border);
-      padding: 0.3rem 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .modal-tech-tag:hover { border-color: var(--red); color: var(--white); }
-
     /* CONTACT */
     #contact { background: var(--dark); text-align: center; }
     .contact-link {
@@ -312,8 +233,6 @@
 
     @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
     @media(max-width:900px){
       nav{padding:1.2rem 1.5rem} .nav-links{display:none}
       section{padding:5rem 1.5rem}
@@ -322,8 +241,261 @@
       .projects-grid{grid-template-columns:1fr}
       .hero-stats{flex-direction:column; padding: 1rem;}
       .stat-item{border-right:none; border-bottom: 1px solid var(--border); padding: 1rem;}
-      .modal-metrics{grid-template-columns:repeat(2,1fr)}
-      .modal-body{padding:1.4rem}
+    }
+
+    /* ── APPLE-STYLE PROJECT DETAIL PANEL ─────────────────────── */
+    .project-detail-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .project-detail-overlay.active {
+      pointer-events: all;
+    }
+
+    /* Dark scrim behind panel */
+    .detail-scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(7,7,9,0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      opacity: 0;
+      transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1);
+    }
+    .project-detail-overlay.active .detail-scrim {
+      opacity: 1;
+    }
+
+    /* The sliding panel */
+    .detail-panel {
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: min(780px, 100vw);
+      background: var(--dark);
+      border-left: 1px solid var(--border);
+      overflow-y: auto;
+      overflow-x: hidden;
+      transform: translateX(100%);
+      transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+      will-change: transform;
+    }
+    .detail-panel::-webkit-scrollbar { width: 4px; }
+    .detail-panel::-webkit-scrollbar-track { background: transparent; }
+    .detail-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .project-detail-overlay.active .detail-panel {
+      transform: translateX(0);
+    }
+
+    /* Sticky top bar inside panel */
+    .detail-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2.5rem;
+      background: rgba(7,7,9,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .detail-topbar-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+    .detail-close {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem; flex-shrink: 0;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      font-family: inherit;
+    }
+    .detail-close:hover {
+      border-color: var(--red);
+      color: var(--white);
+      background: rgba(232,0,45,0.1);
+    }
+
+    /* Hero section of panel — large title that fades in */
+    .detail-hero {
+      padding: 4rem 2.5rem 3rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .detail-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--red), transparent);
+    }
+    .detail-hero-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.45em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
+    }
+    .detail-hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease 0.18s, transform 0.55s ease 0.18s;
+    }
+    .detail-hero-desc {
+      font-size: 0.95rem;
+      color: #999;
+      line-height: 1.8;
+      max-width: 560px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.55s ease 0.26s, transform 0.55s ease 0.26s;
+    }
+    .project-detail-overlay.active .detail-hero-tag,
+    .project-detail-overlay.active .detail-hero-title,
+    .project-detail-overlay.active .detail-hero-desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Metrics row */
+    .detail-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease 0.35s, transform 0.55s ease 0.35s;
+    }
+    .project-detail-overlay.active .detail-metrics { opacity: 1; transform: translateY(0); }
+    .detail-metric {
+      padding: 2rem 1.5rem;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .detail-metric:last-child { border-right: none; }
+    .detail-metric-val {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .detail-metric-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* Scroll-driven content blocks */
+    .detail-block {
+      padding: 3rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .detail-block.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .detail-block-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .detail-block-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .detail-overview {
+      font-size: 0.92rem;
+      color: #999;
+      line-height: 1.95;
+    }
+    .detail-overview strong { color: var(--white); }
+
+    /* Highlights — scroll-staggered list */
+    .detail-highlights { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .detail-highlights li {
+      font-size: 0.88rem;
+      color: #888;
+      line-height: 1.75;
+      padding: 1rem 0 1rem 1.4rem;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      opacity: 0;
+      transform: translateX(-12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .detail-highlights li:last-child { border-bottom: none; }
+    .detail-highlights li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--red);
+      font-size: 0.7rem;
+      top: 1.05rem;
+    }
+    .detail-highlights li.in-view {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Tech tags */
+    .detail-tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .detail-tech-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .detail-tech-tag:hover { border-color: var(--red); color: var(--white); }
+
+    @media(max-width:680px) {
+      .detail-panel { width: 100vw; border-left: none; }
+      .detail-metrics { grid-template-columns: repeat(2,1fr); }
+      .detail-hero { padding: 3rem 1.5rem 2rem; }
+      .detail-block { padding: 2rem 1.5rem; }
+      .detail-topbar { padding: 1rem 1.5rem; }
     }
   </style>
 </head>
@@ -332,38 +504,41 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- PROJECT MODAL -->
-<div class="modal-overlay" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal-box" id="modalBox">
-    <div class="modal-header">
-      <div class="modal-title-wrap">
-        <div class="modal-tag" id="modalTag">// Project</div>
-        <div class="modal-title" id="modalTitle">Project Name</div>
-      </div>
-      <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
+<!-- ── APPLE-STYLE DETAIL PANEL OVERLAY ─────────────────────── -->
+<div class="project-detail-overlay" id="detailOverlay" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+  <div class="detail-scrim" id="detailScrim"></div>
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-topbar">
+      <span class="detail-topbar-label" id="detailTopLabel">// Project</span>
+      <button class="detail-close" id="detailClose" aria-label="Close project detail">✕</button>
     </div>
-    <div class="modal-body">
-      <div class="modal-section">
-        <div class="modal-section-label">Overview</div>
-        <p class="modal-overview" id="modalOverview"></p>
-      </div>
-      <div class="modal-section">
-        <div class="modal-section-label">Key Highlights</div>
-        <ul class="modal-highlights" id="modalHighlights"></ul>
-      </div>
-      <div class="modal-section">
-        <div class="modal-section-label">Metrics</div>
-        <div class="modal-metrics" id="modalMetrics"></div>
-      </div>
-      <div class="modal-section">
-        <div class="modal-section-label">Technologies &amp; Skills</div>
-        <div class="modal-tech-tags" id="modalTech"></div>
-      </div>
+
+    <div class="detail-hero">
+      <div class="detail-hero-tag" id="detailTag">// Engineering</div>
+      <div class="detail-hero-title" id="detailTitle">Project Title</div>
+      <div class="detail-hero-desc" id="detailDesc"></div>
+    </div>
+
+    <div class="detail-metrics" id="detailMetrics"></div>
+
+    <div class="detail-block" id="detailOverviewBlock">
+      <div class="detail-block-label">Overview</div>
+      <p class="detail-overview" id="detailOverview"></p>
+    </div>
+
+    <div class="detail-block" id="detailHighlightsBlock">
+      <div class="detail-block-label">Key Highlights</div>
+      <ul class="detail-highlights" id="detailHighlights"></ul>
+    </div>
+
+    <div class="detail-block" id="detailTechBlock">
+      <div class="detail-block-label">Technologies &amp; Skills</div>
+      <div class="detail-tech-tags" id="detailTech"></div>
     </div>
   </div>
 </div>
 
-<nav>
+<nav id="mainNav">
   <a href="#hero" class="nav-logo">YM<span>.</span></a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
@@ -515,6 +690,7 @@
     conveyor: {
       tag: '// Engineering · FEM',
       title: 'Vibrating Conveyor Analysis',
+      desc: 'A full structural redesign of a food-grade vibrating conveyor — resolving resonance, buckling, and fatigue through FEM simulation.',
       overview: `A full structural redesign of a <strong>food-grade vibrating conveyor</strong> used in industrial processing environments. The project involved identifying failure modes through dynamic load analysis, then iteratively redesigning key structural members to eliminate resonance and buckling risks while complying with food-safety standards.`,
       highlights: [
         'Conducted full FEM simulation pipeline in SolidWorks Simulation — mesh generation, load application, and post-processing',
@@ -535,7 +711,8 @@
     robotics: {
       tag: '// Robotics · Mechanical Design',
       title: 'Competitive Robotics — HAN',
-      overview: `As <strong>Drivetrain & Chassis Engineer</strong> at HAN Competitive Robotics, I am responsible for the full mechanical design of the robot's structural and propulsion systems. This involves translating competition requirements into reliable, high-performance hardware under tight time and weight constraints.`,
+      desc: 'Full mechanical design of drivetrain and chassis for HAN Competitive Robotics, competing under tight weight and time constraints.',
+      overview: `As <strong>Drivetrain &amp; Chassis Engineer</strong> at HAN Competitive Robotics, I am responsible for the full mechanical design of the robot's structural and propulsion systems. This involves translating competition requirements into reliable, high-performance hardware under tight time and weight constraints.`,
       highlights: [
         'Designed modular chassis architecture in SolidWorks, enabling rapid reconfiguration between competition formats',
         'Performed load path analysis to optimise material distribution and minimise weight without sacrificing rigidity',
@@ -555,6 +732,7 @@
     photography: {
       tag: '// Creative · Automotive',
       title: 'Automotive Photography',
+      desc: 'Merging deep automotive technical knowledge with professional photography and visual media production at live motorsport events.',
       overview: `A personal creative project merging <strong>deep automotive technical knowledge</strong> with professional photography and visual media production. Focused on high-performance and motorsport vehicles, the work goes beyond aesthetics — every shot is composed with an engineer's understanding of the machine being captured.`,
       highlights: [
         'Specialised in capturing motorsport and high-performance road cars at circuits and events',
@@ -574,69 +752,113 @@
     }
   };
 
-  // ── Modal Logic ──────────────────────────────────────────────
-  const overlay = document.getElementById('projectModal');
-  const modalClose = document.getElementById('modalClose');
+  // ── Detail Panel Logic ────────────────────────────────────────
+  const overlay   = document.getElementById('detailOverlay');
+  const panel     = document.getElementById('detailPanel');
+  const scrim     = document.getElementById('detailScrim');
+  const closeBtn  = document.getElementById('detailClose');
+  const mainNav   = document.getElementById('mainNav');
 
-  function openModal(key) {
+  // IntersectionObserver for scroll-driven reveal inside panel
+  let panelObserver = null;
+
+  function buildPanelObserver() {
+    if (panelObserver) panelObserver.disconnect();
+    panelObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          // stagger list items
+          if (entry.target.tagName === 'LI') return;
+        }
+      });
+    }, { root: panel, threshold: 0.12 });
+
+    // Observe blocks
+    panel.querySelectorAll('.detail-block').forEach(el => panelObserver.observe(el));
+
+    // Observe highlight list items with stagger
+    panel.querySelectorAll('.detail-highlights li').forEach((li, i) => {
+      li.style.transitionDelay = (i * 0.07) + 's';
+      panelObserver.observe(li);
+    });
+  }
+
+  function openDetail(key) {
     const p = projects[key];
     if (!p) return;
 
-    document.getElementById('modalTag').textContent = p.tag;
-    document.getElementById('modalTitle').textContent = p.title;
-    document.getElementById('modalOverview').innerHTML = p.overview;
+    // Reset scroll
+    panel.scrollTop = 0;
 
-    const hl = document.getElementById('modalHighlights');
+    // Populate content
+    document.getElementById('detailTopLabel').textContent = p.tag;
+    document.getElementById('detailTag').textContent = p.tag;
+    document.getElementById('detailTitle').textContent = p.title;
+    document.getElementById('detailDesc').textContent = p.desc;
+    document.getElementById('detailOverview').innerHTML = p.overview;
+
+    const hl = document.getElementById('detailHighlights');
     hl.innerHTML = p.highlights.map(h => `<li>${h}</li>`).join('');
 
-    const mx = document.getElementById('modalMetrics');
+    const mx = document.getElementById('detailMetrics');
     mx.innerHTML = p.metrics.map(m => `
-      <div class="modal-metric">
-        <div class="modal-metric-val">${m.val}</div>
-        <div class="modal-metric-label">${m.label}</div>
+      <div class="detail-metric">
+        <div class="detail-metric-val">${m.val}</div>
+        <div class="detail-metric-label">${m.label}</div>
       </div>`).join('');
 
-    const tc = document.getElementById('modalTech');
-    tc.innerHTML = p.tech.map(t => `<span class="modal-tech-tag">${t}</span>`).join('');
+    const tc = document.getElementById('detailTech');
+    tc.innerHTML = p.tech.map(t => `<span class="detail-tech-tag">${t}</span>`).join('');
 
+    // Reset in-view states for re-animation
+    panel.querySelectorAll('.detail-block, .detail-highlights li').forEach(el => {
+      el.classList.remove('in-view');
+    });
+
+    // Open
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-    modalClose.focus();
+    mainNav.classList.add('hide');
+    closeBtn.focus();
+
+    // Start observing after panel slides in
+    setTimeout(buildPanelObserver, 300);
   }
 
-  function closeModal() {
+  function closeDetail() {
     overlay.classList.remove('active');
     document.body.style.overflow = '';
+    mainNav.classList.remove('hide');
+    if (panelObserver) panelObserver.disconnect();
   }
 
-  // Card click
+  // Card clicks
   document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('click', () => openModal(card.dataset.project));
+    card.addEventListener('click', () => openDetail(card.dataset.project));
   });
 
   // Close button
-  modalClose.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeDetail);
 
-  // Click outside modal box
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) closeModal();
-  });
+  // Click scrim
+  scrim.addEventListener('click', closeDetail);
 
   // Escape key
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape' && overlay.classList.contains('active')) closeDetail();
   });
 
   // ── Custom Cursor ────────────────────────────────────────────
   const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = -100, my = -100, rx = -100, ry = -100;
+  const ring   = document.getElementById('cursorRing');
+  let mx2 = -100, my2 = -100, rx = -100, ry = -100;
 
   if (window.matchMedia('(pointer: fine)').matches) {
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    document.addEventListener('mousemove', e => { mx2 = e.clientX; my2 = e.clientY; });
     function animCursor() {
-      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-      rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+      cursor.style.left = mx2 + 'px'; cursor.style.top = my2 + 'px';
+      rx += (mx2 - rx) * 0.15; ry += (my2 - ry) * 0.15;
       ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
       requestAnimationFrame(animCursor);
     }
@@ -674,7 +896,7 @@
   }
   type();
 
-  // ── Scroll Reveal ─────────────────────────────────────────────
+  // ── Scroll Reveal (main page) ──────────────────────────────────
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
   }, { threshold: 0.08 });
