@@ -82,11 +82,11 @@
     h1 {
       font-family: 'Orbitron', sans-serif;
       font-size: clamp(2.8rem, 6.5vw, 5.5rem);
-      font-weight: 900; line-height: 1; letter-spacing: -0.02em;
+      font-weight: 900; line-height: 1.05; letter-spacing: -0.02em;
       margin-bottom: 1.5rem;
       opacity: 0; animation: fadeUp 0.8s ease forwards 0.5s;
     }
-    h1 .line2 { color: var(--red); }
+    h1 .line2 { color: var(--red); display: block; }
 
     .hero-typing-wrap {
       font-family: 'JetBrains Mono', monospace;
@@ -232,7 +232,11 @@
     footer { padding: 2rem 5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 0.65rem; color: #444; }
 
     @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── SCROLL REVEAL ── */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .reveal.visible { opacity: 1; transform: none; }
+
     @media(max-width:900px){
       nav{padding:1.2rem 1.5rem} .nav-links{display:none}
       section{padding:5rem 1.5rem}
@@ -329,7 +333,7 @@
       background: rgba(232,0,45,0.1);
     }
 
-    /* Hero section of panel — large title that fades in */
+    /* Hero section of panel */
     .detail-hero {
       padding: 4rem 2.5rem 3rem;
       border-bottom: 1px solid var(--border);
@@ -449,7 +453,7 @@
     }
     .detail-overview strong { color: var(--white); }
 
-    /* Highlights — scroll-staggered list */
+    /* Highlights */
     .detail-highlights { list-style: none; display: flex; flex-direction: column; gap: 0; }
     .detail-highlights li {
       font-size: 0.88rem;
@@ -600,14 +604,14 @@
           <div class="timeline-role">Bachelor of Mechanical Engineering</div>
           <div class="timeline-date">Sep 2024 — Jun 2028</div>
         </div>
-        <p class="timeline-desc">HAN University of Applied Sciences &middot; Arnhem, The Netherlands</p>
+        <p class="timeline-desc">HAN University of Applied Sciences · Arnhem, The Netherlands</p>
         <p class="timeline-desc" style="margin-top:0.5rem;">Grade Average: <span style="color:var(--red);font-weight:600;">8.0 / 10</span></p>
       </div>
     </div>
     <div class="info-card">
       <p class="info-card-title">// Languages</p>
       <div class="lang-row"><span class="lang-name lang-featured">English</span><span class="lang-level">Native</span></div>
-      <div class="lang-row"><span class="lang-name">Dutch &#127475;&#127473;</span><span class="lang-level">Learning</span></div>
+      <div class="lang-row"><span class="lang-name">Dutch 🇳🇱</span><span class="lang-level">Learning</span></div>
       <div class="lang-row"><span class="lang-name">Hindi</span><span class="lang-level">Native</span></div>
     </div>
   </div>
@@ -673,15 +677,15 @@
   <div style="max-width: 600px; margin: 0 auto;">
     <p class="section-tag">// 05 — Contact</p>
     <h2 class="section-title">Let's Connect</h2>
-    <a href="mailto:yashovardhanm28@gmail.com" class="contact-link">&#9993;&nbsp; yashovardhanm28@gmail.com</a>
-    <a href="https://www.linkedin.com/in/yashovardhan-mangalwedhe" target="_blank" class="contact-link">in &nbsp; linkedin.com/in/yashovardhan-mangalwedhe</a>
-    <a href="https://github.com/yashumangalwedhe-cmyk" target="_blank" class="contact-link">&#8997;&nbsp; github.com/yashumangalwedhe-cmyk</a>
+    <a href="mailto:yashovardhanm28@gmail.com" class="contact-link">✉ yashovardhanm28@gmail.com</a>
+    <a href="https://www.linkedin.com/in/yashovardhan-mangalwedhe" target="_blank" class="contact-link">in  linkedin.com/in/yashovardhan-mangalwedhe</a>
+    <a href="https://github.com/yashumangalwedhe-cmyk" target="_blank" class="contact-link">⌥ github.com/yashumangalwedhe-cmyk</a>
   </div>
 </section>
 
 <footer>
   <div>YM. Yashovardhan Mangalwedhe</div>
-  <div>&#169; 2026 · Built with precision for the fast lane.</div>
+  <div>© 2026 · Built with precision for the fast lane.</div>
 </footer>
 
 <script>
@@ -759,7 +763,6 @@
   const closeBtn  = document.getElementById('detailClose');
   const mainNav   = document.getElementById('mainNav');
 
-  // IntersectionObserver for scroll-driven reveal inside panel
   let panelObserver = null;
 
   function buildPanelObserver() {
@@ -768,16 +771,11 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
-          // stagger list items
-          if (entry.target.tagName === 'LI') return;
         }
       });
     }, { root: panel, threshold: 0.12 });
 
-    // Observe blocks
     panel.querySelectorAll('.detail-block').forEach(el => panelObserver.observe(el));
-
-    // Observe highlight list items with stagger
     panel.querySelectorAll('.detail-highlights li').forEach((li, i) => {
       li.style.transitionDelay = (i * 0.07) + 's';
       panelObserver.observe(li);
@@ -788,10 +786,8 @@
     const p = projects[key];
     if (!p) return;
 
-    // Reset scroll
     panel.scrollTop = 0;
 
-    // Populate content
     document.getElementById('detailTopLabel').textContent = p.tag;
     document.getElementById('detailTag').textContent = p.tag;
     document.getElementById('detailTitle').textContent = p.title;
@@ -811,18 +807,15 @@
     const tc = document.getElementById('detailTech');
     tc.innerHTML = p.tech.map(t => `<span class="detail-tech-tag">${t}</span>`).join('');
 
-    // Reset in-view states for re-animation
     panel.querySelectorAll('.detail-block, .detail-highlights li').forEach(el => {
       el.classList.remove('in-view');
     });
 
-    // Open
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
     mainNav.classList.add('hide');
     closeBtn.focus();
 
-    // Start observing after panel slides in
     setTimeout(buildPanelObserver, 300);
   }
 
@@ -833,18 +826,12 @@
     if (panelObserver) panelObserver.disconnect();
   }
 
-  // Card clicks
   document.querySelectorAll('.project-card').forEach(card => {
     card.addEventListener('click', () => openDetail(card.dataset.project));
   });
 
-  // Close button
   closeBtn.addEventListener('click', closeDetail);
-
-  // Click scrim
   scrim.addEventListener('click', closeDetail);
-
-  // Escape key
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && overlay.classList.contains('active')) closeDetail();
   });
