@@ -18,7 +18,6 @@
   --completed: #00e874;
   --ongoing: #e8a700;
   --planned: #00a3e8;
-  --infinite: linear-gradient(90deg, #e8002d, #ff4d4d, #e8002d);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -221,9 +220,6 @@ section { padding: 8rem 5rem; position: relative; z-index: 1; }
 .status-completed { background: var(--completed); box-shadow: 0 0 10px var(--completed); width: 100% !important; }
 .status-ongoing { background: var(--ongoing); box-shadow: 0 0 10px var(--ongoing); width: 65% !important; }
 .status-planned { background: var(--planned); box-shadow: 0 0 10px var(--planned); width: 15% !important; }
-.status-infinite { background: var(--infinite); width: 100% !important; background-size: 200% 100%; animation: infiniteSlide 2s linear infinite; box-shadow: 0 0 15px var(--red); }
-
-@keyframes infiniteSlide { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
 
 /* ── ABOUT ── */
 #about { background: var(--mid); }
@@ -325,8 +321,21 @@ section { padding: 8rem 5rem; position: relative; z-index: 1; }
 .project-view-hint::after { content: '→'; transition: transform 0.3s; }
 .project-card:hover .project-view-hint::after { transform: translateX(4px); }
 
+/* ── HOBBIES ── */
+#hobbies { background: var(--mid); }
+.hobby-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.hobby-item {
+  background: rgba(14,14,18,0.5); border: 1px solid var(--border);
+  padding: 2.5rem 2rem; text-align: center;
+  transition: all 0.3s ease;
+}
+.hobby-item:hover { border-color: var(--red); transform: translateY(-5px); background: var(--card); }
+.hobby-icon { color: var(--red); font-size: 1.8rem; margin-bottom: 1.5rem; display: block; }
+.hobby-title { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; color: var(--white); margin-bottom: 1rem; }
+.hobby-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+
 /* ── CONTACT ── */
-#contact { background: var(--mid); text-align: center; }
+#contact { background: var(--dark); text-align: center; }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 700px; margin: 0 auto; }
 .contact-link {
   display: flex; align-items: center; gap: 1rem; color: #777;
@@ -463,7 +472,7 @@ footer a { color: var(--red); text-decoration: none; }
   .nav-links { display: none; }
   .nav-burger { display: flex; }
   section { padding: 5rem 1.5rem; }
-  .edu-grid, .projects-grid, .contact-grid { grid-template-columns: 1fr; }
+  .edu-grid, .projects-grid, .contact-grid, .hobby-grid { grid-template-columns: 1fr; }
   .hero-stats { flex-direction: column; }
   .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 1rem; }
   footer { flex-direction: column; gap: 0.5rem; text-align: center; }
@@ -523,6 +532,7 @@ footer a { color: var(--red); text-decoration: none; }
     <li><a href="#education">Education</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#hobbies">Hobbies</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <button class="nav-burger" id="navBurger">
@@ -535,6 +545,7 @@ footer a { color: var(--red); text-decoration: none; }
   <a href="#education" class="mobile-nav-link">Education</a>
   <a href="#experience" class="mobile-nav-link">Experience</a>
   <a href="#projects" class="mobile-nav-link">Projects</a>
+  <a href="#hobbies" class="mobile-nav-link">Hobbies</a>
   <a href="#contact" class="mobile-nav-link">Contact</a>
 </div>
 
@@ -559,7 +570,7 @@ footer a { color: var(--red); text-decoration: none; }
       <div class="stat-label">Year BSc</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">7<span>+</span></div>
+      <div class="stat-num">6<span>+</span></div>
       <div class="stat-label">Projects</div>
     </div>
     <div class="stat-item">
@@ -579,7 +590,7 @@ footer a { color: var(--red); text-decoration: none; }
   <div class="about-text">
       <p>I'm <strong>Yashovardhan</strong>, a mechanical engineering student at <strong>HAN University of Applied Sciences</strong>. My passion lies in high-performance automotive design — specifically <strong>Formula 1</strong>.</p>
       <div class="about-tags">
-        <span class="tag">SolidWorks</span><span class="tag">FEM Analysis</span><span class="tag">Robotics</span><span class="tag">F1</span><span class="tag">Photography</span><span class="tag">Cycling</span>
+        <span class="tag">SolidWorks</span><span class="tag">FEM Analysis</span><span class="tag">Robotics</span><span class="tag">F1</span>
       </div>
     </div>
 </section>
@@ -619,7 +630,7 @@ footer a { color: var(--red); text-decoration: none; }
         <div class="timeline-date">Sep 2025 — Present</div>
       </div>
       <p class="timeline-company">HAN Competitive Robotics</p>
-      <p class="timeline-desc">Leading mechanical design for drivetrain and chassis systems. Specializing in load-path optimization and SolidWorks modeling for high-pressure competitive team machines.</p>
+      <p class="timeline-desc">Leading mechanical design for drivetrain and chassis systems. Specialized in load-path optimization and SolidWorks modeling for high-pressure competitive machines.</p>
     </div>
   </div>
 </section>
@@ -653,17 +664,9 @@ footer a { color: var(--red); text-decoration: none; }
       <p class="project-desc">Mechanical design and component selection for high-performance robot chassis and transmissions.</p>
       <div class="project-view-hint">// View Details</div>
     </div>
-    <div class="project-card" data-project="photography">
-      <div class="project-num">04 //</div>
-      <div class="project-name">Automotive Photography</div>
-      <div class="project-status-bar"><div class="status-fill status-infinite"></div></div>
-      <span class="status-label">Never Ending</span>
-      <p class="project-desc">Blending technical knowledge with visual storytelling of high-performance vehicles and aerodynamics.</p>
-      <div class="project-view-hint">// View Details</div>
-    </div>
 
     <div class="project-card" data-project="windmill">
-      <div class="project-num">05 //</div>
+      <div class="project-num">04 //</div>
       <div class="project-name">Wind-Powered Water Pump</div>
       <div class="project-status-bar"><div class="status-fill status-completed"></div></div>
       <span class="status-label">Completed</span>
@@ -671,7 +674,7 @@ footer a { color: var(--red); text-decoration: none; }
       <div class="project-view-hint">// View Details</div>
     </div>
     <div class="project-card" data-project="conveyor">
-      <div class="project-num">06 //</div>
+      <div class="project-num">05 //</div>
       <div class="project-name">Vibrating Conveyor Analysis</div>
       <div class="project-status-bar"><div class="status-fill status-completed"></div></div>
       <span class="status-label">Completed</span>
@@ -679,7 +682,7 @@ footer a { color: var(--red); text-decoration: none; }
       <div class="project-view-hint">// View Details</div>
     </div>
     <div class="project-card" data-project="mechbattery">
-      <div class="project-num">07 //</div>
+      <div class="project-num">06 //</div>
       <div class="project-name">Mechanical Battery</div>
       <div class="project-status-bar"><div class="status-fill status-completed"></div></div>
       <span class="status-label">Completed</span>
@@ -689,9 +692,31 @@ footer a { color: var(--red); text-decoration: none; }
   </div>
 </section>
 
+<section id="hobbies" class="reveal">
+  <p class="section-tag">// 05 — Lifestyle</p>
+  <h2 class="section-title">Beyond the Desk</h2>
+  <div class="hobby-grid">
+    <div class="hobby-item">
+      <span class="hobby-icon">📷</span>
+      <h3 class="hobby-title">Photography</h3>
+      <p class="hobby-desc">Capturing motorsport and high-performance machines with a focus on aerodynamics and technical aesthetics.</p>
+    </div>
+    <div class="hobby-item">
+      <span class="hobby-icon">🚲</span>
+      <h3 class="hobby-title">Cycling</h3>
+      <p class="hobby-desc">Exploring new landscapes and maintaining physical performance through endurance cycling.</p>
+    </div>
+    <div class="hobby-item">
+      <span class="hobby-icon">🏁</span>
+      <h3 class="hobby-title">Formula 1</h3>
+      <p class="hobby-desc">Following technical developments and race strategy in the pinnacle of motorsport engineering.</p>
+    </div>
+  </div>
+</section>
+
 <section id="contact" class="reveal">
-  <p class="section-tag">// 05 — Contact</p>
-  <h2 class="section-title">Let's Connect</h2>
+  <p class="section-tag" style="text-align:center;">// 06 — Contact</p>
+  <h2 class="section-title" style="text-align:center;">Let's Connect</h2>
   <div class="contact-grid">
     <a href="mailto:yashovardhanm28@gmail.com" class="contact-link"><span class="contact-icon">✉</span><div><span class="contact-label">Email</span><span class="contact-value">yashovardhanm28@gmail.com</span></div></a>
     <a href="https://github.com/yashumangalwedhe-cmyk" target="_blank" class="contact-link"><span class="contact-icon">⌥</span><div><span class="contact-label">GitHub</span><span class="contact-value">yashumangalwedhe-cmyk</span></div></a>
@@ -710,7 +735,7 @@ const projects = {
   drs: {
     tag: '// R&D · F1 Tech', title: 'F1 DRS Actuator Design',
     desc: 'Design and optimization of a high-precision linkage for Formula 1 flap actuation.',
-    overview: 'Planned project investigating the kinematics and structural requirements for reliable high-speed DRS actuation. Exploring four-bar linkage synthesis and actuator force mapping.',
+    overview: 'Planned project investigating the kinematics and structural requirements for reliable high-speed DRS actuation.',
     highlights: ['Four-bar linkage synthesis', 'Actuator force mapping under 300+ KPH loads', 'Friction and pivot point analysis'],
     metrics: [{val:'85mm',label:'Max Gap'},{val:'0.2s',label:'Cycle Time'},{val:'300+',label:'KPH Profile'}],
     tech: ['Kinematics', 'SolidWorks', 'Actuation Systems']
@@ -720,12 +745,7 @@ const projects = {
     title: 'ThermoFlow Analysis',
     desc: 'Thermal and control simulation of a vacuum-insulated boiling water system.',
     overview: 'Multi-physics simulation of a Quooker system, validating computational results against first-principle analytical solutions.',
-    highlights: [
-      'Modeled time-dependent flow with conduction and radiation',
-      'Applied surface-to-surface radiation in vacuum subdomains',
-      'Optimized PID controllers using Ziegler-Nichols tuning',
-      'Validated radiation dominance in vacuum heat loss'
-    ],
+    highlights: ['Modeled time-dependent flow with conduction and radiation', 'Optimized PID controllers using Ziegler-Nichols tuning'],
     metrics: [{val:'5 MPa',label:'Pressure'},{val:'PID',label:'Control'},{val:'CFD',label:'Validation'},{val:'0.1kg/s',label:'Flow'}],
     tech: ['SolidWorks Flow', 'MATLAB Simulink', 'PID Tuning', 'Heat Transfer']
   },
@@ -737,14 +757,6 @@ const projects = {
     metrics: [{val:'CAD',label:'Method'},{val:'4WD',label:'Drive'}],
     tech: ['SolidWorks', 'Drivetrain', 'Prototyping']
   },
-  photography: {
-    tag: '// Creative', title: 'Automotive Photography',
-    desc: 'Capturing motorsport and high-performance cars with an engineer’s eye for detail.',
-    overview: 'A project merging technical automotive knowledge with visual storytelling, focusing on aero and suspension details.',
-    highlights: ['Framed technical compositions of aero elements', 'Full post-production RAW workflow', 'Content production for live motorsport events'],
-    metrics: [{val:'RAW',label:'Format'},{val:'F1',label:'Focus'}],
-    tech: ['Lightroom', 'Motorsport', 'Visual Media']
-  },
   windmill: {
     tag: '// Build · Fluid · Semester 1-2', title: 'Wind-Powered Pump',
     desc: 'Functional wind-powered piston pump lifting water 3 metres.',
@@ -752,8 +764,7 @@ const projects = {
     highlights: [
       'Truss mast validated for 100N load (≤2mm deflection)',
       '8 aluminum blades produced 1.76 kg/min yield at 35°',
-      'Selected Piston Pump (79.05% Kesselring score)',
-      'Calculated theoretical yield ($Q_{max}$) of 0.00078 m³/s'
+      'Selected Piston Pump (79.05% Kesselring score)'
     ],
     metrics: [{val:'3m',label:'Lift Height'},{val:'1.76',label:'kg/min Yield'},{val:'25.5W',label:'Wind Power'},{val:'79.05%',label:'Kesselring'}],
     tech: ['Fluid Mechanics', 'Structural Analysis', 'Kesselring Model', 'SolidWorks']
