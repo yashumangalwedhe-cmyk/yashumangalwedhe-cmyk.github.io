@@ -14,6 +14,11 @@
   --card: #111116;
   --border: #1c1c24;
   --muted: #666677;
+  /* Status Colors */
+  --completed: #00e874;
+  --ongoing: #e8a700;
+  --planned: #00a3e8;
+  --infinite: linear-gradient(90deg, #e8002d, #ff4d4d, #e8002d);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -198,6 +203,27 @@ section { padding: 8rem 5rem; position: relative; z-index: 1; }
   font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   font-weight: 900; line-height: 1.1; margin-bottom: 4rem;
 }
+
+/* ── STATUS BAR ── */
+.project-status-bar {
+  height: 3px; width: 100%; background: rgba(255,255,255,0.05); margin-bottom: 1.2rem;
+  position: relative; overflow: hidden;
+}
+.status-fill {
+  height: 100%; width: 0; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.status-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.5rem;
+  letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.4rem;
+  display: block; opacity: 0.8;
+}
+
+.status-completed { background: var(--completed); box-shadow: 0 0 10px var(--completed); width: 100% !important; }
+.status-ongoing { background: var(--ongoing); box-shadow: 0 0 10px var(--ongoing); width: 65% !important; }
+.status-planned { background: var(--planned); box-shadow: 0 0 10px var(--planned); width: 15% !important; }
+.status-infinite { background: var(--infinite); width: 100% !important; background-size: 200% 100%; animation: infiniteSlide 2s linear infinite; box-shadow: 0 0 15px var(--red); }
+
+@keyframes infiniteSlide { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
 
 /* ── ABOUT ── */
 #about { background: var(--mid); }
@@ -533,7 +559,7 @@ footer a { color: var(--red); text-decoration: none; }
       <div class="stat-label">Year BSc</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">6<span>+</span></div>
+      <div class="stat-num">7<span>+</span></div>
       <div class="stat-label">Projects</div>
     </div>
     <div class="stat-item">
@@ -593,7 +619,7 @@ footer a { color: var(--red); text-decoration: none; }
         <div class="timeline-date">Sep 2025 — Present</div>
       </div>
       <p class="timeline-company">HAN Competitive Robotics</p>
-      <p class="timeline-desc">Designing drivetrain and chassis systems using SolidWorks for high-pressure competitive environments.</p>
+      <p class="timeline-desc">Leading mechanical design for drivetrain and chassis systems. Specializing in load-path optimization and SolidWorks modeling for high-pressure competitive team machines.</p>
     </div>
   </div>
 </section>
@@ -602,40 +628,62 @@ footer a { color: var(--red); text-decoration: none; }
   <p class="section-tag">// 04 — Projects</p>
   <h2 class="section-title">Engineering Work</h2>
   <div class="projects-grid">
-    <div class="project-card" data-project="conveyor">
+    <div class="project-card" data-project="drs">
       <div class="project-num">01 //</div>
-      <div class="project-name">Vibrating Conveyor Analysis</div>
-      <p class="project-desc">Redesigned food-grade conveyor with FEM simulations to resolve resonance. 0.17mm deflection achieved.</p>
+      <div class="project-name">F1 DRS Actuator Design</div>
+      <div class="project-status-bar"><div class="status-fill status-planned"></div></div>
+      <span class="status-label">Planned</span>
+      <p class="project-desc">Future R&D project exploring high-precision linkage systems for Formula 1 flap actuation under 300+ KPH loads.</p>
+      <div class="project-view-hint">// View Details</div>
+    </div>
+
+    <div class="project-card" data-project="thermoflow">
+      <div class="project-num">02 //</div>
+      <div class="project-name">ThermoFlow Analysis</div>
+      <div class="project-status-bar"><div class="status-fill status-ongoing"></div></div>
+      <span class="status-label">Ongoing</span>
+      <p class="project-desc">Thermal & control analysis of a Quooker system using CFD and Simulink PID tuning.</p>
       <div class="project-view-hint">// View Details</div>
     </div>
     <div class="project-card" data-project="robotics">
-      <div class="project-num">02 //</div>
+      <div class="project-num">03 //</div>
       <div class="project-name">Competitive Robotics</div>
+      <div class="project-status-bar"><div class="status-fill status-ongoing"></div></div>
+      <span class="status-label">Ongoing</span>
       <p class="project-desc">Mechanical design and component selection for high-performance robot chassis and transmissions.</p>
       <div class="project-view-hint">// View Details</div>
     </div>
     <div class="project-card" data-project="photography">
-      <div class="project-num">03 //</div>
-      <div class="project-name">Automotive Photography</div>
-      <p class="project-desc">Blending technical knowledge with visual storytelling of high-performance vehicles.</p>
-      <div class="project-view-hint">// View Details</div>
-    </div>
-    <div class="project-card" data-project="mechbattery">
       <div class="project-num">04 //</div>
-      <div class="project-name">Gravity Energy Storage</div>
-      <p class="project-desc">Developing a mechanical battery capturing kinetic energy from free-falling objects.</p>
+      <div class="project-name">Automotive Photography</div>
+      <div class="project-status-bar"><div class="status-fill status-infinite"></div></div>
+      <span class="status-label">Never Ending</span>
+      <p class="project-desc">Blending technical knowledge with visual storytelling of high-performance vehicles and aerodynamics.</p>
       <div class="project-view-hint">// View Details</div>
     </div>
+
     <div class="project-card" data-project="windmill">
       <div class="project-num">05 //</div>
       <div class="project-name">Wind-Powered Water Pump</div>
+      <div class="project-status-bar"><div class="status-fill status-completed"></div></div>
+      <span class="status-label">Completed</span>
       <p class="project-desc">Fabricated and wind-tunnel-tested a piston pump system lifting water 3 metres.</p>
       <div class="project-view-hint">// View Details</div>
     </div>
-    <div class="project-card" data-project="thermoflow">
+    <div class="project-card" data-project="conveyor">
       <div class="project-num">06 //</div>
-      <div class="project-name">ThermoFlow Analysis</div>
-      <p class="project-desc">Thermal & control analysis of a Quooker system using CFD and Simulink PID tuning.</p>
+      <div class="project-name">Vibrating Conveyor Analysis</div>
+      <div class="project-status-bar"><div class="status-fill status-completed"></div></div>
+      <span class="status-label">Completed</span>
+      <p class="project-desc">Redesigned food-grade conveyor with FEM simulations to resolve resonance and fatigue. 0.17mm deflection.</p>
+      <div class="project-view-hint">// View Details</div>
+    </div>
+    <div class="project-card" data-project="mechbattery">
+      <div class="project-num">07 //</div>
+      <div class="project-name">Mechanical Battery</div>
+      <div class="project-status-bar"><div class="status-fill status-completed"></div></div>
+      <span class="status-label">Completed</span>
+      <p class="project-desc">Mechanical energy storage capturing kinetic energy from free-falling objects to lift vertical loads.</p>
       <div class="project-view-hint">// View Details</div>
     </div>
   </div>
@@ -659,13 +707,27 @@ footer a { color: var(--red); text-decoration: none; }
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 const projects = {
-  conveyor: {
-    tag: '// Engineering · FEM', title: 'Vibrating Conveyor Analysis',
-    desc: 'Full structural redesign of a food-grade conveyor — resolving resonance and fatigue through FEM.',
-    overview: 'Redesigned a conveyor by identifying failure modes via dynamic load analysis and iteratively refining structural members to eliminate resonance.',
-    highlights: ['Conducted full FEM simulation in SolidWorks', 'Reduced peak stress concentration by 40%', 'Achieved 0.17mm maximum deflection'],
-    metrics: [{val:'0.17mm',label:'Deflection'},{val:'2.3x',label:'Safety Factor'}],
-    tech: ['SolidWorks', 'FEM', 'Structural Analysis']
+  drs: {
+    tag: '// R&D · F1 Tech', title: 'F1 DRS Actuator Design',
+    desc: 'Design and optimization of a high-precision linkage for Formula 1 flap actuation.',
+    overview: 'Planned project investigating the kinematics and structural requirements for reliable high-speed DRS actuation. Exploring four-bar linkage synthesis and actuator force mapping.',
+    highlights: ['Four-bar linkage synthesis', 'Actuator force mapping under 300+ KPH loads', 'Friction and pivot point analysis'],
+    metrics: [{val:'85mm',label:'Max Gap'},{val:'0.2s',label:'Cycle Time'},{val:'300+',label:'KPH Profile'}],
+    tech: ['Kinematics', 'SolidWorks', 'Actuation Systems']
+  },
+  thermoflow: {
+    tag: '// CFD · Control Systems · Semester 4',
+    title: 'ThermoFlow Analysis',
+    desc: 'Thermal and control simulation of a vacuum-insulated boiling water system.',
+    overview: 'Multi-physics simulation of a Quooker system, validating computational results against first-principle analytical solutions.',
+    highlights: [
+      'Modeled time-dependent flow with conduction and radiation',
+      'Applied surface-to-surface radiation in vacuum subdomains',
+      'Optimized PID controllers using Ziegler-Nichols tuning',
+      'Validated radiation dominance in vacuum heat loss'
+    ],
+    metrics: [{val:'5 MPa',label:'Pressure'},{val:'PID',label:'Control'},{val:'CFD',label:'Validation'},{val:'0.1kg/s',label:'Flow'}],
+    tech: ['SolidWorks Flow', 'MATLAB Simulink', 'PID Tuning', 'Heat Transfer']
   },
   robotics: {
     tag: '// Robotics · Design', title: 'Competitive Robotics',
@@ -678,42 +740,39 @@ const projects = {
   photography: {
     tag: '// Creative', title: 'Automotive Photography',
     desc: 'Capturing motorsport and high-performance cars with an engineer’s eye for detail.',
-    overview: 'A personal project merging technical automotive knowledge with visual storytelling, focusing on aero and suspension details.',
+    overview: 'A project merging technical automotive knowledge with visual storytelling, focusing on aero and suspension details.',
     highlights: ['Framed technical compositions of aero elements', 'Full post-production RAW workflow', 'Content production for live motorsport events'],
     metrics: [{val:'RAW',label:'Format'},{val:'F1',label:'Focus'}],
     tech: ['Lightroom', 'Motorsport', 'Visual Media']
   },
+  windmill: {
+    tag: '// Build · Fluid · Semester 1-2', title: 'Wind-Powered Pump',
+    desc: 'Functional wind-powered piston pump lifting water 3 metres.',
+    overview: 'Two-term project designing a Dutch-style windmill for land drainage. Included truss architecture validation and piston pump optimization.',
+    highlights: [
+      'Truss mast validated for 100N load (≤2mm deflection)',
+      '8 aluminum blades produced 1.76 kg/min yield at 35°',
+      'Selected Piston Pump (79.05% Kesselring score)',
+      'Calculated theoretical yield ($Q_{max}$) of 0.00078 m³/s'
+    ],
+    metrics: [{val:'3m',label:'Lift Height'},{val:'1.76',label:'kg/min Yield'},{val:'25.5W',label:'Wind Power'},{val:'79.05%',label:'Kesselring'}],
+    tech: ['Fluid Mechanics', 'Structural Analysis', 'Kesselring Model', 'SolidWorks']
+  },
+  conveyor: {
+    tag: '// Engineering · FEM', title: 'Vibrating Conveyor Analysis',
+    desc: 'Full structural redesign of a food-grade conveyor — resolving resonance and fatigue through FEM.',
+    overview: 'Redesigned a conveyor by identifying failure modes via dynamic load analysis and iteratively refining structural members to eliminate resonance.',
+    highlights: ['Conducted full FEM simulation in SolidWorks', 'Reduced peak stress concentration by 40%', 'Achieved 0.17mm maximum deflection'],
+    metrics: [{val:'0.17mm',label:'Deflection'},{val:'2.3x',label:'Safety Factor'}],
+    tech: ['SolidWorks', 'FEM', 'Structural Analysis']
+  },
   mechbattery: {
-    tag: '// R&D · Energy', title: 'Gravity Energy Storage',
+    tag: '// R&D · Energy', title: 'Mechanical Battery',
     desc: 'Capturing and storing kinetic energy from a free-falling object to lift a load.',
     overview: 'Researching purely mechanical short-duration energy storage without electrical components.',
     highlights: ['Developed energy release mechanism from first principles', 'Applied gear ratios and flywheel inertia', 'Validated theory against test prototypes'],
     metrics: [{val:'10s',label:'Storage'},{val:'1m',label:'Lift'}],
     tech: ['SolidWorks', 'Energy Systems', 'R&D']
-  },
-  windmill: {
-    tag: '// Build · Fluid', title: 'Wind-Powered Pump',
-    desc: 'Functional wind-powered piston pump lifting water 3 metres.',
-    overview: 'A two-term project covering research, truss architecture design, wind tunnel testing, and full physical fabrication.',
-    highlights: ['Truss architecture validated for 100N wind load', 'Aluminum blades produced 1.76 kg/min yield', 'Full rotor shaft bending moment analysis'],
-    metrics: [{val:'3m',label:'Lift'},{val:'25.5W',label:'Power'}],
-    tech: ['Fluid Mechanics', 'Welding', 'Machining']
-  },
-  thermoflow: {
-    tag: '// CFD · Control Systems · Semester 4',
-    title: 'ThermoFlow Analysis',
-    desc: 'Thermal and control simulation of a vacuum-insulated boiling water system using CFD and Simulink.',
-    overview: 'An engineering research project involving the end-to-end simulation of a Quooker system. The work validates computational results against analytical solutions derived from Newton\'s Law of Cooling and Stefan-Boltzmann radiation law.',
-    highlights: [
-      'Modeled time-dependent internal flow with conduction and radiation',
-      'Applied surface-to-surface radiation in vacuum subdomains',
-      'Implemented Simulink model via differential equation blocks',
-      'Optimized PID controllers using Ziegler-Nichols tuning',
-      'Demonstrated radiation dominance in vacuum heat loss',
-      'Validated results through mesh convergence and what-if analysis'
-    ],
-    metrics: [{val:'5 MPa',label:'Pressure'},{val:'PID',label:'Control'},{val:'CFD',label:'Validation'},{val:'0.1kg/s',label:'Flow'}],
-    tech: ['SolidWorks Flow', 'MATLAB Simulink', 'PID Tuning', 'Heat Transfer', 'Numerical Convergence']
   }
 };
 
