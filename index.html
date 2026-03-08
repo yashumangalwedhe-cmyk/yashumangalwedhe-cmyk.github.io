@@ -232,7 +232,11 @@
     footer { padding: 2rem 5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 0.65rem; color: #444; }
 
     @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── THE KEY FIX: reveal sections on scroll ── */
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
     @media(max-width:900px){
       nav{padding:1.2rem 1.5rem} .nav-links{display:none}
       section{padding:5rem 1.5rem}
@@ -245,249 +249,84 @@
 
     /* ── APPLE-STYLE PROJECT DETAIL PANEL ─────────────────────── */
     .project-detail-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 500;
-      pointer-events: none;
-      overflow: hidden;
+      position: fixed; inset: 0; z-index: 500;
+      pointer-events: none; overflow: hidden;
     }
-    .project-detail-overlay.active {
-      pointer-events: all;
-    }
+    .project-detail-overlay.active { pointer-events: all; }
 
-    /* Dark scrim behind panel */
     .detail-scrim {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: rgba(7,7,9,0.7);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      opacity: 0;
-      transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      opacity: 0; transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1);
     }
-    .project-detail-overlay.active .detail-scrim {
-      opacity: 1;
-    }
+    .project-detail-overlay.active .detail-scrim { opacity: 1; }
 
-    /* The sliding panel */
     .detail-panel {
-      position: absolute;
-      top: 0; right: 0; bottom: 0;
+      position: absolute; top: 0; right: 0; bottom: 0;
       width: min(780px, 100vw);
-      background: var(--dark);
-      border-left: 1px solid var(--border);
-      overflow-y: auto;
-      overflow-x: hidden;
+      background: var(--dark); border-left: 1px solid var(--border);
+      overflow-y: auto; overflow-x: hidden;
       transform: translateX(100%);
       transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
-      scrollbar-width: thin;
-      scrollbar-color: var(--border) transparent;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
       will-change: transform;
     }
     .detail-panel::-webkit-scrollbar { width: 4px; }
     .detail-panel::-webkit-scrollbar-track { background: transparent; }
     .detail-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .project-detail-overlay.active .detail-panel { transform: translateX(0); }
 
-    .project-detail-overlay.active .detail-panel {
-      transform: translateX(0);
-    }
-
-    /* Sticky top bar inside panel */
     .detail-topbar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 1.2rem 2.5rem;
-      background: rgba(7,7,9,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(7,7,9,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-    .detail-topbar-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.4em;
-      color: var(--red);
-      text-transform: uppercase;
-    }
+    .detail-topbar-label { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.4em; color: var(--red); text-transform: uppercase; }
     .detail-close {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      width: 36px; height: 36px;
-      display: flex; align-items: center; justify-content: center;
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
       cursor: pointer; font-size: 1rem; flex-shrink: 0;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-      font-family: inherit;
+      transition: border-color 0.2s, color 0.2s, background 0.2s; font-family: inherit;
     }
-    .detail-close:hover {
-      border-color: var(--red);
-      color: var(--white);
-      background: rgba(232,0,45,0.1);
-    }
+    .detail-close:hover { border-color: var(--red); color: var(--white); background: rgba(232,0,45,0.1); }
 
-    /* Hero section of panel */
     .detail-hero {
-      padding: 4rem 2.5rem 3rem;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
+      padding: 4rem 2.5rem 3rem; border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
     }
-    .detail-hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(to right, var(--red), transparent);
-    }
-    .detail-hero-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.45em;
-      color: var(--red);
-      text-transform: uppercase;
-      margin-bottom: 1.2rem;
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
-    }
-    .detail-hero-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      font-weight: 900;
-      line-height: 1.05;
-      color: var(--white);
-      margin-bottom: 1.4rem;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.55s ease 0.18s, transform 0.55s ease 0.18s;
-    }
-    .detail-hero-desc {
-      font-size: 0.95rem;
-      color: #999;
-      line-height: 1.8;
-      max-width: 560px;
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.55s ease 0.26s, transform 0.55s ease 0.26s;
-    }
+    .detail-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, var(--red), transparent); }
+    .detail-hero-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.45em; color: var(--red); text-transform: uppercase; margin-bottom: 1.2rem; opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s; }
+    .detail-hero-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 900; line-height: 1.05; color: var(--white); margin-bottom: 1.4rem; opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease 0.18s, transform 0.55s ease 0.18s; }
+    .detail-hero-desc { font-size: 0.95rem; color: #999; line-height: 1.8; max-width: 560px; opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease 0.26s, transform 0.55s ease 0.26s; }
     .project-detail-overlay.active .detail-hero-tag,
     .project-detail-overlay.active .detail-hero-title,
-    .project-detail-overlay.active .detail-hero-desc {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .project-detail-overlay.active .detail-hero-desc { opacity: 1; transform: translateY(0); }
 
-    /* Metrics row */
-    .detail-metrics {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border-bottom: 1px solid var(--border);
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.55s ease 0.35s, transform 0.55s ease 0.35s;
-    }
+    .detail-metrics { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease 0.35s, transform 0.55s ease 0.35s; }
     .project-detail-overlay.active .detail-metrics { opacity: 1; transform: translateY(0); }
-    .detail-metric {
-      padding: 2rem 1.5rem;
-      border-right: 1px solid var(--border);
-      text-align: center;
-    }
+    .detail-metric { padding: 2rem 1.5rem; border-right: 1px solid var(--border); text-align: center; }
     .detail-metric:last-child { border-right: none; }
-    .detail-metric-val {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: var(--red);
-      line-height: 1;
-      margin-bottom: 0.5rem;
-    }
-    .detail-metric-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.5rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
+    .detail-metric-val { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--red); line-height: 1; margin-bottom: 0.5rem; }
+    .detail-metric-label { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
 
-    /* Scroll-driven content blocks */
-    .detail-block {
-      padding: 3rem 2.5rem;
-      border-bottom: 1px solid var(--border);
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .detail-block.in-view {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .detail-block-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.4em;
-      color: var(--red);
-      text-transform: uppercase;
-      margin-bottom: 1.4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-    .detail-block-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    .detail-overview {
-      font-size: 0.92rem;
-      color: #999;
-      line-height: 1.95;
-    }
+    .detail-block { padding: 3rem 2.5rem; border-bottom: 1px solid var(--border); opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .detail-block.in-view { opacity: 1; transform: translateY(0); }
+    .detail-block-label { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.4em; color: var(--red); text-transform: uppercase; margin-bottom: 1.4rem; display: flex; align-items: center; gap: 0.8rem; }
+    .detail-block-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .detail-overview { font-size: 0.92rem; color: #999; line-height: 1.95; }
     .detail-overview strong { color: var(--white); }
 
-    /* Highlights */
     .detail-highlights { list-style: none; display: flex; flex-direction: column; gap: 0; }
-    .detail-highlights li {
-      font-size: 0.88rem;
-      color: #888;
-      line-height: 1.75;
-      padding: 1rem 0 1rem 1.4rem;
-      position: relative;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      opacity: 0;
-      transform: translateX(-12px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
+    .detail-highlights li { font-size: 0.88rem; color: #888; line-height: 1.75; padding: 1rem 0 1rem 1.4rem; position: relative; border-bottom: 1px solid rgba(255,255,255,0.04); opacity: 0; transform: translateX(-12px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .detail-highlights li:last-child { border-bottom: none; }
-    .detail-highlights li::before {
-      content: '▸';
-      position: absolute;
-      left: 0;
-      color: var(--red);
-      font-size: 0.7rem;
-      top: 1.05rem;
-    }
-    .detail-highlights li.in-view {
-      opacity: 1;
-      transform: translateX(0);
-    }
+    .detail-highlights li::before { content: '▸'; position: absolute; left: 0; color: var(--red); font-size: 0.7rem; top: 1.05rem; }
+    .detail-highlights li.in-view { opacity: 1; transform: translateX(0); }
 
-    /* Tech tags */
     .detail-tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .detail-tech-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.58rem;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 0.35rem 0.9rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: border-color 0.2s, color 0.2s;
-    }
+    .detail-tech-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--muted); border: 1px solid var(--border); padding: 0.35rem 0.9rem; letter-spacing: 0.08em; text-transform: uppercase; transition: border-color 0.2s, color 0.2s; }
     .detail-tech-tag:hover { border-color: var(--red); color: var(--white); }
 
     @media(max-width:680px) {
@@ -504,7 +343,7 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- ── APPLE-STYLE DETAIL PANEL OVERLAY ─────────────────────── -->
+<!-- APPLE-STYLE DETAIL PANEL OVERLAY -->
 <div class="project-detail-overlay" id="detailOverlay" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
   <div class="detail-scrim" id="detailScrim"></div>
   <div class="detail-panel" id="detailPanel">
@@ -512,25 +351,20 @@
       <span class="detail-topbar-label" id="detailTopLabel">// Project</span>
       <button class="detail-close" id="detailClose" aria-label="Close project detail">✕</button>
     </div>
-
     <div class="detail-hero">
       <div class="detail-hero-tag" id="detailTag">// Engineering</div>
       <div class="detail-hero-title" id="detailTitle">Project Title</div>
       <div class="detail-hero-desc" id="detailDesc"></div>
     </div>
-
     <div class="detail-metrics" id="detailMetrics"></div>
-
     <div class="detail-block" id="detailOverviewBlock">
       <div class="detail-block-label">Overview</div>
       <p class="detail-overview" id="detailOverview"></p>
     </div>
-
     <div class="detail-block" id="detailHighlightsBlock">
       <div class="detail-block-label">Key Highlights</div>
       <ul class="detail-highlights" id="detailHighlights"></ul>
     </div>
-
     <div class="detail-block" id="detailTechBlock">
       <div class="detail-block-label">Technologies &amp; Skills</div>
       <div class="detail-tech-tags" id="detailTech"></div>
@@ -559,7 +393,7 @@
     <div class="hero-cta">
       <a href="#projects" class="btn-primary">Explore Projects</a>
       <a href="#contact" class="btn-outline">Get In Touch</a>
-      <a href="/YashovardhanM_Resume.pdf" download class="btn-outline">&#8595;&nbsp;Download CV</a>
+      <a href="/YashovardhanM_Resume.pdf" download class="btn-outline">↓&nbsp;Download CV</a>
     </div>
   </div>
   <div class="hero-stats">
@@ -600,14 +434,14 @@
           <div class="timeline-role">Bachelor of Mechanical Engineering</div>
           <div class="timeline-date">Sep 2024 — Jun 2028</div>
         </div>
-        <p class="timeline-desc">HAN University of Applied Sciences &middot; Arnhem, The Netherlands</p>
+        <p class="timeline-desc">HAN University of Applied Sciences · Arnhem, The Netherlands</p>
         <p class="timeline-desc" style="margin-top:0.5rem;">Grade Average: <span style="color:var(--red);font-weight:600;">8.0 / 10</span></p>
       </div>
     </div>
     <div class="info-card">
       <p class="info-card-title">// Languages</p>
       <div class="lang-row"><span class="lang-name lang-featured">English</span><span class="lang-level">Native</span></div>
-      <div class="lang-row"><span class="lang-name">Dutch &#127475;&#127473;</span><span class="lang-level">Learning</span></div>
+      <div class="lang-row"><span class="lang-name">Dutch 🇳🇱</span><span class="lang-level">Learning</span></div>
       <div class="lang-row"><span class="lang-name">Hindi</span><span class="lang-level">Native</span></div>
     </div>
   </div>
@@ -632,7 +466,6 @@
   <p class="section-tag">// 04 — Projects</p>
   <h2 class="section-title">Engineering Work</h2>
   <div class="projects-grid">
-
     <div class="project-card" data-project="conveyor">
       <div class="project-name">Vibrating Conveyor Analysis</div>
       <p class="project-desc">Redesigned food-grade conveyor. Performed FEM simulations to resolve resonance and buckling issues. Achieved 0.17mm deflection.</p>
@@ -643,7 +476,6 @@
       </div>
       <div class="project-view-hint">// View Details</div>
     </div>
-
     <div class="project-card" data-project="robotics">
       <div class="project-name">Competitive Robotics</div>
       <p class="project-desc">Mechanical design and component selection for high-performance robot chassis and transmission systems.</p>
@@ -654,7 +486,6 @@
       </div>
       <div class="project-view-hint">// View Details</div>
     </div>
-
     <div class="project-card" data-project="photography">
       <div class="project-name">Automotive Photography</div>
       <p class="project-desc">Blending technical automotive knowledge with high-end visual storytelling and media production of high-performance vehicles.</p>
@@ -665,7 +496,6 @@
       </div>
       <div class="project-view-hint">// View Details</div>
     </div>
-
   </div>
 </section>
 
@@ -673,15 +503,15 @@
   <div style="max-width: 600px; margin: 0 auto;">
     <p class="section-tag">// 05 — Contact</p>
     <h2 class="section-title">Let's Connect</h2>
-    <a href="mailto:yashovardhanm28@gmail.com" class="contact-link">&#9993;&nbsp; yashovardhanm28@gmail.com</a>
+    <a href="mailto:yashovardhanm28@gmail.com" class="contact-link">✉&nbsp; yashovardhanm28@gmail.com</a>
     <a href="https://www.linkedin.com/in/yashovardhan-mangalwedhe" target="_blank" class="contact-link">in &nbsp; linkedin.com/in/yashovardhan-mangalwedhe</a>
-    <a href="https://github.com/yashumangalwedhe-cmyk" target="_blank" class="contact-link">&#8997;&nbsp; github.com/yashumangalwedhe-cmyk</a>
+    <a href="https://github.com/yashumangalwedhe-cmyk" target="_blank" class="contact-link">⌥&nbsp; github.com/yashumangalwedhe-cmyk</a>
   </div>
 </section>
 
 <footer>
   <div>YM. Yashovardhan Mangalwedhe</div>
-  <div>&#169; 2026 · Built with precision for the fast lane.</div>
+  <div>© 2026 · Built with precision for the fast lane.</div>
 </footer>
 
 <script>
@@ -691,7 +521,7 @@
       tag: '// Engineering · FEM',
       title: 'Vibrating Conveyor Analysis',
       desc: 'A full structural redesign of a food-grade vibrating conveyor — resolving resonance, buckling, and fatigue through FEM simulation.',
-      overview: `A full structural redesign of a <strong>food-grade vibrating conveyor</strong> used in industrial processing environments. The project involved identifying failure modes through dynamic load analysis, then iteratively redesigning key structural members to eliminate resonance and buckling risks while complying with food-safety standards.`,
+      overview: 'A full structural redesign of a <strong>food-grade vibrating conveyor</strong> used in industrial processing environments. The project involved identifying failure modes through dynamic load analysis, then iteratively redesigning key structural members to eliminate resonance and buckling risks while complying with food-safety standards.',
       highlights: [
         'Conducted full FEM simulation pipeline in SolidWorks Simulation — mesh generation, load application, and post-processing',
         'Identified critical resonance frequencies causing fatigue failure in the original design',
@@ -712,7 +542,7 @@
       tag: '// Robotics · Mechanical Design',
       title: 'Competitive Robotics — HAN',
       desc: 'Full mechanical design of drivetrain and chassis for HAN Competitive Robotics, competing under tight weight and time constraints.',
-      overview: `As <strong>Drivetrain &amp; Chassis Engineer</strong> at HAN Competitive Robotics, I am responsible for the full mechanical design of the robot's structural and propulsion systems. This involves translating competition requirements into reliable, high-performance hardware under tight time and weight constraints.`,
+      overview: 'As <strong>Drivetrain &amp; Chassis Engineer</strong> at HAN Competitive Robotics, I am responsible for the full mechanical design of the robot\'s structural and propulsion systems. This involves translating competition requirements into reliable, high-performance hardware under tight time and weight constraints.',
       highlights: [
         'Designed modular chassis architecture in SolidWorks, enabling rapid reconfiguration between competition formats',
         'Performed load path analysis to optimise material distribution and minimise weight without sacrificing rigidity',
@@ -733,7 +563,7 @@
       tag: '// Creative · Automotive',
       title: 'Automotive Photography',
       desc: 'Merging deep automotive technical knowledge with professional photography and visual media production at live motorsport events.',
-      overview: `A personal creative project merging <strong>deep automotive technical knowledge</strong> with professional photography and visual media production. Focused on high-performance and motorsport vehicles, the work goes beyond aesthetics — every shot is composed with an engineer's understanding of the machine being captured.`,
+      overview: 'A personal creative project merging <strong>deep automotive technical knowledge</strong> with professional photography and visual media production. Focused on high-performance and motorsport vehicles, the work goes beyond aesthetics — every shot is composed with an engineer\'s understanding of the machine being captured.',
       highlights: [
         'Specialised in capturing motorsport and high-performance road cars at circuits and events',
         'Applied engineering knowledge to frame technically meaningful compositions — highlighting aero elements, suspension geometry, and powertrain detail',
@@ -753,27 +583,19 @@
   };
 
   // ── Detail Panel Logic ────────────────────────────────────────
-  const overlay   = document.getElementById('detailOverlay');
-  const panel     = document.getElementById('detailPanel');
-  const scrim     = document.getElementById('detailScrim');
-  const closeBtn  = document.getElementById('detailClose');
-  const mainNav   = document.getElementById('mainNav');
-
+  const overlay  = document.getElementById('detailOverlay');
+  const panel    = document.getElementById('detailPanel');
+  const scrim    = document.getElementById('detailScrim');
+  const closeBtn = document.getElementById('detailClose');
+  const mainNav  = document.getElementById('mainNav');
   let panelObserver = null;
 
   function buildPanelObserver() {
     if (panelObserver) panelObserver.disconnect();
     panelObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          if (entry.target.tagName === 'LI') return;
-        }
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in-view'); });
     }, { root: panel, threshold: 0.12 });
-
     panel.querySelectorAll('.detail-block').forEach(el => panelObserver.observe(el));
-
     panel.querySelectorAll('.detail-highlights li').forEach((li, i) => {
       li.style.transitionDelay = (i * 0.07) + 's';
       panelObserver.observe(li);
@@ -783,37 +605,23 @@
   function openDetail(key) {
     const p = projects[key];
     if (!p) return;
-
     panel.scrollTop = 0;
-
     document.getElementById('detailTopLabel').textContent = p.tag;
     document.getElementById('detailTag').textContent = p.tag;
     document.getElementById('detailTitle').textContent = p.title;
     document.getElementById('detailDesc').textContent = p.desc;
     document.getElementById('detailOverview').innerHTML = p.overview;
-
     const hl = document.getElementById('detailHighlights');
-    hl.innerHTML = p.highlights.map(h => `<li>${h}</li>`).join('');
-
+    hl.innerHTML = p.highlights.map(h => '<li>' + h + '</li>').join('');
     const mx = document.getElementById('detailMetrics');
-    mx.innerHTML = p.metrics.map(m => `
-      <div class="detail-metric">
-        <div class="detail-metric-val">${m.val}</div>
-        <div class="detail-metric-label">${m.label}</div>
-      </div>`).join('');
-
+    mx.innerHTML = p.metrics.map(m => '<div class="detail-metric"><div class="detail-metric-val">' + m.val + '</div><div class="detail-metric-label">' + m.label + '</div></div>').join('');
     const tc = document.getElementById('detailTech');
-    tc.innerHTML = p.tech.map(t => `<span class="detail-tech-tag">${t}</span>`).join('');
-
-    panel.querySelectorAll('.detail-block, .detail-highlights li').forEach(el => {
-      el.classList.remove('in-view');
-    });
-
+    tc.innerHTML = p.tech.map(t => '<span class="detail-tech-tag">' + t + '</span>').join('');
+    panel.querySelectorAll('.detail-block, .detail-highlights li').forEach(el => el.classList.remove('in-view'));
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
     mainNav.classList.add('hide');
     closeBtn.focus();
-
     setTimeout(buildPanelObserver, 300);
   }
 
@@ -827,19 +635,16 @@
   document.querySelectorAll('.project-card').forEach(card => {
     card.addEventListener('click', () => openDetail(card.dataset.project));
   });
-
   closeBtn.addEventListener('click', closeDetail);
   scrim.addEventListener('click', closeDetail);
-
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && overlay.classList.contains('active')) closeDetail();
   });
 
-  // ── Custom Cursor ────────────────────────────────────────────
+  // ── Custom Cursor ─────────────────────────────────────────────
   const cursor = document.getElementById('cursor');
   const ring   = document.getElementById('cursorRing');
   let mx2 = -100, my2 = -100, rx = -100, ry = -100;
-
   if (window.matchMedia('(pointer: fine)').matches) {
     document.addEventListener('mousemove', e => { mx2 = e.clientX; my2 = e.clientY; });
     function animCursor() {
@@ -882,7 +687,7 @@
   }
   type();
 
-  // ── Scroll Reveal (main page) ──────────────────────────────────
+  // ── Scroll Reveal (main page) ─────────────────────────────────
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
   }, { threshold: 0.08 });
