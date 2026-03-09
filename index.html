@@ -2222,7 +2222,11 @@
       });
 
       // --- Lenis Smooth Scroll Setup ---
-      const lenis = new Lenis()
+      const lenis = new Lenis({
+        lerp: 0.05,        // Lower value makes the interpolation smoother and noticeably slower
+        wheelMultiplier: 0.7, // Reduces the amount of scroll distance per mouse wheel tick
+        smoothWheel: true,
+      })
       function raf(time) {
         lenis.raf(time)
         requestAnimationFrame(raf)
