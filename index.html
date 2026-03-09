@@ -731,6 +731,129 @@
       background: var(--dark);
     }
 
+    /* ── TRACK MAP ── */
+    .track-map-wrap {
+      position: relative;
+      width: 100%;
+      margin-bottom: 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .track-map-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.4em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .track-svg {
+      width: 100%;
+      max-width: 860px;
+      height: auto;
+      display: block;
+    }
+
+    .track-outline {
+      fill: none;
+      stroke: rgba(232, 0, 45, 0.12);
+      stroke-width: 18;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .track-line {
+      fill: none;
+      stroke: rgba(232, 0, 45, 0.55);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 4px rgba(232, 0, 45, 0.5));
+      stroke-dasharray: 3000;
+      stroke-dashoffset: 3000;
+      transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .track-line.drawn {
+      stroke-dashoffset: 0;
+    }
+
+    .track-node {
+      cursor: pointer;
+    }
+
+    .track-node circle {
+      fill: var(--dark);
+      stroke: var(--red);
+      stroke-width: 2;
+      transition: fill 0.25s, r 0.25s;
+      filter: drop-shadow(0 0 5px rgba(232, 0, 45, 0.5));
+    }
+
+    .track-node:hover circle {
+      fill: var(--red);
+      filter: drop-shadow(0 0 12px rgba(232, 0, 45, 0.9));
+    }
+
+    .track-node-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      fill: var(--muted);
+      pointer-events: none;
+      transition: fill 0.25s;
+    }
+
+    .track-node:hover .track-node-label {
+      fill: var(--white);
+    }
+
+    .track-node-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 7px;
+      fill: var(--red);
+      pointer-events: none;
+      font-weight: 700;
+    }
+
+    .track-tooltip {
+      position: absolute;
+      background: rgba(7, 7, 9, 0.95);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--red);
+      color: var(--white);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.5rem 0.8rem;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.2s, transform 0.2s;
+      white-space: nowrap;
+      z-index: 10;
+    }
+
+    .track-tooltip.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .track-tooltip-name {
+      display: block;
+      color: var(--white);
+      font-size: 0.7rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .track-tooltip-hint {
+      display: block;
+      color: var(--red);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+    }
+
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1666,6 +1789,56 @@
   <section id="projects" class="reveal">
     <p class="section-tag">// 04 — Projects</p>
     <h2 class="section-title">Engineering Work</h2>
+
+    <div class="track-map-wrap">
+      <div class="track-tooltip" id="trackTooltip"></div>
+      <p class="track-map-label">// Circuit map — select a project</p>
+      <svg class="track-svg" viewBox="0 0 860 360" xmlns="http://www.w3.org/2000/svg" id="trackSvg">
+        <!-- Track outline (thick glow) -->
+        <path class="track-outline" d="M 100 180 C 100 80, 200 40, 330 40 L 520 40 Q 580 40 580 100 L 580 140 Q 580 170 620 170 L 680 170 Q 760 170 760 240 Q 760 310 680 310 L 300 310 Q 220 310 200 260 L 150 180 Q 130 160 100 180 Z" />
+        <!-- Track center line -->
+        <path class="track-line" id="trackLine" d="M 100 180 C 100 80, 200 40, 330 40 L 520 40 Q 580 40 580 100 L 580 140 Q 580 170 620 170 L 680 170 Q 760 170 760 240 Q 760 310 680 310 L 300 310 Q 220 310 200 260 L 150 180 Q 130 160 100 180 Z" />
+
+        <!-- Start/Finish line -->
+        <line x1="95" y1="165" x2="95" y2="195" stroke="rgba(255,255,255,0.5)" stroke-width="2" />
+        <text x="60" y="162" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(255,255,255,0.3)" letter-spacing="1">S/F</text>
+
+        <!-- Sector dividers -->
+        <line x1="330" y1="30" x2="330" y2="50" stroke="rgba(232,0,45,0.3)" stroke-width="1" stroke-dasharray="2,2" />
+        <line x1="580" y1="95" x2="595" y2="110" stroke="rgba(232,0,45,0.3)" stroke-width="1" stroke-dasharray="2,2" />
+        <text x="82" y="158" font-family="JetBrains Mono, monospace" font-size="6" fill="rgba(232,0,45,0.5)">S1</text>
+        <text x="450" y="30" font-family="JetBrains Mono, monospace" font-size="6" fill="rgba(232,0,45,0.5)">S2</text>
+        <text x="700" y="200" font-family="JetBrains Mono, monospace" font-size="6" fill="rgba(232,0,45,0.5)">S3</text>
+
+        <!-- Project Nodes -->
+        <g class="track-node" data-project="drs" id="tnode-drs">
+          <circle cx="220" cy="40" r="10" />
+          <text class="track-node-num" x="216" y="44">01</text>
+          <text class="track-node-label" x="210" y="28">DRS Actuator</text>
+        </g>
+        <g class="track-node" data-project="thermoflow" id="tnode-thermoflow">
+          <circle cx="580" cy="120" r="10" />
+          <text class="track-node-num" x="576" y="124">02</text>
+          <text class="track-node-label" x="566" y="110">ThermoFlow</text>
+        </g>
+        <g class="track-node" data-project="windmill" id="tnode-windmill">
+          <circle cx="760" cy="240" r="10" />
+          <text class="track-node-num" x="756" y="244">03</text>
+          <text class="track-node-label" x="735" y="228">Wind Pump</text>
+        </g>
+        <g class="track-node" data-project="conveyor" id="tnode-conveyor">
+          <circle cx="490" cy="310" r="10" />
+          <text class="track-node-num" x="486" y="314">04</text>
+          <text class="track-node-label" x="468" y="328">Conveyor FEM</text>
+        </g>
+        <g class="track-node" data-project="mechbattery" id="tnode-mechbattery">
+          <circle cx="190" cy="290" r="10" />
+          <text class="track-node-num" x="186" y="294">05</text>
+          <text class="track-node-label" x="162" y="280">Mech. Battery</text>
+        </g>
+      </svg>
+    </div>
+
     <div class="projects-grid">
       <div class="project-card" data-project="drs">
         <div class="project-num">01 //</div>
