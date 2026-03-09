@@ -1110,6 +1110,60 @@
       pointer-events: none;
     }
 
+    .pm-lap-timer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 1.5rem;
+      background: rgba(7,7,9,0.95);
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .pm-lap-timer.active {
+      opacity: 1;
+    }
+
+    .pm-lap-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .pm-lap-bar-wrap {
+      flex: 1;
+      height: 2px;
+      background: rgba(255,255,255,0.05);
+      overflow: hidden;
+    }
+
+    .pm-lap-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, var(--red), rgba(232,0,45,0.4));
+      transition: width 0.05s linear;
+      box-shadow: 0 0 8px rgba(232,0,45,0.6);
+    }
+
+    .pm-lap-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--white);
+      white-space: nowrap;
+      min-width: 60px;
+      text-align: right;
+    }
+
     .pm-parallax-layer {
       will-change: transform;
       transition: transform 0.08s linear;
@@ -1440,6 +1494,13 @@
   <div class="pm-wrapper" id="pmWrapper">
     <div class="pm-card" id="pmCard" role="dialog" aria-modal="true">
       <div class="pm-corner-tl"></div>
+      <div class="pm-lap-timer" id="pmLapTimer">
+        <span class="pm-lap-label">LOADING</span>
+        <div class="pm-lap-bar-wrap">
+          <div class="pm-lap-bar-fill" id="pmLapFill"></div>
+        </div>
+        <span class="pm-lap-time" id="pmLapTime">0.000s</span>
+      </div>
       <div class="pm-parallax-layer" id="pmParallax">
         <div class="pm-header">
           <div class="pm-header-left">
@@ -1789,6 +1850,23 @@
 
       function openPm(key) {
         const p = projects[key]; if (!p) return;
+
+        // --- F1 Lap Timer Sequence ---
+        const lapTimer = document.getElementById('pmLapTimer');
+        const lapFill = document.getElementById('pmLapFill');
+        const lapTime = document.getElementById('pmLapTime');
+        const pmParallax = document.getElementById('pmParallax');
+
+        // Hide content, show timer
+        pmParallax.style.opacity = '0';
+        lapTimer.classList.add('active');
+        lapFill.style.width = '0%';
+        lapTime.textContent = '0.000s';
+        
+        // Open the scrim
+        pmScrim.classList.add('active'); document.body.style.overflow = 'hidden'; pmOpen = true;
+
+        // Set content immediately (hidden)
         document.getElementById('pmTag').textContent = p.tag;
         document.getElementById('pmTitle').textContent = p.title;
         document.getElementById('pmDesc').textContent = p.desc;
@@ -1796,8 +1874,30 @@
         document.getElementById('pmHighlights').innerHTML = p.highlights.map(h => `<li>${h}</li>`).join('');
         document.getElementById('pmMetrics').innerHTML = p.metrics.map(m => `<div class="pm-metric"><div class="pm-metric-val">${m.val}</div><div class="pm-metric-label">${m.label}</div></div>`).join('');
         document.getElementById('pmTech').innerHTML = p.tech.map(t => `<span class="pm-tech-tag">${t}</span>`).join('');
-        pmScrim.classList.add('active'); document.body.style.overflow = 'hidden'; pmOpen = true;
-        document.querySelectorAll('.pm-section, .pm-highlights li').forEach(el => el.classList.add('in-view'));
+
+        // Animate the lap timer
+        let elapsed = 0;
+        const duration = 600; // ms
+        const stepMs = 30;
+        const lapInterval = setInterval(() => {
+          elapsed += stepMs;
+          const progress = Math.min(elapsed / duration, 1);
+          lapFill.style.width = (progress * 100) + '%';
+          lapTime.textContent = (elapsed / 1000).toFixed(3) + 's';
+          
+          if (elapsed >= duration) {
+            clearInterval(lapInterval);
+            lapTime.textContent = '[LOADED]';
+            lapTime.style.color = '#00e874';
+            setTimeout(() => {
+              lapTimer.classList.remove('active');
+              lapTime.style.color = '';
+              pmParallax.style.opacity = '1';
+              pmParallax.style.transition = 'opacity 0.3s ease';
+              document.querySelectorAll('.pm-section, .pm-highlights li').forEach(el => el.classList.add('in-view'));
+            }, 250);
+          }
+        }, stepMs);
       }
 
       function closePm() { pmScrim.classList.remove('active'); document.body.style.overflow = ''; pmOpen = false; }
@@ -1844,38 +1944,28 @@
       });
 
       // --- Scramble Text Animation ---
-      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!<>-_/[]{}—=+*^?#_";
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
       function scrambleText(element) {
         if(element.dataset.scrambled) return;
         element.dataset.scrambled = true;
-        
-        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
-        const textNodes = [];
-        let node;
-        while(node = walker.nextNode()) {
-          if(node.nodeValue.trim().length > 0) {
-            textNodes.push({ node: node, orig: node.nodeValue });
-          }
-        }
-        
+
+        const orig = element.textContent;
         let iter = 0;
-        const maxLen = Math.max(...textNodes.map(t => t.orig.length), 0);
-        
+        const maxLen = orig.length;
+
         const interval = setInterval(() => {
-          textNodes.forEach(t => {
-            t.node.nodeValue = t.orig.split("").map((char, idx) => {
-              if (char.trim() === "") return char;
-              if (idx < iter) return t.orig[idx];
-              return chars[Math.floor(Math.random() * chars.length)];
-            }).join("");
-          });
-          
-          if(iter >= maxLen) {
+          element.textContent = orig.split("").map((char, idx) => {
+            if (char.trim() === "" || char === "\n") return char;
+            if (idx < iter) return orig[idx];
+            return chars[Math.floor(Math.random() * chars.length)];
+          }).join("");
+
+          if (iter >= maxLen) {
             clearInterval(interval);
-            textNodes.forEach(t => t.node.nodeValue = t.orig);
+            element.textContent = orig;
           }
-          iter += 1/2;
-        }, 30);
+          iter += 1;
+        }, 45);
       }
 
       // --- Staggered Reveals ---
@@ -1884,14 +1974,14 @@
           if (e.isIntersecting) {
             setTimeout(() => {
               e.target.classList.add('visible');
-              
-              // Trigger text scramble for sections
-              const titles = e.target.querySelectorAll('.section-title, .section-tag');
-              titles.forEach(t => scrambleText(t));
-              if(e.target.classList.contains('section-title') || e.target.classList.contains('section-tag')) {
-                 scrambleText(e.target);
+
+              // Only scramble the big section title, nothing else
+              if (e.target.classList.contains('section-title')) {
+                scrambleText(e.target);
+              } else {
+                e.target.querySelectorAll('.section-title').forEach(t => scrambleText(t));
               }
-              
+
             }, (e.target.dataset.delay || 0) * 150);
             observer.unobserve(e.target);
           }
