@@ -13,9 +13,9 @@
     :root {
       --red: #e8002d;
       --white: #f0ece4;
-      --dark: #070709;
-      --mid: #0e0e12;
-      --card: #111116;
+      --dark: rgba(7, 7, 9, 0.4);
+      --mid: rgba(14, 14, 18, 0.3);
+      --card: rgba(17, 17, 22, 0.85);
       --border: #1c1c24;
       --muted: #666677;
       /* Status Colors */
@@ -271,11 +271,11 @@
 
     .aero-path {
       fill: none;
-      stroke: rgba(232, 0, 45, 0.25);
-      stroke-width: 1.5;
+      stroke: rgba(232, 0, 45, 0.4);
+      stroke-width: 2.5;
       stroke-dasharray: 4000;
       stroke-dashoffset: 4000;
-      animation: drawPath 12s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+      animation: drawPath 7s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
     }
 
     @keyframes drawPath {
@@ -580,9 +580,8 @@
       color: var(--white);
     }
 
-    /* ── EDUCATION ── */
     #education {
-      background: var(--dark);
+      background: rgba(7, 7, 9, 0.2);
     }
 
     .edu-grid {
@@ -648,9 +647,8 @@
       font-weight: 600;
     }
 
-    /* ── EXPERIENCE ── */
     #experience {
-      background: var(--mid);
+      background: rgba(14, 14, 18, 0.2);
     }
 
     .timeline {
@@ -730,9 +728,8 @@
       line-height: 1.8;
     }
 
-    /* ── PROJECTS ── */
     #projects {
-      background: var(--dark);
+      background: rgba(7, 7, 9, 0.2);
     }
 
     .projects-grid {
@@ -842,9 +839,8 @@
       transform: translateX(4px);
     }
 
-    /* ── HOBBIES ── */
     #hobbies {
-      background: var(--mid);
+      background: rgba(14, 14, 18, 0.2);
     }
 
     .hobby-grid {
@@ -887,9 +883,8 @@
       line-height: 1.7;
     }
 
-    /* ── CONTACT ── */
     #contact {
-      background: var(--dark);
+      background: rgba(7, 7, 9, 0.2);
       text-align: center;
     }
 
@@ -1438,10 +1433,10 @@
 
   <div class="global-bg"></div>
   <div class="global-lines" id="globalLines">
-    <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 1000 1000" style="position:absolute; inset:0; opacity: 0.6;">
+    <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 1000 1000" style="position:absolute; inset:0; opacity: 0.85;">
       <path class="aero-path" d="M -100 200 C 300 100, 400 800, 800 500 S 1100 200, 1200 400" />
-      <path class="aero-path" style="animation-delay: 2s; stroke-width: 1; stroke: rgba(0, 163, 232, 0.15);" d="M -100 800 C 200 900, 500 200, 900 600 S 1100 800, 1200 500" />
-      <path class="aero-path" style="animation-delay: 4s; stroke-width: 1;" d="M 0 500 C 300 600, 600 200, 900 800" />
+      <path class="aero-path" style="animation-delay: 1.5s; stroke-width: 1.5; stroke: rgba(0, 163, 232, 0.3);" d="M -100 800 C 200 900, 500 200, 900 600 S 1100 800, 1200 500" />
+      <path class="aero-path" style="animation-delay: 2.5s; stroke-width: 1.5;" d="M 0 500 C 300 600, 600 200, 900 800" />
     </svg>
   </div>
 
