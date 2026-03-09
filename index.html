@@ -1652,66 +1652,6 @@
       }
     }
 
-    /* ── F1 ASSEMBLY SCROLL ANIMATION ── */
-    #assembly {
-      height: 300vh;
-      position: relative;
-      background: var(--dark);
-      z-index: 10;
-    }
-
-    .assembly-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      perspective: 1000px;
-    }
-
-    .assembly-container {
-      position: relative;
-      width: 100%;
-      max-width: 800px;
-      aspect-ratio: 1 / 1;
-    }
-
-    .assembly-part {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      mix-blend-mode: screen;
-      will-change: transform, opacity;
-      transform: translate3d(var(--tx, 0), var(--ty, 0), var(--tz, 0)) rotate(var(--rot, 0deg));
-    }
-
-    .assembly-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.4em;
-      color: var(--white);
-      text-transform: uppercase;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s;
-    }
-
-    .assembly-text.visible {
-      opacity: 1;
-    }
-
-    .assembly-fade-out {
-      opacity: var(--op, 1);
-    }
   </style>
 </head>
 
@@ -1918,20 +1858,6 @@
         <p class="timeline-company">HART (HAN Automotive Rally Team)</p>
         <p class="timeline-desc">Assisted in the service and assembly of a rally car. Gained technical knowledge on
           suspension systems, internal combustion engines, and critical vehicle components.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="assembly">
-    <div class="assembly-sticky">
-      <div class="assembly-container" id="assemblyContainer">
-        <!-- The parts of the F1 car. Z-index implies natural stacking -->
-        <img src="images/f1_assembly/f1_car_part_base.png" class="assembly-part part-base assembly-fade-out" id="partBase" />
-        <img src="images/f1_assembly/f1_car_part_front.png" class="assembly-part part-front assembly-fade-out" id="partFront" />
-        <img src="images/f1_assembly/f1_car_part_rear.png" class="assembly-part part-rear assembly-fade-out" id="partRear" />
-        <img src="images/f1_assembly/f1_car_part_wheels_left.png" class="assembly-part part-left assembly-fade-out" id="partLeft" />
-        <img src="images/f1_assembly/f1_car_part_wheels_right.png" class="assembly-part part-right assembly-fade-out" id="partRight" />
-        <div class="assembly-text" id="assemblyText">[ AERO_ASSEMBLY : COMPLETE ]</div>
       </div>
     </div>
   </section>
@@ -2457,91 +2383,6 @@
       setTimeout(() => {
         document.body.classList.remove('ignition-active');
       }, 400);
-
-      // --- ASSEMBLY SCROLL ANIMATION ---
-      const sections = {
-        assembly: document.getElementById('assembly'),
-        container: document.getElementById('assemblyContainer'),
-        parts: {
-          base: document.getElementById('partBase'),
-          front: document.getElementById('partFront'),
-          rear: document.getElementById('partRear'),
-          left: document.getElementById('partLeft'),
-          right: document.getElementById('partRight'),
-          text: document.getElementById('assemblyText')
-        }
-      };
-
-      if (sections.assembly) {
-        window.addEventListener('scroll', () => {
-          const rect = sections.assembly.getBoundingClientRect();
-          const viewHeight = window.innerHeight;
-
-          // Calculate progress from 0 (top of section enters bottom of viewport)
-          // to 1 (bottom of section leaves top of viewport)
-          // We want the sticky part to act specifically when the stick starts.
-          // Since it's 300vh tall, the sticky phase happens when rect.top <= 0 and rect.bottom >= viewHeight.
-
-          let progress = 0;
-          if (rect.top <= 0 && rect.bottom >= viewHeight) {
-            // We are in the sticky phase.
-            // Scroll distance available for the sticky phase is rect.height - viewHeight.
-            // Map the current scrolled amount in this bounds to 0...1
-            progress = Math.abs(rect.top) / (rect.height - viewHeight);
-          } else if (rect.top > 0) {
-            progress = 0;
-          } else if (rect.bottom < viewHeight) {
-            progress = 1;
-          }
-
-          // Phase 1: 0 to 0.5 (Scatter to Collect)
-          const p1 = Math.min(progress / 0.5, 1);
-          const inv1 = 1 - p1;
-
-          // Phase 2: 0.8 to 1.0 (Fade out assembly)
-          let p2 = 0;
-          if (progress > 0.8) {
-             p2 = (progress - 0.8) / 0.2;
-          }
-
-          // Apply transforms
-          if (sections.parts.front) {
-             sections.parts.front.style.setProperty('--ty', (inv1 * -80) + 'vh');
-             sections.parts.front.style.setProperty('--rot', (inv1 * -45) + 'deg');
-          }
-          if (sections.parts.rear) {
-             sections.parts.rear.style.setProperty('--ty', (inv1 * 80) + 'vh');
-             sections.parts.rear.style.setProperty('--rot', (inv1 * 45) + 'deg');
-          }
-          if (sections.parts.left) {
-             sections.parts.left.style.setProperty('--tx', (inv1 * -80) + 'vw');
-             sections.parts.left.style.setProperty('--rot', (inv1 * 90) + 'deg');
-          }
-          if (sections.parts.right) {
-             sections.parts.right.style.setProperty('--tx', (inv1 * 80) + 'vw');
-             sections.parts.right.style.setProperty('--rot', (inv1 * -90) + 'deg');
-          }
-          if (sections.parts.base) {
-             sections.parts.base.style.setProperty('--tz', (inv1 * -500) + 'px');
-             sections.parts.base.style.opacity = p1; // Fade the base in
-          }
-
-          // Full container scale effect
-          sections.container.style.transform = `scale(${1 + (inv1 * 0.2)})`;
-
-          // Text appearance logic
-          if (p1 >= 1 && p2 < 0.1) {
-            sections.parts.text.classList.add('visible');
-          } else {
-            sections.parts.text.classList.remove('visible');
-          }
-
-          // Fade out phase
-          document.querySelectorAll('.assembly-fade-out').forEach(el => {
-             el.style.setProperty('--op', 1 - p2);
-          });
-        });
-      }
 
     });
   </script>
