@@ -1803,50 +1803,161 @@
 
     <div class="track-map-wrap">
       <div class="track-tooltip" id="trackTooltip"></div>
-      <p class="track-map-label">// Circuit map — select a project</p>
-      <svg class="track-svg" viewBox="0 0 860 360" xmlns="http://www.w3.org/2000/svg" id="trackSvg">
-        <!-- Track outline (thick glow) -->
-        <path class="track-outline" d="M 100 180 C 100 80, 200 40, 330 40 L 520 40 Q 580 40 580 100 L 580 140 Q 580 170 620 170 L 680 170 Q 760 170 760 240 Q 760 310 680 310 L 300 310 Q 220 310 200 260 L 150 180 Q 130 160 100 180 Z" />
-        <!-- Track center line -->
-        <path class="track-line" id="trackLine" d="M 100 180 C 100 80, 200 40, 330 40 L 520 40 Q 580 40 580 100 L 580 140 Q 580 170 620 170 L 680 170 Q 760 170 760 240 Q 760 310 680 310 L 300 310 Q 220 310 200 260 L 150 180 Q 130 160 100 180 Z" />
+      <p class="track-map-label">// Circuit de Monaco · Monte Carlo — select a project</p>
+      <svg class="track-svg" viewBox="0 0 920 480" xmlns="http://www.w3.org/2000/svg" id="trackSvg">
 
-        <!-- Start/Finish line -->
-        <line x1="95" y1="165" x2="95" y2="195" stroke="rgba(255,255,255,0.5)" stroke-width="2" />
-        <text x="60" y="162" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(255,255,255,0.3)" letter-spacing="1">S/F</text>
+        <!-- ═══ MONACO CIRCUIT (schematic approximation) ═══ -->
+        <!--
+          Key corners clockwise from S/F:
+          Sainte Dévote → Massenet → Casino → Mirabeau → Grand Hotel (hairpin)
+          → Portier → Tunnel → Chicane → Tabac → Swimming Pool → Rascasse → Anthony Noghès → S/F
+        -->
 
-        <!-- Sector dividers -->
-        <line x1="330" y1="30" x2="330" y2="50" stroke="rgba(232,0,45,0.3)" stroke-width="1" stroke-dasharray="2,2" />
-        <line x1="580" y1="95" x2="595" y2="110" stroke="rgba(232,0,45,0.3)" stroke-width="1" stroke-dasharray="2,2" />
-        <text x="82" y="158" font-family="JetBrains Mono, monospace" font-size="6" fill="rgba(232,0,45,0.5)">S1</text>
-        <text x="450" y="30" font-family="JetBrains Mono, monospace" font-size="6" fill="rgba(232,0,45,0.5)">S2</text>
-        <text x="700" y="200" font-family="JetBrains Mono, monospace" font-size="6" fill="rgba(232,0,45,0.5)">S3</text>
+        <!-- Track outline / glow -->
+        <path class="track-outline" d="
+          M 200 390 L 370 390
+          Q 430 390 450 360
+          L 460 280
+          Q 462 250 490 240
+          L 540 240
+          Q 580 240 580 200
+          L 580 160
+          Q 580 130 560 120
+          L 490 110
+          Q 450 108 430 90
+          Q 410 72 410 50
+          Q 410 30 430 22
+          L 570 22
+          Q 600 22 610 50
+          L 620 80
+          Q 630 110 660 112
+          L 720 112
+          Q 760 112 760 150
+          L 760 200
+          Q 760 240 720 240
+          L 700 240
+          Q 660 240 640 260
+          L 630 310
+          Q 615 360 640 380
+          L 720 400
+          Q 760 410 770 440
+          Q 775 460 750 470
+          L 640 470
+          Q 600 470 580 440
+          L 570 420
+          Q 560 400 530 395
+          L 460 390
+          Q 440 390 430 410
+          Q 420 430 400 435
+          L 200 435
+          Q 160 435 150 410
+          Q 140 390 160 375
+          L 200 375
+        " />
 
-        <!-- Project Nodes -->
+        <!-- Track centre line (animated draw) -->
+        <path class="track-line" id="trackLine" d="
+          M 200 390 L 370 390
+          Q 430 390 450 360
+          L 460 280
+          Q 462 250 490 240
+          L 540 240
+          Q 580 240 580 200
+          L 580 160
+          Q 580 130 560 120
+          L 490 110
+          Q 450 108 430 90
+          Q 410 72 410 50
+          Q 410 30 430 22
+          L 570 22
+          Q 600 22 610 50
+          L 620 80
+          Q 630 110 660 112
+          L 720 112
+          Q 760 112 760 150
+          L 760 200
+          Q 760 240 720 240
+          L 700 240
+          Q 660 240 640 260
+          L 630 310
+          Q 615 360 640 380
+          L 720 400
+          Q 760 410 770 440
+          Q 775 460 750 470
+          L 640 470
+          Q 600 470 580 440
+          L 570 420
+          Q 560 400 530 395
+          L 460 390
+          Q 440 390 430 410
+          Q 420 430 400 435
+          L 200 435
+          Q 160 435 150 410
+          Q 140 390 160 375
+          L 200 375
+        " />
+
+        <!-- Start / Finish line -->
+        <line x1="200" y1="370" x2="200" y2="450" stroke="rgba(255,255,255,0.6)" stroke-width="2.5"/>
+        <text x="168" y="368" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(255,255,255,0.35)" letter-spacing="1">S/F</text>
+
+        <!-- Corner labels (Monaco landmarks) -->
+        <text x="450" y="350" font-family="JetBrains Mono, monospace" font-size="6.5" fill="rgba(232,0,45,0.4)" transform="rotate(-90,450,350)">Sainte Dévote</text>
+        <text x="390" y="118" font-family="JetBrains Mono, monospace" font-size="6.5" fill="rgba(232,0,45,0.4)">Casino</text>
+        <text x="582" y="145" font-family="JetBrains Mono, monospace" font-size="6.5" fill="rgba(232,0,45,0.4)" transform="rotate(90,582,145)">Mirabeau</text>
+        <text x="760" y="185" font-family="JetBrains Mono, monospace" font-size="6.5" fill="rgba(232,0,45,0.4)" transform="rotate(90,760,185)">Tunnel</text>
+        <text x="748" y="415" font-family="JetBrains Mono, monospace" font-size="6.5" fill="rgba(232,0,45,0.4)">Rascasse</text>
+
+        <!-- Sector markers -->
+        <line x1="460" y1="270" x2="475" y2="270" stroke="rgba(232,0,45,0.35)" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="640" y1="370" x2="655" y2="370" stroke="rgba(232,0,45,0.35)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="430" y="268" font-family="JetBrains Mono, monospace" font-size="6" fill="rgba(232,0,45,0.5)">S1</text>
+        <text x="647" y="368" font-family="JetBrains Mono, monospace" font-size="6" fill="rgba(232,0,45,0.5)">S2</text>
+        <text x="165" y="420" font-family="JetBrains Mono, monospace" font-size="6" fill="rgba(232,0,45,0.5)">S3</text>
+
+        <!-- ══════════ PROJECT NODES + EXTERNAL LABELS ══════════ -->
+
+        <!-- 01: DRS Actuator — on Casino Square straight -->
+        <line x1="500" y1="22" x2="500" y2="0" stroke="rgba(232,0,45,0.3)" stroke-width="1" stroke-dasharray="3,2"/>
         <g class="track-node" data-project="drs" id="tnode-drs">
-          <circle cx="220" cy="40" r="10" />
-          <text class="track-node-num" x="216" y="44">01</text>
-          <text class="track-node-label" x="210" y="28">DRS Actuator</text>
+          <circle cx="500" cy="22" r="9"/>
+          <text class="track-node-num" x="496" y="26">01</text>
         </g>
+        <!-- Label card above track -->
+        <text x="432" y="-8" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#f0ece4" letter-spacing="0.5" pointer-events="none">F1 DRS Actuator</text>
+
+        <!-- 02: ThermoFlow — on Mirabeau straight -->
+        <line x1="618" y1="180" x2="660" y2="180" stroke="rgba(232,0,45,0.3)" stroke-width="1" stroke-dasharray="3,2"/>
         <g class="track-node" data-project="thermoflow" id="tnode-thermoflow">
-          <circle cx="580" cy="120" r="10" />
-          <text class="track-node-num" x="576" y="124">02</text>
-          <text class="track-node-label" x="566" y="110">ThermoFlow</text>
+          <circle cx="580" cy="180" r="9"/>
+          <text class="track-node-num" x="576" y="184">02</text>
         </g>
+        <text x="665" y="184" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#f0ece4" letter-spacing="0.5" pointer-events="none">ThermoFlow Analysis</text>
+
+        <!-- 03: Wind Pump — on tunnel exit -->
+        <line x1="760" y1="175" x2="810" y2="155" stroke="rgba(232,0,45,0.3)" stroke-width="1" stroke-dasharray="3,2"/>
         <g class="track-node" data-project="windmill" id="tnode-windmill">
-          <circle cx="760" cy="240" r="10" />
-          <text class="track-node-num" x="756" y="244">03</text>
-          <text class="track-node-label" x="735" y="228">Wind Pump</text>
+          <circle cx="760" cy="175" r="9"/>
+          <text class="track-node-num" x="756" y="179">03</text>
         </g>
+        <text x="815" y="159" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#f0ece4" letter-spacing="0.5" pointer-events="none">Wind-Powered Pump</text>
+
+        <!-- 04: Conveyor FEM — Rascasse hairpin -->
+        <line x1="700" y1="470" x2="700" y2="490" stroke="rgba(232,0,45,0.3)" stroke-width="1" stroke-dasharray="3,2"/>
         <g class="track-node" data-project="conveyor" id="tnode-conveyor">
-          <circle cx="490" cy="310" r="10" />
-          <text class="track-node-num" x="486" y="314">04</text>
-          <text class="track-node-label" x="468" y="328">Conveyor FEM</text>
+          <circle cx="700" cy="470" r="9"/>
+          <text class="track-node-num" x="696" y="474">04</text>
         </g>
+        <text x="640" y="495" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#f0ece4" letter-spacing="0.5" pointer-events="none">Vibrating Conveyor FEM</text>
+
+        <!-- 05: Mech Battery — swimming pool chicane -->
+        <line x1="310" y1="390" x2="310" y2="415" stroke="rgba(232,0,45,0.3)" stroke-width="1" stroke-dasharray="3,2"/>
         <g class="track-node" data-project="mechbattery" id="tnode-mechbattery">
-          <circle cx="190" cy="290" r="10" />
-          <text class="track-node-num" x="186" y="294">05</text>
-          <text class="track-node-label" x="162" y="280">Mech. Battery</text>
+          <circle cx="310" cy="390" r="9"/>
+          <text class="track-node-num" x="306" y="394">05</text>
         </g>
+        <text x="260" y="420" font-family="JetBrains Mono, monospace" font-size="7.5" fill="#f0ece4" letter-spacing="0.5" pointer-events="none">Mechanical Battery</text>
+
       </svg>
     </div>
 
