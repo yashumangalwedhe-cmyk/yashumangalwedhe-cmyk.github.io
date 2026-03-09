@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Yashovardhan Mangalwedhe — Mechanical Engineer</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
 <style>
 :root {
   --red: #e8002d;
@@ -37,18 +38,21 @@ body {
 
 /* ── CURSOR ── */
 .cursor {
-  position: fixed; width: 5px; height: 5px; background: var(--red);
+  position: fixed; width: 5px; height: 5px; background: var(--white);
   border-radius: 50%; pointer-events: none; z-index: 10000;
   transform: translate(-50%,-50%); display: none;
-  box-shadow: 0 0 8px 1px var(--red);
+  mix-blend-mode: difference;
+  transition: width 0.2s, height 0.2s;
 }
+.cursor.expand { width: 40px; height: 40px; }
 .cursor-ring {
-  position: fixed; width: 24px; height: 24px; border: 1px solid rgba(232,0,45,0.8);
+  position: fixed; width: 24px; height: 24px; border: 1px solid rgba(255,255,255,0.8);
   border-radius: 50%; pointer-events: none; z-index: 9999;
-  transform: translate(-50%,-50%); transition: width 0.2s, height 0.2s, border-color 0.2s;
+  transform: translate(-50%,-50%); transition: width 0.2s, height 0.2s, border-color 0.2s, opacity 0.2s;
   display: none;
-  box-shadow: 0 0 8px rgba(232,0,45,0.4);
+  mix-blend-mode: difference;
 }
+.cursor-ring.expand { opacity: 0; }
 
 /* ── NAV ── */
 nav {
@@ -298,7 +302,7 @@ section { padding: 8rem 5rem; position: relative; z-index: 1; }
   background: linear-gradient(to right, var(--red), transparent);
   transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
 }
-.project-card:hover { border-color: rgba(232,0,45,0.5); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(232,0,45,0.15); }
+.project-card:hover { border-color: rgba(232,0,45,0.5); box-shadow: 0 12px 40px rgba(232,0,45,0.15); }
 .project-card:hover::before { transform: scaleX(1); }
 .project-num {
   font-family: 'JetBrains Mono', monospace; font-size: 0.5rem;
@@ -331,7 +335,7 @@ section { padding: 8rem 5rem; position: relative; z-index: 1; }
   padding: 2.5rem 2rem; text-align: center;
   transition: all 0.3s ease;
 }
-.hobby-item:hover { border-color: var(--red); transform: translateY(-5px); background: var(--card); }
+.hobby-item:hover { border-color: var(--red); background: var(--card); }
 .hobby-icon { color: var(--red); font-size: 1.8rem; margin-bottom: 1.5rem; display: block; }
 .hobby-title { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; letter-spacing: 0.1em; color: var(--white); margin-bottom: 1rem; }
 .hobby-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
@@ -484,7 +488,7 @@ footer a { color: var(--red); text-decoration: none; }
 /* ── ANIMATIONS ── */
 @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
 .reveal.hidden { opacity: 0; transform: translateY(30px); }
-.reveal.visible { opacity: 1; transform: translateY(0); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+.reveal.visible { opacity: 1; transform: translateY(0); transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
 </style>
 </head>
 <body>
@@ -856,16 +860,77 @@ document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
   requestAnimationFrame(anim);
 })();
 
-const obs = new IntersectionObserver(ents => ents.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold: 0.1});
-document.querySelectorAll('.reveal').forEach(el => { el.classList.add('hidden'); obs.observe(el); });
+document.querySelectorAll('a, button, .project-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.classList.add('expand'); ring.classList.add('expand'); });
+  el.addEventListener('mouseleave', () => { cursor.classList.remove('expand'); ring.classList.remove('expand'); });
+});
+
+// --- Staggered Reveals ---
+const staggerObs = new IntersectionObserver((entries, observer) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      setTimeout(() => {
+        e.target.classList.add('visible');
+      }, (e.target.dataset.delay || 0) * 150);
+      observer.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.1});
+
+document.querySelectorAll('.reveal').forEach((el, index) => {
+  el.classList.add('hidden');
+  staggerObs.observe(el);
+});
+
+// We can dynamically add staggered classes to our grid items
+document.querySelectorAll('.projects-grid .project-card, .hobby-grid .hobby-item, .edu-grid .timeline-item, .edu-grid .info-card').forEach((el, i) => {
+  el.classList.add('reveal', 'hidden');
+  el.dataset.delay = i % 3 + 1;
+  staggerObs.observe(el);
+});
+
+// --- 3D Card Tilt ---
+document.querySelectorAll('.project-card, .hobby-item, .info-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const ax = -(rect.height / 2 - y) / 20;
+    const ay = (rect.width / 2 - x) / 20;
+    card.style.transform = `perspective(1000px) rotateX(${ax}deg) rotateY(${ay}deg) scale3d(1.02, 1.02, 1.02)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+  });
+});
+
+// --- Lenis Smooth Scroll Setup ---
+const lenis = new Lenis()
+function raf(time) {
+  lenis.raf(time)
+  requestAnimationFrame(raf)
+}
+requestAnimationFrame(raf)
+
 
 const linesEl = document.getElementById('heroLines');
 setInterval(() => {
   const l = document.createElement('div'); l.className = 'speed-line';
   l.style.top = Math.random()*100+'%'; l.style.width = (Math.random()*200+100)+'px';
   l.style.animationDuration = (Math.random()*1+0.5)+'s';
-  linesEl.appendChild(l); setTimeout(() => l.remove(), 2500);
 }, 200);
+
+// --- Hero Parallax ---
+const heroContent = document.querySelector('.hero-content');
+const heroBg = document.querySelector('.hero-bg');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY <= window.innerHeight) {
+    if(heroContent) heroContent.style.transform = `translateY(${scrollY * 0.35}px)`;
+    if(heroBg) heroBg.style.transform = `translateY(${scrollY * 0.15}px)`;
+  }
+});
+
 });
 </script>
 </body>
