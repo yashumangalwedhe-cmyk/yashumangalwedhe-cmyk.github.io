@@ -2220,6 +2220,42 @@
         }
       });
 
+      // --- F1 Track Map ---
+      const trackProjectNames = {
+        drs: 'F1 DRS Actuator', thermoflow: 'ThermoFlow Analysis',
+        windmill: 'Wind-Powered Pump', conveyor: 'Vibrating Conveyor', mechbattery: 'Mechanical Battery'
+      };
+      const trackLine = document.getElementById('trackLine');
+      const trackTooltip = document.getElementById('trackTooltip');
+
+      // Draw the circuit when it scrolls into view
+      const trackObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            setTimeout(() => trackLine && trackLine.classList.add('drawn'), 400);
+            trackObs.disconnect();
+          }
+        });
+      }, { threshold: 0.25 });
+      const trackSvg = document.getElementById('trackSvg');
+      if (trackSvg) trackObs.observe(trackSvg);
+
+      // Tooltip + click on nodes
+      document.querySelectorAll('.track-node').forEach(node => {
+        const key = node.dataset.project;
+        const wrap = document.querySelector('.track-map-wrap');
+        node.addEventListener('mouseenter', () => {
+          if (!trackTooltip || !wrap) return;
+          trackTooltip.innerHTML = `<span class="track-tooltip-name">${trackProjectNames[key]}</span><span class="track-tooltip-hint">// Click to open details</span>`;
+          const r = node.getBoundingClientRect(), w = wrap.getBoundingClientRect();
+          trackTooltip.style.left = (r.left - w.left + r.width / 2 - 90) + 'px';
+          trackTooltip.style.top = (r.top - w.top - 60) + 'px';
+          trackTooltip.classList.add('visible');
+        });
+        node.addEventListener('mouseleave', () => trackTooltip && trackTooltip.classList.remove('visible'));
+        node.addEventListener('click', () => { trackTooltip && trackTooltip.classList.remove('visible'); openPm(key); });
+      });
+
     });
   </script>
 </body>
