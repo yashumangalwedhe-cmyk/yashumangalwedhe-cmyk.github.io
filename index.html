@@ -233,10 +233,10 @@
       overflow: hidden;
     }
 
-    .hero-bg {
-      position: absolute;
+    .global-bg {
+      position: fixed;
       inset: 0;
-      background: 
+      background:
         radial-gradient(ellipse at 50% 55%, rgba(232, 0, 45, 0.07) 0%, transparent 65%),
         linear-gradient(rgba(232, 0, 45, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(232, 0, 45, 0.03) 1px, transparent 1px);
@@ -244,11 +244,42 @@
       background-position: center center, center center, center center;
       pointer-events: none;
       opacity: 0;
+      z-index: -2;
       animation: gridReveal 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.2s;
     }
+
     @keyframes gridReveal {
-      0% { opacity: 0; transform: scale(1.1); }
-      100% { opacity: 1; transform: scale(1); }
+      0% {
+        opacity: 0;
+        transform: scale(1.1);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .global-lines {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+      mix-blend-mode: screen;
+    }
+
+    .aero-path {
+      fill: none;
+      stroke: rgba(232, 0, 45, 0.25);
+      stroke-width: 1.5;
+      stroke-dasharray: 4000;
+      stroke-dashoffset: 4000;
+      animation: drawPath 12s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+    }
+
+    @keyframes drawPath {
+      to { stroke-dashoffset: 0; }
     }
 
     .hero-lines {
@@ -1405,6 +1436,15 @@
 
 <body>
 
+  <div class="global-bg"></div>
+  <div class="global-lines" id="globalLines">
+    <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 1000 1000" style="position:absolute; inset:0; opacity: 0.6;">
+      <path class="aero-path" d="M -100 200 C 300 100, 400 800, 800 500 S 1100 200, 1200 400" />
+      <path class="aero-path" style="animation-delay: 2s; stroke-width: 1; stroke: rgba(0, 163, 232, 0.15);" d="M -100 800 C 200 900, 500 200, 900 600 S 1100 800, 1200 500" />
+      <path class="aero-path" style="animation-delay: 4s; stroke-width: 1;" d="M 0 500 C 300 600, 600 200, 900 800" />
+    </svg>
+  </div>
+
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
@@ -1468,7 +1508,6 @@
   </div>
 
   <section id="hero">
-    <div class="hero-bg"></div>
     <div class="hero-lines" id="heroLines"></div>
     <div class="hero-content">
       <p class="hero-tag">// Mechanical Engineer · HAN University</p>
@@ -1870,12 +1909,10 @@
 
       // --- Hero Parallax ---
       const heroContent = document.querySelector('.hero-content');
-      const heroBg = document.querySelector('.hero-bg');
       window.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
         if (scrollY <= window.innerHeight) {
           if (heroContent) heroContent.style.transform = `translate3d(0, ${scrollY * 0.35}px, 0)`;
-          if (heroBg) heroBg.style.transform = `translate3d(0, ${scrollY * 0.15}px, 0)`;
         }
       });
 
