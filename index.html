@@ -475,6 +475,18 @@
       padding: 8rem 5rem;
       position: relative;
       z-index: 1;
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    section.animated-section {
+      opacity: 0;
+      transform: translateY(60px) scale(0.98);
+    }
+    section.animated-section.visible {
+      opacity: 1;
+      transform: none;
     }
 
     .section-tag {
@@ -1990,6 +2002,18 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+          // --- Animated Section Transitions ---
+          const animatedSections = document.querySelectorAll('section');
+          animatedSections.forEach(sec => sec.classList.add('animated-section'));
+          const sectionObs = new IntersectionObserver((entries, observer) => {
+            entries.forEach(e => {
+              if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+              }
+            });
+          }, { threshold: 0.15 });
+          animatedSections.forEach(sec => sectionObs.observe(sec));
       const projects = {
         drs: {
           tag: '// R&D · F1 Tech', title: 'F1 DRS Actuator Design',
