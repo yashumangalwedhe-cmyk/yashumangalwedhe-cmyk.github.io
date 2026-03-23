@@ -631,11 +631,14 @@
       padding: 1.8rem;
       position: relative;
       overflow: hidden;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      will-change: transform, box-shadow;
       transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     }
 
     .info-card:hover {
-      transform: translateY(-4px);
+      transform: translate3d(0, -4px, 0);
       box-shadow: 0 12px 40px rgba(232, 0, 45, 0.15);
       border-color: rgba(232, 0, 45, 0.4);
     }
@@ -915,6 +918,9 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      will-change: transform, box-shadow;
     }
 
     .project-card::before {
@@ -933,7 +939,7 @@
     .project-card:hover {
       border-color: rgba(232, 0, 45, 0.5);
       box-shadow: 0 0 20px rgba(232, 0, 45, 0.25);
-      transform: translateY(2px);
+      transform: translate3d(0, -4px, 0);
     }
 
     .project-card:hover::before {
@@ -1028,13 +1034,16 @@
       border-radius: 16px;
       padding: 2.5rem 2rem;
       text-align: center;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      will-change: transform, box-shadow, border-color, background;
       transition: all 0.3s ease;
     }
 
     .hobby-item:hover {
       border-color: var(--red);
       background: var(--card);
-      transform: translateY(2px);
+      transform: translate3d(0, -4px, 0);
       box-shadow: 0 0 15px rgba(232, 0, 45, 0.2);
     }
 
@@ -1090,6 +1099,9 @@
       font-size: 0.7rem;
       position: relative;
       overflow: hidden;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      will-change: transform, box-shadow, border-color, color;
     }
 
     .contact-link::before {
@@ -1104,7 +1116,7 @@
     .contact-link:hover {
       border-color: var(--red);
       color: var(--white);
-      transform: translateY(-2px);
+      transform: translate3d(0, -2px, 0);
       box-shadow: 0 8px 24px rgba(232, 0, 45, 0.15);
     }
 
