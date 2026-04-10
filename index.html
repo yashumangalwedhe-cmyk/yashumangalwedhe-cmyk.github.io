@@ -1870,11 +1870,15 @@
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-header">
-            <div class="timeline-role">Bachelor of Science (BSc.) Mechanical Engineering</div>
+            <div class="timeline-role">Bachelor of Science in Mechanical Engineering</div>
             <div class="timeline-date">Sep 2024 — Jun 2028</div>
           </div>
           <p class="timeline-company">HAN University of Applied Sciences · Arnhem</p>
-          <p class="timeline-desc">Grade Average: <span style="color:var(--red);font-weight:600;">8.0 / 10</span></p>
+          <div class="timeline-desc">
+            <p>Completed 1st Year <span style="color:var(--red); font-weight:600;">Propedeuse (60 credits)</span></p>
+            <p>Grade Average: <span style="color:var(--red); font-weight:600;">8.0 / 10</span></p>
+            <p style="margin-top:0.5rem; font-size:0.75rem; opacity:0.8;"><strong>Relevant Coursework:</strong> Powertrain, Heat Transfer, Thermo, Energy Systems, Production, Statics, Dynamics, SolidWorks, Material Science.</p>
+          </div>
         </div>
       </div>
       <div class="info-card">
@@ -1895,13 +1899,16 @@
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="timeline-header">
-          <div class="timeline-role">Drivetrain & Chassis Engineer</div>
+          <div class="timeline-role">Chassis & Drivetrain Engineer</div>
           <div class="timeline-date">Sep 2025 — Present</div>
         </div>
         <p class="timeline-company">HAN Competitive Robotics</p>
-        <p class="timeline-desc">
-          <li>Leading mechanical design for drivetrain and chassis systems for a Battle Bot.</li>
-          <li>Specialized in load-path optimization and SolidWorks modeling in a multi-disciplinary team environment.</li></p>
+        <ul class="timeline-desc" style="margin-left:1.2em;">
+          <li>Leading the mechanical design for drivetrain and chassis systems for a Battle Bot.</li>
+          <li>Working in a multi-disciplinary team with mechanical, embedded systems, and electrical students.</li>
+          <li>Leading manufacturing of the Battle Bot for European competition.</li>
+          <li>Responsible for load-path optimization and reporting/documenting all technical work.</li>
+        </ul>
       </div>
 
       <div class="timeline-item">
@@ -1911,14 +1918,12 @@
           <div class="timeline-date">Oct 2025 — Jan 2026</div>
         </div>
         <p class="timeline-company">HART (HAN Automotive Rally Team)</p>
-        <p class="timeline-desc">
-          <li>Assisted in the service and assembly of a rally car.</li> 
-          <li>Gained technical knowledge on
-          suspension systems, internal combustion engines, and critical vehicle components.</li></p>
+        <ul class="timeline-desc" style="margin-left:1.2em;">
+          <li>Assisted in the service and assembly of a rally car.</li>
+          <li>Acquired deep technical knowledge on suspension systems, internal combustion engines, and critical rally vehicle components.</li>
+        </ul>
       </div>
-    </div>
 
-    <div class="timeline" style="margin-top:3rem;">
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="timeline-header">
@@ -1927,10 +1932,9 @@
         </div>
         <p class="timeline-company">HAN Mechanical Engineering</p>
         <ul class="timeline-desc" style="margin-left:1.2em;">
-          <li>Managed the official Instagram account for HAN Mechanical Engineering.</li>
-          <li>Created videos and posts to promote the study and highlight its international aspects.</li>
-          <li>Achieved slow but significant growth in likes and reach for posts and videos.</li>
-          <li>Collaborated with the main HAN Instagram and other study programs to broaden engagement and visibility.</li>
+          <li>Handling the Instagram account for Mechanical Engineering (Werktuigbouwkunde) at the university.</li>
+          <li>Promoting the course on an international level to broaden engagement and provide info to prospective students.</li>
+          <li>Achieved significant growth in reach for international student recruitment content.</li>
         </ul>
       </div>
     </div>
@@ -1967,24 +1971,22 @@
 
       <div class="project-card" data-project="windmill">
         <div class="project-num">03 //</div>
-        <div class="project-name">Wind-Powered Water Pump</div>
+        <div class="project-name">Wind Turbine Design</div>
         <div class="project-status-bar">
           <div class="status-fill status-completed"></div>
         </div>
         <span class="status-label">Completed</span>
-        <p class="project-desc">Designed and fabricated a sustainable windmill system to pump water 3 meters vertically.
-        </p>
+        <p class="project-desc">Designed and manufactured a wind turbine to connect to a pump, helping pump water for land drainage.</p>
         <div class="project-view-hint">// View Details</div>
       </div>
       <div class="project-card" data-project="conveyor">
         <div class="project-num">04 //</div>
-        <div class="project-name">Vibrating Conveyor Analysis</div>
+        <div class="project-name">Vibratory Conveyor Redesign</div>
         <div class="project-status-bar">
           <div class="status-fill status-completed"></div>
         </div>
         <span class="status-label">Completed</span>
-        <p class="project-desc">Structural redesign using FEM simulations (static, buckling, frequency) to resolve
-          resonance issues.</p>
+        <p class="project-desc">Structural redesign using FEM simulations (static, buckling, frequency) to meet strict industrial requirements.</p>
         <div class="project-view-hint">// View Details</div>
       </div>
       <div class="project-card" data-project="mechbattery">
@@ -1994,8 +1996,7 @@
           <div class="status-fill status-completed"></div>
         </div>
         <span class="status-label">Completed</span>
-        <p class="project-desc">R&D on torsional spring storage systems; secured 2nd place in professional design
-          competition.</p>
+        <p class="project-desc">Research and prototyping of torsional spring storage systems; secured 2nd place in professional competition.</p>
         <div class="project-view-hint">// View Details</div>
       </div>
     </div>
@@ -2110,40 +2111,41 @@
           tech: ['SolidWorks Flow', 'MATLAB Simulink', 'PID Tuning', 'Heat Transfer']
         },
         windmill: {
-          tag: '// Build · Fluid · Semester 1-2', title: 'Wind-Powered Pump',
-          desc: 'Functional wind-powered piston pump lifting water 3 metres.',
-          overview: 'Designed, calculated, and fabricated a wind-powered piston pump system to address land drainage challenges.',
+          tag: '// Build · Fluid · Sep 2024 — Jan 2025', title: 'Design and Manufacturing of a Wind Turbine',
+          desc: 'Functional wind-powered piston pump lifting water.',
+          overview: 'Designed, calculated, and manufactured a wind-powered pump system to address water drainage challenges in the Netherlands.',
           highlights: [
-            'Truss mast validated for 100N load (≤2mm deflection)',
-            '8 aluminum blades produced 1.76 kg/min yield at 35°',
-            'Selected Piston Pump (79.05% Kesselring score)',
-            'Calculated theoretical yield (Qmax) of 0.00078 m³/s'
+            'Designed a wind turbine to connect to a pump, which helps to pump the water out from the Netherlands.',
+            'Made the choice for the material and manufactured the wind turbine.',
+            'Designed a pump which would be ideal for the purpose stated above.'
           ],
-          metrics: [{ val: '3m', label: 'Lift Height' }, { val: '1.76', label: 'kg/min Yield' }, { val: '25.5W', label: 'Wind Power' }, { val: '79.05%', label: 'Kesselring' }],
+          metrics: [{ val: '3m', label: 'Lift Height' }, { val: '1.76', label: 'kg/min Yield' }, { val: 'Wind', label: 'Powered' }, { val: '79.05%', label: 'Kesselring' }],
           tech: ['Fluid Mechanics', 'Structural Analysis', 'SolidWorks', 'Machining']
         },
         conveyor: {
-          tag: '// Engineering · FEM', title: 'Vibrating Conveyor Analysis',
+          tag: '// Engineering · FEM · Sep 2025 — Jan 2026', title: 'Vibratory Conveyor Redesign and Structural Analysis',
           desc: 'Full structural redesign and FEM analysis of an industrial conveyor frame.',
-          overview: 'Redesigned a vibratory conveyor support frame to meet strict industrial requirements through advanced simulation.',
+          overview: 'Redesigned a vibratory conveyor support frame and drive system to meet strict industrial requirements through advanced simulation and analytical validation.',
           highlights: [
-            'Conducted static, buckling, and frequency analysis in SolidWorks',
-            'Validated simulations against manual analytical calculations',
-            'Engineered new drivetrain system with specific spring stiffness and frequency'
+            'Redesigned a vibratory conveyor support frame and drive system to meet strict industrial requirements.',
+            'FEM: Conducted static, buckling and frequency analysis using SolidWorks to identify weakness and to verify redesign integrity.',
+            'Validated the simulations with manual calculations.',
+            'Engineered a new drivetrain system by calculating spring stiffness, eccentric mass, frequency, etc. to achieve a particular amplitude.'
           ],
-          metrics: [{ val: '0.17mm', label: 'Deflection' }, { val: '2.3x', label: 'Safety Factor' }],
+          metrics: [{ val: '0.17mm', label: 'Deflection' }, { val: '2.3x', label: 'Safety Factor' }, { val: 'FEM', label: 'Analysis' }],
           tech: ['SolidWorks', 'FEM Simulation', 'Structural Dynamics']
         },
         mechbattery: {
-          tag: '// R&D · Energy', title: 'Mechanical Battery',
+          tag: '// R&D · Energy · Jan 2025 — June 2025', title: 'Design and Manufacturing of Mechanical Battery',
           desc: 'Designing and prototyping a torsion spring kinetic energy storage system.',
-          overview: 'Research on mechanical energy storage using torsional springs and flywheels; secured 2nd place in professional competition.',
+          overview: 'Research on mechanical energy storage using torsional springs and flywheels; prototyped a kinetic energy storage system that secured 2nd place in professional competition.',
           highlights: [
-            'Developed mechanical storage and release mechanism from first principles',
-            'Secured 2nd place in inter-university design competition',
-            'Documented technical research reporting and physical prototyping'
+            'Completed Research on how energy can be stored in mechanical way for example springs and flywheels.',
+            'Designed and Prototyped a mechanical battery with the storage system being the torsional springs.',
+            'Competed in a competition with other mechanical students and secured 2nd place.',
+            'Worked in a team with other students and documented the whole project in a professional manner.'
           ],
-          metrics: [{ val: '10s', label: 'Storage' }, { val: '1m', label: 'Lift Height' }],
+          metrics: [{ val: '2nd', label: 'Place' }, { val: 'Torsion', label: 'Spring' }, { val: 'R&D', label: 'Comp' }],
           tech: ['Energy Systems', 'Torsion Springs', 'Prototyping']
         }
       };
