@@ -2116,11 +2116,10 @@
         <div class="project-num">02 //</div>
         <div class="project-name">ThermoFlow Analysis</div>
         <div class="project-status-bar">
-          <div class="status-fill status-ongoing"></div>
+          <div class="status-fill status-completed"></div>
         </div>
-        <span class="status-label">Ongoing</span>
-        <p class="project-desc">Thermal & control analysis of a Quooker vacuum-insulated system using CFD and
-          MATLAB/Simulink.</p>
+        <span class="status-label">Completed</span>
+        <p class="project-desc">Design, mathematical modeling, and CFD/Simulink simulation of a water-based thermal storage unit.</p>
         <div class="project-view-hint">// View Details</div>
       </div>
 
@@ -2253,17 +2252,24 @@
           tech: ['Kinematics', 'SolidWorks', 'Actuation Systems']
         },
         thermoflow: {
-          tag: '// CFD · Control Systems', title: 'ThermoFlow Analysis',
-          desc: 'Thermal and control simulation of a vacuum-insulated boiling water system.',
-          overview: 'Conducting multi-physics simulation of a Quooker system, covering CFD, heat transfer, and automated control design.',
+          tag: '// Case Study · CFD & Control · Grade: 9.0',
+          title: 'Thermal Control & Flow Simulation of a Thermal Storage Unit',
+          desc: 'Design, mathematical modeling, and CFD/Simulink simulation of a 1.05 kg water-based thermal storage unit.',
+          overview: 'Designed, mathematically modeled, and simulated the thermodynamic behavior and active control system of a 1.05 kg water-based thermal storage unit. The system required a highly efficient control architecture to elevate the thermal mass from 20°C to an exact target of 90°C while minimizing electrical grid load and strictly preventing temperature overshoot. Validation was achieved by integrating analytical calculations, SolidWorks Flow simulation studies, and Simulink closed-loop response models.',
           highlights: [
-            'Time-dependent internal flow simulation',
-            'Surface-to-surface radiation in vacuum environment',
-            'Derived governing differential equations from Newton\'s Law of Cooling',
-            'Feedback control modeling in Simulink using Ziegler-Nichols tuning'
+            'Analytical Thermodynamics: Derived first-order transient heat-up differential equations and steady-state heat loss parameters using Newton’s Law of Cooling.',
+            '3D Fluid Flow CFD: Performed time-dependent fluid studies in SolidWorks using adiabatic boundary conditions to define the baseline maximum-efficiency curve.',
+            'Closed-loop Control Modeling: Designed a comprehensive Simulink block diagram to analyze transient systems under 2000W, 2500W, and 3000W limits.',
+            'Actuator Selection: Selected a 2500W heater as the optimal engineering solution, providing swift 150-second warm-ups without excessive grid spikes.',
+            'PI Design & Tuning: Implemented a manually tuned PI controller (Kp=550, Ki=0.001) that supplies exactly 67W at steady state, matching ambient loss with zero steady-state error and overshoot.'
           ],
-          metrics: [{ val: '5 MPa', label: 'Pressure' }, { val: 'PID', label: 'Control' }, { val: 'CFD', label: 'Validation' }, { val: '0.1kg/s', label: 'Flow' }],
-          tech: ['SolidWorks Flow', 'MATLAB Simulink', 'PID Tuning', 'Heat Transfer']
+          metrics: [
+            { val: '9.0/10', label: 'Grade' },
+            { val: '2500W', label: 'Heater Limit' },
+            { val: '150s', label: 'Heat-up Time' },
+            { val: '67W', label: 'Steady Power' }
+          ],
+          tech: ['SolidWorks Flow', 'MATLAB Simulink', 'CFD Analysis', 'Control Theory', 'Heat Transfer']
         },
         windmill: {
           tag: '// Build · Fluid · Sep 2024 — Jan 2025', title: 'Design and Manufacturing of a Wind Turbine',
