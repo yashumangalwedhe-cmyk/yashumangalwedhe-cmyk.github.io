@@ -282,7 +282,7 @@
       }
     }
 
-    .hero-aero-lines {
+    .hero-canvas-wrap {
       position: absolute;
       inset: 0;
       overflow: hidden;
@@ -291,56 +291,10 @@
       mix-blend-mode: screen;
     }
 
-    .aero-path {
-      fill: none;
-      stroke: rgba(232, 0, 45, 0.4);
-      stroke-width: 2.5;
-      stroke-dasharray: 4000;
-      stroke-dashoffset: 4000;
-      animation: drawPath 7s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
-    }
-
-    @keyframes drawPath {
-      to {
-        stroke-dashoffset: 0;
-      }
-    }
-
-    .hero-lines {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 0;
-      mix-blend-mode: screen;
-    }
-
-    .speed-line {
-      position: absolute;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(232, 0, 45, 0.5), transparent);
-      animation: speedLine 2.5s linear infinite;
-      opacity: 0;
-    }
-
-    @keyframes speedLine {
-      0% {
-        transform: translateX(-100%);
-        opacity: 0;
-      }
-
-      10% {
-        opacity: 1;
-      }
-
-      90% {
-        opacity: 1;
-      }
-
-      100% {
-        transform: translateX(200%);
-        opacity: 0;
-      }
+    #heroCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
     .hero-content {
@@ -794,8 +748,112 @@
       line-height: 1.8;
     }
 
-    #projects {
+    #tech-skills {
       background: var(--dark);
+    }
+
+    #projects {
+      background: var(--mid);
+    }
+
+    /* ── TECHNICAL SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .skill-card {
+      padding: 2.2rem 2rem !important;
+    }
+
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.6rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 0.8rem;
+    }
+
+    .skill-icon {
+      font-size: 1.3rem;
+      color: var(--red);
+    }
+
+    .skill-category-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+
+    .skill-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .skill-item-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .skill-info {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .skill-name {
+      color: var(--white);
+    }
+
+    .skill-val {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .skill-bar-wrap {
+      height: 7px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--red) 0%, #ff4c6a 100%);
+      box-shadow: 0 0 10px rgba(232, 0, 45, 0.6);
+      border-radius: 4px;
+      transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    /* Telemetry grid-overlay for segmented F1 gauge look */
+    .skill-bar-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, 
+        transparent 0%, transparent 80%, 
+        var(--dark) 80%, var(--dark) 100%
+      );
+      background-size: 8px 100%;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
     }
 
     /* ── TRACK MAP ── */
@@ -1915,8 +1973,9 @@
       <li><a href="#about">About</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#experience">Experience</a></li>
-      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#tech-skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certifications</a></li>
       <li><a href="#hobbies">Hobbies</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -1929,25 +1988,18 @@
     <a href="#about" class="mobile-nav-link">About</a>
     <a href="#education" class="mobile-nav-link">Education</a>
     <a href="#experience" class="mobile-nav-link">Experience</a>
-    <a href="#certifications" class="mobile-nav-link">Certifications</a>
+    <a href="#tech-skills" class="mobile-nav-link">Skills</a>
     <a href="#projects" class="mobile-nav-link">Projects</a>
+    <a href="#certifications" class="mobile-nav-link">Certifications</a>
     <a href="#hobbies" class="mobile-nav-link">Hobbies</a>
     <a href="#contact" class="mobile-nav-link">Contact</a>
   </div>
 
   <section id="hero">
     <div class="hero-bg" id="heroBg"></div>
-    <div class="hero-aero-lines" id="heroAeroLines">
-      <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 1000 1000"
-        style="position:absolute; inset:0; opacity: 0.85;">
-        <path class="aero-path" d="M -100 200 C 300 100, 400 800, 800 500 S 1100 200, 1200 400" />
-        <path class="aero-path" style="animation-delay: 1.5s; stroke-width: 1.5; stroke: rgba(0, 163, 232, 0.3);"
-          d="M -100 800 C 200 900, 500 200, 900 600 S 1100 800, 1200 500" />
-        <path class="aero-path" style="animation-delay: 2.5s; stroke-width: 1.5;"
-          d="M 0 500 C 300 600, 600 200, 900 800" />
-      </svg>
+    <div class="hero-canvas-wrap" id="heroCanvasWrap">
+      <canvas id="heroCanvas"></canvas>
     </div>
-    <div class="hero-lines" id="heroLines"></div>
     <div class="hero-content">
       <p class="hero-tag">// Mechanical Engineer · HAN University</p>
       <h1>Yashovardhan<span class="line2">Mangalwedhe</span></h1>
@@ -2095,8 +2147,162 @@
     </div>
   </section>
 
+  <section id="tech-skills" class="reveal">
+    <p class="section-tag">// 04 — Tech Telemetry</p>
+    <h2 class="section-title">Engineering Specifications</h2>
+    <div class="skills-grid">
+      <!-- CAD & Design Card -->
+      <div class="info-card skill-card" data-category="cad">
+        <div class="skill-card-header">
+          <span class="skill-icon">⚙</span>
+          <h3 class="skill-category-title">CAD & Design</h3>
+        </div>
+        <div class="skill-items">
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">SolidWorks (3D Modeling & Design)</span>
+              <span class="skill-val">90%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 90%;"></div>
+            </div>
+          </div>
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">Assembly & Sheet Metal Design</span>
+              <span class="skill-val">85%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 85%;"></div>
+            </div>
+          </div>
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">Engineering Drawings / GD&T</span>
+              <span class="skill-val">80%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 80%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Simulation & Analysis Card -->
+      <div class="info-card skill-card" data-category="simulation">
+        <div class="skill-card-header">
+          <span class="skill-icon">⚡</span>
+          <h3 class="skill-category-title">Simulation & Analysis</h3>
+        </div>
+        <div class="skill-items">
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">CFD (Aerodynamics & Fluid)</span>
+              <span class="skill-val">85%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 85%;"></div>
+            </div>
+          </div>
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">FEM / FEA (Stress & Structural)</span>
+              <span class="skill-val">80%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 80%;"></div>
+            </div>
+          </div>
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">SolidWorks Flow Simulation</span>
+              <span class="skill-val">85%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 85%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Systems & Controls Card -->
+      <div class="info-card skill-card" data-category="systems">
+        <div class="skill-card-header">
+          <span class="skill-icon">📊</span>
+          <h3 class="skill-category-title">Systems & Controls</h3>
+        </div>
+        <div class="skill-items">
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">MATLAB (Numerical Analysis)</span>
+              <span class="skill-val">80%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 80%;"></div>
+            </div>
+          </div>
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">Simulink (Dynamic Modeling)</span>
+              <span class="skill-val">75%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 75%;"></div>
+            </div>
+          </div>
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">Control Theory (PI/PID)</span>
+              <span class="skill-val">80%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 80%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Workshop & Practical Card -->
+      <div class="info-card skill-card" data-category="workshop">
+        <div class="skill-card-header">
+          <span class="skill-icon">🛠</span>
+          <h3 class="skill-category-title">Workshop & Practical</h3>
+        </div>
+        <div class="skill-items">
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">Machining & Manufacturing</span>
+              <span class="skill-val">85%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 85%;"></div>
+            </div>
+          </div>
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">Prototyping & Assembly</span>
+              <span class="skill-val">90%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 90%;"></div>
+            </div>
+          </div>
+          <div class="skill-item-row">
+            <div class="skill-info">
+              <span class="skill-name">Workshop Safety (Vol-VCA)</span>
+              <span class="skill-val">95%</span>
+            </div>
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-fill" style="width: 95%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="projects" class="reveal">
-    <p class="section-tag">// 04 — Projects</p>
+    <p class="section-tag">// 05 — Projects</p>
     <h2 class="section-title">Engineering Work</h2>
 
     <div class="projects-grid">
@@ -2157,7 +2363,7 @@
   </section>
 
   <section id="certifications" class="reveal">
-    <p class="section-tag">// 05 — Certifications</p>
+    <p class="section-tag">// 06 — Certifications</p>
     <h2 class="section-title">Professional & Academic Certifications</h2>
     <div class="edu-grid">
       <div class="info-card">
@@ -2172,9 +2378,9 @@
       </div>
     </div>
   </section>
-
+ 
   <section id="hobbies" class="reveal">
-    <p class="section-tag">// 06 — Lifestyle</p>
+    <p class="section-tag">// 07 — Lifestyle</p>
     <h2 class="section-title">Beyond the Desk</h2>
     <div class="hobby-grid">
       <div class="hobby-item">
@@ -2203,9 +2409,9 @@
       </div>
     </div>
   </section>
-
+ 
   <section id="contact" class="reveal">
-    <p class="section-tag" style="text-align:center;">// 07 — Contact</p>
+    <p class="section-tag" style="text-align:center;">// 08 — Contact</p>
     <h2 class="section-title" style="text-align:center;">Let's Connect</h2>
     <div class="contact-grid">
       <a href="mailto:yashovardhanm28@gmail.com" class="contact-link"><span class="contact-icon">✉</span>
@@ -2230,7 +2436,247 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-          // --- Animated Section Transitions ---
+      // --- Global Telemetry HUD Variables ---
+      let targetKph = 0;
+      let currentKph = 0;
+
+      // --- Initialize Skill Bars Target Widths ---
+      document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+        const target = bar.style.width;
+        bar.dataset.targetWidth = target;
+        bar.style.width = '0%';
+      });
+
+      // --- Aerodynamic Wind Tunnel Canvas Simulation ---
+      const canvas = document.getElementById('heroCanvas');
+      const ctx = canvas ? canvas.getContext('2d') : null;
+      let W = window.innerWidth;
+      let H = window.innerHeight;
+      let obstacles = [];
+      let cx = 0, cy = 0, carWidth = 0;
+      let mouseX = 0, mouseY = 0, mouseActive = false;
+
+      if (canvas && ctx) {
+        function resizeCanvas() {
+          W = window.innerWidth;
+          H = window.innerHeight;
+          canvas.width = W * window.devicePixelRatio;
+          canvas.height = H * window.devicePixelRatio;
+          ctx.resetTransform();
+          ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+          updateObstacles();
+        }
+
+        function updateObstacles() {
+          cx = W * 0.55;
+          if (W < 768) cx = W * 0.5;
+          cy = H * 0.62;
+          carWidth = Math.min(W * 0.55, 480);
+          if (W < 768) carWidth = Math.min(W * 0.8, 350);
+
+          obstacles = [
+            { x: cx - carWidth * 0.45, y: cy + carWidth * 0.06, r: carWidth * 0.03, strength: 1.2 }, // Nose
+            { x: cx - carWidth * 0.3, y: cy + carWidth * 0.08, r: carWidth * 0.08, strength: 1.5 },  // Front Wheel
+            { x: cx - carWidth * 0.03, y: cy - carWidth * 0.03, r: carWidth * 0.07, strength: 1.8 }, // Cockpit/Airbox
+            { x: cx + carWidth * 0.28, y: cy + carWidth * 0.08, r: carWidth * 0.08, strength: 1.5 },  // Rear Wheel
+            { x: cx + carWidth * 0.4, y: cy - carWidth * 0.04, r: carWidth * 0.05, strength: 1.3 }   // Rear Wing
+          ];
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const hero = document.getElementById('hero');
+        if (hero) {
+          hero.addEventListener('mousemove', (e) => {
+            const rect = hero.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+            mouseActive = true;
+          });
+          hero.addEventListener('mouseleave', () => {
+            mouseActive = false;
+          });
+        }
+
+        // Generate streamlines
+        const numStreamlines = 22;
+        const streamlines = [];
+        for (let i = 0; i < numStreamlines; i++) {
+          streamlines.push({
+            ratioY: 0.12 + (i / (numStreamlines - 1)) * 0.76
+          });
+        }
+
+        // Generate particles
+        const numParticles = 80;
+        const particles = [];
+        for (let i = 0; i < numParticles; i++) {
+          particles.push({
+            x: Math.random() * (W + 100) - 50,
+            ratioY: 0.12 + Math.random() * 0.76,
+            speedFactor: Math.random() * 1.5 + 2.5,
+            length: Math.random() * 15 + 20,
+            opacity: Math.random() * 0.35 + 0.45
+          });
+        }
+
+        function getDeflection(x, y0, activeObstacles) {
+          let dy = 0;
+          for (let i = 0; i < activeObstacles.length; i++) {
+            const obs = activeObstacles[i];
+            const dx = x - obs.x;
+            const diffY = y0 - obs.y;
+            const distSq = dx * dx + diffY * diffY;
+            const dist = Math.sqrt(distSq);
+            const r = obs.r;
+
+            if (dist < r * 3.5) {
+              const factor = Math.exp(-distSq / (2.2 * r * r));
+              const sign = diffY >= 0 ? 1 : -1;
+              const force = (r * r) / (distSq + r * 12) * obs.strength;
+              dy += sign * force * r * 1.6 * factor;
+            }
+          }
+          return y0 + dy;
+        }
+
+        function drawCar(ctx, cx, cy, carWidth) {
+          ctx.save();
+          ctx.strokeStyle = 'rgba(232, 0, 45, 0.1)';
+          ctx.lineWidth = 1.5;
+          ctx.fillStyle = 'rgba(14, 14, 18, 0.15)';
+
+          ctx.beginPath();
+          // Front wing
+          ctx.moveTo(cx - carWidth * 0.52, cy + carWidth * 0.08);
+          ctx.lineTo(cx - carWidth * 0.45, cy + carWidth * 0.08);
+          // Nose cone
+          ctx.lineTo(cx - carWidth * 0.38, cy + carWidth * 0.05);
+          // Front suspension links
+          ctx.lineTo(cx - carWidth * 0.22, cy + carWidth * 0.04);
+          // Cockpit rising edge
+          ctx.lineTo(cx - carWidth * 0.08, cy - carWidth * 0.03);
+          // Roll hoop / Airbox
+          ctx.lineTo(cx - carWidth * 0.02, cy - carWidth * 0.06);
+          ctx.lineTo(cx + carWidth * 0.03, cy - carWidth * 0.06);
+          // Engine cover slope
+          ctx.lineTo(cx + carWidth * 0.22, cy + carWidth * 0.02);
+          // Rear wing support
+          ctx.lineTo(cx + carWidth * 0.38, cy + carWidth * 0.02);
+          // Rear wing
+          ctx.lineTo(cx + carWidth * 0.38, cy - carWidth * 0.08);
+          ctx.lineTo(cx + carWidth * 0.44, cy - carWidth * 0.08);
+          ctx.lineTo(cx + carWidth * 0.44, cy + carWidth * 0.04);
+          // Floor undertray
+          ctx.lineTo(cx + carWidth * 0.35, cy + carWidth * 0.09);
+          ctx.lineTo(cx - carWidth * 0.35, cy + carWidth * 0.09);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Draw wheels
+          ctx.strokeStyle = 'rgba(232, 0, 45, 0.16)';
+          ctx.beginPath();
+          ctx.arc(cx - carWidth * 0.3, cy + carWidth * 0.08, carWidth * 0.08, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(cx - carWidth * 0.3, cy + carWidth * 0.08, carWidth * 0.03, 0, Math.PI * 2);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(cx + carWidth * 0.28, cy + carWidth * 0.08, carWidth * 0.08, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(cx + carWidth * 0.28, cy + carWidth * 0.08, carWidth * 0.03, 0, Math.PI * 2);
+          ctx.stroke();
+
+          ctx.restore();
+        }
+
+        function runWindTunnel() {
+          // If scrolled past hero, pause rendering
+          if (window.scrollY > window.innerHeight) {
+            requestAnimationFrame(runWindTunnel);
+            return;
+          }
+
+          ctx.clearRect(0, 0, W, H);
+
+          const activeObstacles = [...obstacles];
+          if (mouseActive && mouseX >= 0 && mouseX <= W && mouseY >= 0 && mouseY <= H) {
+            activeObstacles.push({ x: mouseX, y: mouseY, r: 45, strength: 2.2 });
+          }
+
+          // Draw car silhouette
+          drawCar(ctx, cx, cy, carWidth);
+
+          // Draw streamlines
+          ctx.strokeStyle = 'rgba(232, 0, 45, 0.04)';
+          ctx.lineWidth = 1.0;
+          for (let i = 0; i < streamlines.length; i++) {
+            const y0 = streamlines[i].ratioY * H;
+            ctx.beginPath();
+            let first = true;
+            for (let x = -20; x <= W + 20; x += 15) {
+              const y = getDeflection(x, y0, activeObstacles);
+              if (first) {
+                ctx.moveTo(x, y);
+                first = false;
+              } else {
+                ctx.lineTo(x, y);
+              }
+            }
+            ctx.stroke();
+          }
+
+          // Speed tied to KPH readout (using the global targetKph/currentKph)
+          // Base flow is 2.2px/frame, accelerating up to 14px/frame
+          let flowSpeed = 2.2 + (currentKph / 346) * 11.8;
+
+          // Draw smoke particles
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.x += p.speedFactor * flowSpeed;
+            if (p.x > W + 50) {
+              p.x = -50;
+              p.ratioY = 0.12 + Math.random() * 0.76;
+            }
+
+            const y0 = p.ratioY * H;
+
+            ctx.beginPath();
+            let first = true;
+            for (let offset = 0; offset <= p.length; offset += 5) {
+              const px = p.x - offset;
+              const pct = 1 - (offset / p.length);
+              const py = getDeflection(px, y0, activeObstacles);
+              if (first) {
+                ctx.moveTo(px, py);
+                first = false;
+              } else {
+                ctx.lineTo(px, py);
+              }
+            }
+            ctx.strokeStyle = `rgba(232, 0, 45, ${p.opacity * 0.28})`;
+            ctx.lineWidth = 1.8;
+            ctx.stroke();
+
+            // Core glow dot
+            const cy = getDeflection(p.x, y0, activeObstacles);
+            ctx.fillStyle = `rgba(232, 0, 45, ${p.opacity * 0.75})`;
+            ctx.beginPath();
+            ctx.arc(p.x, cy, 1.2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          requestAnimationFrame(runWindTunnel);
+        }
+
+        requestAnimationFrame(runWindTunnel);
+      }
+
+      // --- Animated Section Transitions ---
           const animatedSections = document.querySelectorAll('section');
           animatedSections.forEach(sec => sec.classList.add('animated-section'));
           const sectionObs = new IntersectionObserver((entries, observer) => {
@@ -2451,6 +2897,13 @@
                 e.target.querySelectorAll('.section-title').forEach(t => scrambleText(t));
               }
 
+              // Animate skill bars if this is a skill card
+              if (e.target.classList.contains('skill-card')) {
+                e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                  bar.style.width = bar.dataset.targetWidth;
+                });
+              }
+
             }, (e.target.dataset.delay || 0) * 150);
             observer.unobserve(e.target);
           }
@@ -2463,7 +2916,7 @@
       });
 
       // We can dynamically add staggered classes to our grid items
-      document.querySelectorAll('.projects-grid .project-card, .hobby-grid .hobby-item, .edu-grid .timeline-item, .edu-grid .info-card').forEach((el, i) => {
+      document.querySelectorAll('.projects-grid .project-card, .hobby-grid .hobby-item, .edu-grid .timeline-item, .edu-grid .info-card, .skills-grid .skill-card').forEach((el, i) => {
         el.classList.add('reveal', 'hidden');
         el.dataset.delay = i % 3 + 1;
         staggerObs.observe(el);
@@ -2583,10 +3036,11 @@
           'about': '02 // PROFILE',
           'education': '03 // ACADEMIA',
           'experience': '04 // TELEMETRY',
-          'projects': '05 // R&D GRID',
-          'certifications': '06 // CERT',
-          'hobbies': '07 // PADDOCK',
-          'contact': '08 // PITSTOP'
+          'tech-skills': '05 // SPEC SHEET',
+          'projects': '06 // R&D GRID',
+          'certifications': '07 // CERT',
+          'hobbies': '08 // PADDOCK',
+          'contact': '09 // PITSTOP'
         };
 
         const name = sectionNames[activeId] || activeId.toUpperCase();
@@ -2607,8 +3061,8 @@
       }
 
       // Smooth Speed KPH calculation with inertia/flywheel effect
-      let targetKph = 0;
-      let currentKph = 0;
+      targetKph = 0;
+      currentKph = 0;
 
       function smoothKphLoop() {
         if (Math.round(currentKph) !== Math.round(targetKph)) {
@@ -2631,18 +3085,6 @@
       }
       smoothKphLoop();
 
-      // --- Hero Aerodynamics Path Scrubbing ---
-      const aeroPaths = document.querySelectorAll('.aero-path');
-      function scrollingAeroLines(scrollVal) {
-        if (scrollVal > window.innerHeight) return;
-        aeroPaths.forEach((path, i) => {
-          const direction = i % 2 === 0 ? 1 : -1;
-          const factor = (i + 1) * 1.8;
-          const offset = 4000 - (scrollVal * factor * direction);
-          path.style.strokeDashoffset = offset;
-        });
-      }
-
       // Lenis Scroll Event Bridge
       lenis.on('scroll', (e) => {
         // e.velocity is scroll velocity (px/ms)
@@ -2650,22 +3092,12 @@
         targetKph = Math.min(346, Math.round(vel * 95));
 
         updateHUDTelemetry(e.scroll);
-        scrollingAeroLines(e.scroll);
       });
-
-      const linesEl = document.getElementById('heroLines');
-      setInterval(() => {
-        if (window.scrollY > window.innerHeight) return;
-        const l = document.createElement('div'); l.className = 'speed-line';
-        l.style.top = Math.random() * 100 + '%'; l.style.width = (Math.random() * 200 + 100) + 'px';
-        l.style.animationDuration = (Math.random() * 1 + 0.5) + 's';
-        linesEl.appendChild(l); setTimeout(() => l.remove(), 2500);
-      }, 250);
 
       // --- Hero Parallax ---
       const heroContent = document.querySelector('.hero-content');
       const heroBg = document.getElementById('heroBg');
-      const heroAeroLines = document.getElementById('heroAeroLines');
+      const heroCanvasWrap = document.getElementById('heroCanvasWrap');
 
       window.addEventListener('scroll', () => {
         if (!window._lastScroll) window._lastScroll = 0;
@@ -2676,7 +3108,7 @@
         if (scrollY <= window.innerHeight) {
           if (heroContent) heroContent.style.transform = `translate3d(0, ${scrollY * 0.35}px, 0)`;
           if (heroBg) heroBg.style.transform = `translate3d(0, ${scrollY * 0.15}px, 0)`;
-          if (heroAeroLines) heroAeroLines.style.transform = `translate3d(0, ${scrollY * 0.15}px, 0)`;
+          if (heroCanvasWrap) heroCanvasWrap.style.transform = `translate3d(0, ${scrollY * 0.15}px, 0)`;
         }
       });
 
