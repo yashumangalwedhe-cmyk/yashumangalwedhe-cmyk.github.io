@@ -108,7 +108,7 @@
       background: var(--white);
       border-radius: 50%;
       pointer-events: none;
-      z-index: 10000;
+      z-index: 30001;
       display: none;
       mix-blend-mode: difference;
       transition: width 0.2s, height 0.2s, margin 0.2s;
@@ -131,7 +131,7 @@
       border: 1px solid rgba(255, 255, 255, 0.8);
       border-radius: 50%;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 30000;
       display: none;
       mix-blend-mode: difference;
       transition: width 0.2s, height 0.2s, border-color 0.2s, opacity 0.2s, margin 0.2s;
@@ -2929,24 +2929,14 @@
       </div>
       <div class="briefing-body">
         <div class="briefing-step active" data-step="1">
-          <div class="briefing-number">01 / 04</div>
+          <div class="briefing-number">01 / 02</div>
           <h3 class="briefing-step-title">AERO DYNAMICS PANEL</h3>
-          <p class="briefing-text">Use the <strong>AERO CONFIG</strong> dashboard on the top right of the Hero section to control our wind tunnel. Adjust the car's <strong>Angle of Attack</strong> to rotate the wireframe and bend streamlines, scale Wind Velocity, and toggle between Laminar and Turbulent flows in real-time.</p>
+          <p class="briefing-text">Use the <strong>AERO CONFIG</strong> console on the top right to control the wind tunnel in real-time. Adjust the car's <strong>Angle of Attack</strong> to tilt the wireframe and bend streamlines, scale Wind Velocity, and toggle between Laminar and Turbulent flows.</p>
         </div>
         <div class="briefing-step" data-step="2">
-          <div class="briefing-number">02 / 04</div>
-          <h3 class="briefing-step-title">TELEMETRY SYS HUD</h3>
-          <p class="briefing-text">The <strong>TELEMETRY HUD</strong> at the bottom left displays live telemetry. Watch your scroll speed translate to velocity (KPH) and track which lap section you are currently in. Click the header bar anytime to minimize the HUD.</p>
-        </div>
-        <div class="briefing-step" data-step="3">
-          <div class="briefing-number">03 / 04</div>
-          <h3 class="briefing-step-title">TEAM PROFILES</h3>
-          <p class="briefing-text">Use the <strong>TEAM PROFILE</strong> dropdown inside the HUD to switch colors. Choosing your favorite team (e.g. Ferrari, McLaren, Red Bull) will dynamically paint the entire portfolio, including the wind tunnel flow paths!</p>
-        </div>
-        <div class="briefing-step" data-step="4">
-          <div class="briefing-number">04 / 04</div>
-          <h3 class="briefing-step-title">PROJECT CIRCUIT MAP</h3>
-          <p class="briefing-text">Scroll to the Projects grid to reveal the interactive <strong>CIRCUIT TRACK MAP</strong>. Hover over corner nodes to view diagnostic labels, and click corners to auto-scroll and run the project's detailed telemetry report.</p>
+          <div class="briefing-number">02 / 02</div>
+          <h3 class="briefing-step-title">TELEMETRY & TEAM STYLES</h3>
+          <p class="briefing-text">The <strong>TELEMETRY HUD</strong> at the bottom left displays live KPH velocity. Select a <strong>Team Profile</strong> in the HUD to recolor the entire page, and scroll down to interact with the <strong>Circuit Projects Map</strong>! Click the HUD header to minimize it.</p>
         </div>
       </div>
       <div class="briefing-footer">
@@ -3839,7 +3829,7 @@
 
       // --- Driver Briefing Tutorial Logic ---
       let currentStep = 1;
-      const totalSteps = 4;
+      const totalSteps = 2;
       const briefingOverlay = document.getElementById('briefingOverlay');
       const briefingNextBtn = document.getElementById('briefingNextBtn');
       const briefingSkipBtn = document.getElementById('briefingSkipBtn');
@@ -3871,25 +3861,6 @@
             hud.classList.remove('minimized');
             hud.classList.add('tutorial-highlight');
           }
-        } else if (step === 3) {
-          lenis.scrollTo(document.getElementById('hero'), { immediate: true });
-          const select = document.getElementById('hudThemeSelect');
-          if (select) {
-            select.classList.add('tutorial-highlight');
-          }
-        } else if (step === 4) {
-          const track = document.querySelector('.track-map-wrap');
-          const projectsSec = document.getElementById('projects');
-          if (projectsSec) {
-            lenis.start();
-            lenis.scrollTo(projectsSec, {
-              duration: 1.2,
-              onComplete: () => {
-                lenis.stop();
-                if (track) track.classList.add('tutorial-highlight');
-              }
-            });
-          }
         }
 
         // Update button label
@@ -3905,6 +3876,7 @@
         const aeroPanel = document.getElementById('aeroPanel');
         if (aeroPanel) aeroPanel.classList.remove('expanded');
 
+        currentStep = 1;
         lenis.start();
         lenis.scrollTo(document.getElementById('hero'), { duration: 1.0 });
       }
