@@ -1834,9 +1834,14 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-      transition: opacity 0.3s, transform 0.3s;
-      pointer-events: none;
+      transition: opacity 0.3s, transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+      pointer-events: auto;
       opacity: 0.9;
+    }
+
+    .telemetry-hud.minimized {
+      transform: translateY(calc(100% - 2.5rem));
+      opacity: 0.75;
     }
 
     .telemetry-hud:hover {
@@ -2094,6 +2099,175 @@
       color: var(--muted);
     }
 
+    /* ── DRIVER BRIEFING TUTORIAL ── */
+    .briefing-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(4, 4, 6, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .briefing-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .briefing-card {
+      width: 100%;
+      max-width: 480px;
+      background: rgba(11, 11, 14, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-left: 4px solid var(--red);
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(15px) scale(0.98);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .briefing-overlay.active .briefing-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .briefing-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
+      color: var(--red);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .briefing-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+
+    .briefing-body {
+      min-height: 120px;
+      position: relative;
+    }
+
+    .briefing-step {
+      display: none;
+      flex-direction: column;
+      gap: 0.6rem;
+      animation: briefingFadeIn 0.3s ease forwards;
+    }
+
+    @keyframes briefingFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .briefing-step.active {
+      display: flex;
+    }
+
+    .briefing-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    .briefing-step-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.05em;
+    }
+
+    .briefing-text {
+      font-size: 0.8rem;
+      color: #b0b0bc;
+      line-height: 1.6;
+    }
+
+    .briefing-text strong {
+      color: var(--red);
+    }
+
+    .briefing-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 1.2rem;
+    }
+
+    .briefing-skip {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 0.5rem 1.4rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .briefing-skip:hover {
+      border-color: rgba(255,255,255,0.15);
+      color: var(--white);
+    }
+
+    .briefing-next {
+      background: var(--red);
+      border: 1px solid var(--red);
+      color: var(--white);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 0.5rem 1.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(232, 0, 45, 0.25);
+      transition: all 0.2s;
+    }
+
+    .briefing-next:hover {
+      background: #ff1c47;
+      border-color: #ff1c47;
+      box-shadow: 0 0 16px rgba(232, 0, 45, 0.45);
+    }
+
+    .tutorial-highlight {
+      position: relative !important;
+      z-index: 10005 !important;
+      outline: 2px solid var(--red) !important;
+      box-shadow: 0 0 25px rgba(232, 0, 45, 0.6) !important;
+      pointer-events: none !important;
+    }
+
     @media (max-width: 900px) {
       .telemetry-hud {
         display: none;
@@ -2109,9 +2283,12 @@
 
   <!-- Telemetry HUD -->
   <div class="telemetry-hud" id="telemetryHud">
-    <div class="hud-title">
+    <div class="hud-title" id="hudHeader" style="cursor: pointer; user-select: none;" title="Toggle Telemetry HUD">
       <span>TELEMETRY SYS V1.9</span>
-      <span class="status-dot"></span>
+      <div style="display: flex; align-items: center; gap: 0.5rem; pointer-events: none;">
+        <span class="hud-toggle-icon" id="hudToggleIcon" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted); font-weight: bold; margin-right: 0.2rem;">[-]</span>
+        <span class="status-dot"></span>
+      </div>
     </div>
     <div class="hud-metric-row">
       <span class="hud-label">LAP // SECTION</span>
@@ -2743,6 +2920,42 @@
     <div>© 2026 · Built for the fast lane.</div>
   </footer>
 
+  <!-- Driver Briefing Tutorial Overlay -->
+  <div class="briefing-overlay" id="briefingOverlay">
+    <div class="briefing-card">
+      <div class="briefing-header">
+        <span class="briefing-tag">// DRIVER CHECKLIST</span>
+        <h2 class="briefing-title">PRE-FLIGHT BRIEFING</h2>
+      </div>
+      <div class="briefing-body">
+        <div class="briefing-step active" data-step="1">
+          <div class="briefing-number">01 / 04</div>
+          <h3 class="briefing-step-title">AERO DYNAMICS PANEL</h3>
+          <p class="briefing-text">Use the <strong>AERO CONFIG</strong> dashboard on the top right of the Hero section to control our wind tunnel. Adjust the car's <strong>Angle of Attack</strong> to rotate the wireframe and bend streamlines, scale Wind Velocity, and toggle between Laminar and Turbulent flows in real-time.</p>
+        </div>
+        <div class="briefing-step" data-step="2">
+          <div class="briefing-number">02 / 04</div>
+          <h3 class="briefing-step-title">TELEMETRY SYS HUD</h3>
+          <p class="briefing-text">The <strong>TELEMETRY HUD</strong> at the bottom left displays live telemetry. Watch your scroll speed translate to velocity (KPH) and track which lap section you are currently in. Click the header bar anytime to minimize the HUD.</p>
+        </div>
+        <div class="briefing-step" data-step="3">
+          <div class="briefing-number">03 / 04</div>
+          <h3 class="briefing-step-title">TEAM PROFILES</h3>
+          <p class="briefing-text">Use the <strong>TEAM PROFILE</strong> dropdown inside the HUD to switch colors. Choosing your favorite team (e.g. Ferrari, McLaren, Red Bull) will dynamically paint the entire portfolio, including the wind tunnel flow paths!</p>
+        </div>
+        <div class="briefing-step" data-step="4">
+          <div class="briefing-number">04 / 04</div>
+          <h3 class="briefing-step-title">PROJECT CIRCUIT MAP</h3>
+          <p class="briefing-text">Scroll to the Projects grid to reveal the interactive <strong>CIRCUIT TRACK MAP</strong>. Hover over corner nodes to view diagnostic labels, and click corners to auto-scroll and run the project's detailed telemetry report.</p>
+        </div>
+      </div>
+      <div class="briefing-footer">
+        <button class="briefing-skip" id="briefingSkipBtn">SKIP</button>
+        <button class="briefing-next" id="briefingNextBtn">NEXT LAP</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       // --- Global Telemetry HUD Variables ---
@@ -2768,6 +2981,27 @@
         themeSelect.addEventListener('change', (e) => {
           setTheme(e.target.value);
         });
+      }
+
+      // --- Collapsible Telemetry HUD ---
+      const telemetryHud = document.getElementById('telemetryHud');
+      const hudHeader = document.getElementById('hudHeader');
+      const hudToggleIcon = document.getElementById('hudToggleIcon');
+
+      if (hudHeader && telemetryHud) {
+        hudHeader.addEventListener('click', () => {
+          const isMin = telemetryHud.classList.toggle('minimized');
+          if (hudToggleIcon) {
+            hudToggleIcon.textContent = isMin ? '[+]' : '[-]';
+          }
+          localStorage.setItem('hud-minimized', isMin ? 'true' : 'false');
+        });
+
+        // Restore minimized state on page load
+        if (localStorage.getItem('hud-minimized') === 'true') {
+          telemetryHud.classList.add('minimized');
+          if (hudToggleIcon) hudToggleIcon.textContent = '[+]';
+        }
       }
 
       // --- Aero Config Physics Variables ---
@@ -3602,6 +3836,104 @@
           if (heroCanvasWrap) heroCanvasWrap.style.transform = `translate3d(0, ${scrollY * 0.15}px, 0)`;
         }
       });
+
+      // --- Driver Briefing Tutorial Logic ---
+      let currentStep = 1;
+      const totalSteps = 4;
+      const briefingOverlay = document.getElementById('briefingOverlay');
+      const briefingNextBtn = document.getElementById('briefingNextBtn');
+      const briefingSkipBtn = document.getElementById('briefingSkipBtn');
+
+      function showStep(step) {
+        // Clear previous highlights and active steps
+        document.querySelectorAll('.briefing-step').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tutorial-highlight').forEach(el => el.classList.remove('tutorial-highlight'));
+
+        // Handle special panel states
+        const aeroPanel = document.getElementById('aeroPanel');
+        if (aeroPanel && step !== 1) aeroPanel.classList.remove('expanded');
+
+        // Activate step text
+        const stepEl = document.querySelector(`.briefing-step[data-step="${step}"]`);
+        if (stepEl) stepEl.classList.add('active');
+
+        // Apply highlights, expand panels, and navigate via scroll
+        if (step === 1) {
+          lenis.scrollTo(document.getElementById('hero'), { immediate: true });
+          if (aeroPanel) {
+            aeroPanel.classList.add('expanded');
+            aeroPanel.classList.add('tutorial-highlight');
+          }
+        } else if (step === 2) {
+          lenis.scrollTo(document.getElementById('hero'), { immediate: true });
+          const hud = document.getElementById('telemetryHud');
+          if (hud) {
+            hud.classList.remove('minimized');
+            hud.classList.add('tutorial-highlight');
+          }
+        } else if (step === 3) {
+          lenis.scrollTo(document.getElementById('hero'), { immediate: true });
+          const select = document.getElementById('hudThemeSelect');
+          if (select) {
+            select.classList.add('tutorial-highlight');
+          }
+        } else if (step === 4) {
+          const track = document.querySelector('.track-map-wrap');
+          const projectsSec = document.getElementById('projects');
+          if (projectsSec) {
+            lenis.start();
+            lenis.scrollTo(projectsSec, {
+              duration: 1.2,
+              onComplete: () => {
+                lenis.stop();
+                if (track) track.classList.add('tutorial-highlight');
+              }
+            });
+          }
+        }
+
+        // Update button label
+        if (briefingNextBtn) {
+          briefingNextBtn.textContent = step === totalSteps ? 'START ENGINE' : 'NEXT LAP';
+        }
+      }
+
+      function endBriefing() {
+        if (briefingOverlay) briefingOverlay.classList.remove('active');
+        document.querySelectorAll('.tutorial-highlight').forEach(el => el.classList.remove('tutorial-highlight'));
+        
+        const aeroPanel = document.getElementById('aeroPanel');
+        if (aeroPanel) aeroPanel.classList.remove('expanded');
+
+        lenis.start();
+        lenis.scrollTo(document.getElementById('hero'), { duration: 1.0 });
+      }
+
+      if (briefingNextBtn) {
+        briefingNextBtn.addEventListener('click', () => {
+          if (currentStep < totalSteps) {
+            currentStep++;
+            showStep(currentStep);
+          } else {
+            endBriefing();
+          }
+        });
+      }
+
+      if (briefingSkipBtn) {
+        briefingSkipBtn.addEventListener('click', () => {
+          endBriefing();
+        });
+      }
+
+      // Automatically launch briefing after a 1.2s delay for a clean load sequence
+      setTimeout(() => {
+        if (briefingOverlay) {
+          lenis.stop();
+          briefingOverlay.classList.add('active');
+          showStep(1);
+        }
+      }, 1200);
 
     });
   </script>
