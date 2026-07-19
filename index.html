@@ -2268,6 +2268,17 @@
       pointer-events: none !important;
     }
 
+    /* ── RANDOM F1 CAR FLYBY ── */
+    .flyby-car {
+      position: fixed;
+      left: -150px;
+      z-index: 20000;
+      pointer-events: none;
+      opacity: 0;
+      display: flex;
+      align-items: center;
+    }
+
     @media (max-width: 900px) {
       .telemetry-hud {
         display: none;
@@ -2776,6 +2787,24 @@
           <circle r="12" />
           <text class="track-node-num" dy="2.5" text-anchor="middle">5</text>
           <text class="track-node-label" y="24" text-anchor="middle">MECH BATTERY</text>
+        </g>
+
+        <!-- Track Racing Car -->
+        <g id="trackCar" style="display: none; pointer-events: none;">
+          <!-- Rear Wing -->
+          <line x1="-12" y1="-8" x2="-12" y2="8" stroke="var(--white)" stroke-width="2" />
+          <line x1="-12" y1="0" x2="-6" y2="0" stroke="var(--white)" stroke-width="1.5" />
+          <!-- Wheels -->
+          <rect x="-8" y="-9" width="5" height="3.5" fill="var(--red)" />
+          <rect x="-8" y="5.5" width="5" height="3.5" fill="var(--red)" />
+          <rect x="4" y="-9" width="5" height="3.5" fill="var(--red)" />
+          <rect x="4" y="5.5" width="5" height="3.5" fill="var(--red)" />
+          <!-- Main Chassis Body -->
+          <path d="M-10,-4 L6,-3 L12,0 L6,3 L-10,4 Z" fill="var(--white)" />
+          <!-- Helmet -->
+          <circle cx="0" cy="0" r="2.5" fill="var(--red)" />
+          <!-- Front Wing -->
+          <line x1="10" y1="-7" x2="10" y2="7" stroke="var(--white)" stroke-width="2" />
         </g>
       </svg>
       <div class="track-tooltip" id="trackTooltip">
@@ -3906,6 +3935,82 @@
           showStep(1);
         }
       }, 1200);
+
+      // --- F1 Circuit Track Car Animation ---
+      let trackCarProgress = 0;
+      function animateTrackCar() {
+        const path = document.getElementById('trackActivePath');
+        const trackCar = document.getElementById('trackCar');
+        if (path && trackCar) {
+          trackCar.style.display = 'block';
+          const totalLength = path.getTotalLength();
+          
+          // Increment progress along the path (1.4px/frame speed)
+          trackCarProgress = (trackCarProgress + 1.4) % totalLength;
+
+          // Get coordinates on the path
+          const pt = path.getPointAtLength(trackCarProgress);
+          // Get a small forward-offset point to calculate tangent vector rotation
+          const ptAhead = path.getPointAtLength((trackCarProgress + 2) % totalLength);
+          const angle = Math.atan2(ptAhead.y - pt.y, ptAhead.x - pt.x) * 180 / Math.PI;
+
+          trackCar.setAttribute('transform', `translate(${pt.x}, ${pt.y}) rotate(${angle})`);
+        }
+        requestAnimationFrame(animateTrackCar);
+      }
+      // Start track car animation loop
+      animateTrackCar();
+
+      // --- Random F1 Car Flyby ---
+      function triggerCarFlyby() {
+        // Prevent launching flybys if the page is currently in driver briefing tutorial mode
+        const tutorialActive = briefingOverlay && briefingOverlay.classList.contains('active');
+        if (tutorialActive) return;
+
+        const car = document.createElement('div');
+        car.className = 'flyby-car';
+        
+        // Grab current theme color RGB dynamic variables
+        const activeRGB = (typeof getThemeColorRGB === 'function') ? getThemeColorRGB() : '232, 0, 45';
+        
+        car.innerHTML = `
+          <svg width="100" height="30" viewBox="0 0 100 30" fill="none">
+            <path d="M5 22h10l5-3h40l3 3h20l7-5-5-2-15-1h-10l-5-4h-10l-3 4H15l-3 3H5v5z" stroke="rgba(${activeRGB}, 0.8)" stroke-width="1.5" fill="rgba(14,14,18,0.8)"/>
+            <circle cx="25" cy="22" r="7" stroke="rgba(${activeRGB}, 0.9)" fill="#070709" stroke-width="1.5" />
+            <circle cx="75" cy="22" r="7" stroke="rgba(${activeRGB}, 0.9)" fill="#070709" stroke-width="1.5" />
+            <path d="M68 15h12l3-5h-10l-5 5z" fill="rgba(${activeRGB}, 0.8)" />
+          </svg>
+          <div style="position: absolute; right: 80px; width: 60px; height: 10px; background: linear-gradient(to right, transparent, rgba(${activeRGB}, 0.35)); filter: blur(3px);"></div>
+        `;
+
+        const randomY = 15 + Math.random() * 70; // Spawn between 15% and 85% viewport height
+        car.style.top = randomY + 'vh';
+        car.style.left = '-150px';
+        document.body.appendChild(car);
+
+        // Slide the car across the screen with smooth transform transition
+        setTimeout(() => {
+          car.style.transition = 'transform 2.2s cubic-bezier(0.25, 1, 0.5, 1)';
+          car.style.transform = `translateX(${window.innerWidth + 300}px)`;
+          car.style.opacity = '1';
+        }, 50);
+
+        // Clean up from DOM when offscreen
+        setTimeout(() => {
+          car.remove();
+        }, 2400);
+      }
+
+      // Schedule flybys dynamically at random intervals (every 18 to 36 seconds)
+      function queueNextFlyby() {
+        const delay = 18000 + Math.random() * 18000;
+        setTimeout(() => {
+          triggerCarFlyby();
+          queueNextFlyby();
+        }, delay);
+      }
+      // Start scheduling flybys after a brief delay
+      setTimeout(queueNextFlyby, 10000);
 
     });
   </script>
