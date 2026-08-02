@@ -305,9 +305,9 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at 50% 55%, rgba(232, 0, 45, 0.07) 0%, transparent 65%),
-        linear-gradient(rgba(232, 0, 45, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(232, 0, 45, 0.03) 1px, transparent 1px);
+        radial-gradient(ellipse at 50% 55%, rgba(var(--red-rgb), 0.06) 0%, transparent 65%),
+        linear-gradient(rgba(var(--red-rgb), 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(var(--red-rgb), 0.02) 1px, transparent 1px);
       background-size: 100% 100%, 40px 40px, 40px 40px;
       background-position: center center, center center, center center;
       pointer-events: none;
@@ -1937,7 +1937,7 @@
       background: transparent;
       border: none;
       color: var(--muted);
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Cinzel', serif;
       font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.15em;
@@ -2018,10 +2018,10 @@
     }
 
     .aero-btn.active {
-      background: rgba(232, 0, 45, 0.15);
+      background: rgba(var(--red-rgb), 0.15);
       border-color: var(--red);
       color: var(--white);
-      box-shadow: 0 0 8px rgba(232, 0, 45, 0.2);
+      box-shadow: 0 0 8px rgba(var(--red-rgb), 0.2);
     }
 
     .aero-slider {
@@ -2061,7 +2061,7 @@
     }
 
     .hud-title {
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Cinzel', serif;
       font-size: 0.58rem;
       letter-spacing: 0.25em;
       color: var(--muted);
@@ -2120,7 +2120,7 @@
 
     .hud-val.highlight {
       color: var(--red);
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
     }
 
@@ -2190,10 +2190,10 @@
     }
 
     .briefing-title {
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Cinzel', serif;
       font-size: 1.35rem;
-      font-weight: 900;
-      letter-spacing: 0.05em;
+      font-weight: 700;
+      letter-spacing: 0.08em;
       color: var(--white);
       text-transform: uppercase;
     }
@@ -2227,7 +2227,7 @@
     }
 
     .briefing-step-title {
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Cinzel', serif;
       font-size: 0.95rem;
       font-weight: 700;
       color: var(--white);
@@ -2258,8 +2258,8 @@
       background: transparent;
       border: 1px solid var(--border);
       color: var(--muted);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.55rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
       font-weight: 700;
       letter-spacing: 0.15em;
       padding: 0.5rem 1.4rem;
@@ -2276,29 +2276,30 @@
     .briefing-next {
       background: var(--red);
       border: 1px solid var(--red);
-      color: var(--white);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.55rem;
+      color: var(--dark);
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
       font-weight: 700;
       letter-spacing: 0.15em;
       padding: 0.5rem 1.6rem;
       border-radius: 4px;
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(232, 0, 45, 0.25);
+      box-shadow: 0 0 10px rgba(var(--red-rgb), 0.25);
       transition: all 0.2s;
     }
 
     .briefing-next:hover {
-      background: #ff1c47;
-      border-color: #ff1c47;
-      box-shadow: 0 0 16px rgba(232, 0, 45, 0.45);
+      background: var(--white);
+      border-color: var(--white);
+      color: var(--dark);
+      box-shadow: 0 0 16px rgba(var(--red-rgb), 0.45);
     }
 
     .tutorial-highlight {
       position: relative !important;
       z-index: 10005 !important;
       outline: 2px solid var(--red) !important;
-      box-shadow: 0 0 25px rgba(232, 0, 45, 0.6) !important;
+      box-shadow: 0 0 25px rgba(var(--red-rgb), 0.6) !important;
       pointer-events: none !important;
     }
 
@@ -2328,8 +2329,8 @@
 
   <!-- Telemetry HUD -->
   <div class="telemetry-hud" id="telemetryHud">
-    <div class="hud-title" id="hudHeader" style="cursor: pointer; user-select: none;" title="Toggle Telemetry HUD">
-      <span>TELEMETRY SYS V1.9</span>
+    <div class="hud-title" id="hudHeader" style="cursor: pointer; user-select: none;" title="Toggle Dashboard HUD">
+      <span>MONACO CHRONO V1.9</span>
       <div style="display: flex; align-items: center; gap: 0.5rem; pointer-events: none;">
         <span class="hud-toggle-icon" id="hudToggleIcon" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted); font-weight: bold; margin-right: 0.2rem;">[-]</span>
         <span class="status-dot"></span>
@@ -2356,13 +2357,13 @@
       <span class="hud-val highlight" style="color: var(--completed);">SECURED</span>
     </div>
     <div class="hud-metric-row" style="margin-top: 0.5rem; border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 0.5rem;">
-      <span class="hud-label">TEAM PROFILE</span>
+      <span class="hud-label">HERITAGE PALETTE</span>
       <select class="hud-theme-select" id="hudThemeSelect">
-        <option value="paddock">F1 Paddock</option>
-        <option value="scuderia">Ferrari</option>
-        <option value="papaya">McLaren</option>
-        <option value="silver">Mercedes</option>
-        <option value="bull">Red Bull</option>
+        <option value="paddock">Heritage Green</option>
+        <option value="scuderia">Scuderia Rosso</option>
+        <option value="papaya">McLaren Copper</option>
+        <option value="silver">Silberpfeil</option>
+        <option value="bull">Blue Ribbon</option>
       </select>
     </div>
   </div>
