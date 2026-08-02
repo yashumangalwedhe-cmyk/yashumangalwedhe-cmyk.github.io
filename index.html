@@ -1072,8 +1072,8 @@
     }
 
     .project-card:hover {
-      border-color: rgba(232, 0, 45, 0.5);
-      box-shadow: 0 0 20px rgba(232, 0, 45, 0.25);
+      border-color: rgba(var(--red-rgb), 0.45);
+      box-shadow: 0 0 20px rgba(var(--red-rgb), 0.15);
       transform: translate3d(0, -4px, 0);
     }
 
@@ -1095,8 +1095,9 @@
     }
 
     .project-name {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.75rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
       color: var(--red);
       margin-bottom: 1rem;
     }
@@ -1179,7 +1180,7 @@
       border-color: var(--red);
       background: var(--card);
       transform: translate3d(0, -4px, 0);
-      box-shadow: 0 0 15px rgba(232, 0, 45, 0.2);
+      box-shadow: 0 8px 24px rgba(var(--red-rgb), 0.15);
     }
 
     .hobby-icon {
@@ -1190,9 +1191,10 @@
     }
 
     .hobby-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
       color: var(--white);
       margin-bottom: 1rem;
     }
@@ -1243,7 +1245,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(232, 0, 45, 0.04);
+      background: rgba(var(--red-rgb), 0.04);
       opacity: 0;
       transition: opacity 0.3s;
     }
@@ -1252,7 +1254,7 @@
       border-color: var(--red);
       color: var(--white);
       transform: translate3d(0, -2px, 0);
-      box-shadow: 0 8px 24px rgba(232, 0, 45, 0.15);
+      box-shadow: 0 8px 24px rgba(var(--red-rgb), 0.15);
     }
 
     .contact-link:hover::before {
@@ -1516,10 +1518,10 @@
     }
 
     .pm-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 900;
-      line-height: 1.05;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+      font-weight: 500;
+      line-height: 1.1;
       color: var(--white);
       opacity: 0;
       transform: translateY(12px);
@@ -1544,7 +1546,7 @@
     .pm-close:hover {
       border-color: var(--red);
       color: var(--white);
-      background: rgba(232, 0, 45, 0.1);
+      background: rgba(var(--red-rgb), 0.1);
       transform: rotate(90deg);
     }
 
@@ -1614,9 +1616,9 @@
     }
 
     .pm-metric-val {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 900;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
       color: var(--red);
       line-height: 1;
       margin-bottom: 0.4rem;
