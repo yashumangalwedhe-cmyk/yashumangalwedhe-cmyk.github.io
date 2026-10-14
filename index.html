@@ -1923,7 +1923,8 @@
       color: var(--white);
       transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
       overflow: hidden;
-      max-height: 40px; /* Collapsed height */
+      max-height: 40px;
+      /* Collapsed height */
     }
 
     .aero-panel.expanded {
@@ -2211,8 +2212,15 @@
     }
 
     @keyframes briefingFadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .briefing-step.active {
@@ -2269,7 +2277,7 @@
     }
 
     .briefing-skip:hover {
-      border-color: rgba(255,255,255,0.15);
+      border-color: rgba(255, 255, 255, 0.15);
       color: var(--white);
     }
 
@@ -2332,7 +2340,8 @@
     <div class="hud-title" id="hudHeader" style="cursor: pointer; user-select: none;" title="Toggle Dashboard HUD">
       <span>MONACO CHRONO V1.9</span>
       <div style="display: flex; align-items: center; gap: 0.5rem; pointer-events: none;">
-        <span class="hud-toggle-icon" id="hudToggleIcon" style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted); font-weight: bold; margin-right: 0.2rem;">[-]</span>
+        <span class="hud-toggle-icon" id="hudToggleIcon"
+          style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted); font-weight: bold; margin-right: 0.2rem;">[-]</span>
         <span class="status-dot"></span>
       </div>
     </div>
@@ -2356,7 +2365,8 @@
       <span class="hud-label">INTERNSHIP</span>
       <span class="hud-val highlight" style="color: var(--completed);">SECURED</span>
     </div>
-    <div class="hud-metric-row" style="margin-top: 0.5rem; border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 0.5rem;">
+    <div class="hud-metric-row"
+      style="margin-top: 0.5rem; border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 0.5rem;">
       <span class="hud-label">HERITAGE PALETTE</span>
       <select class="hud-theme-select" id="hudThemeSelect">
         <option value="paddock">Heritage Green</option>
@@ -2522,7 +2532,10 @@
         it's the relentless refinement of every variable until marginal gains compound into something extraordinary.
         That's the standard I hold my engineering to.</p>
 
-      <p>I have secured my <strong>3rd-year internship</strong> as a Mechanical R&D Intern at <strong>Gravity Gardens</strong> in Nijmegen, Netherlands, starting September 2026. I am excited to apply transient thermodynamic and kinematic models to physical, high-performance R&D systems. Long-term, my focus remains on engineering environments where innovation is the baseline.</p>
+      <p>I have secured my <strong>3rd-year internship</strong> as a Mechanical R&D Intern at <strong>Gravity
+          Gardens</strong> in Nijmegen, Netherlands, starting September 2026. I am excited to apply transient
+        thermodynamic and kinematic models to physical, high-performance R&D systems. Long-term, my focus remains on
+        engineering environments where innovation is the baseline.</p>
 
       <div class="about-tags">
         <span class="tag">SolidWorks</span>
@@ -2577,12 +2590,14 @@
         <div class="timeline-dot"></div>
         <div class="timeline-header">
           <div class="timeline-role">Mechanical R&D Intern</div>
-          <div class="timeline-date">Incoming · Sep 2026</div>
+          <div class="timeline-date">Sep 2026 - Present</div>
         </div>
         <p class="timeline-company">Gravity Gardens · Nijmegen, Netherlands</p>
         <ul class="timeline-desc" style="margin-left:1.2em;">
-          <li>Secured a competitive 3rd-year engineering internship focusing on mechanical systems design, automation, and prototyping.</li>
-          <li>Will be contributing to structural detailing, FEA stress modeling, and physical validation tests of high-performance assemblies.</li>
+          <li>Secured a competitive 3rd-year engineering internship focusing on mechanical systems design, automation,
+            and prototyping.</li>
+          <li>Will be contributing to structural detailing, FEA stress modeling, and physical validation tests of
+            high-performance assemblies.</li>
         </ul>
       </div>
 
@@ -2590,7 +2605,7 @@
         <div class="timeline-dot"></div>
         <div class="timeline-header">
           <div class="timeline-role">Chassis & Drivetrain Engineer</div>
-          <div class="timeline-date">Sep 2025 — Present</div>
+          <div class="timeline-date">Sep 2025 — Jun 2026</div>
         </div>
         <p class="timeline-company">HAN Competitive Robotics</p>
         <ul class="timeline-desc" style="margin-left:1.2em;">
@@ -2794,9 +2809,11 @@
     <div class="track-map-wrap">
       <div class="track-map-label">// CIRCUIT MAP · PROJECT TELEMETRY</div>
       <svg class="track-svg" viewBox="0 0 1000 900">
-        <path class="track-outline" d="M 150 150 L 550 150 C 700 150, 750 300, 600 400 L 400 400 C 300 400, 250 500, 350 600 C 450 700, 600 700, 700 600 L 750 500 C 800 420, 900 420, 850 600 L 750 800 C 700 880, 500 880, 450 800 L 150 500 C 80 400, 80 200, 150 150 Z" />
-        <path class="track-line" id="trackActivePath" d="M 150 150 L 550 150 C 700 150, 750 300, 600 400 L 400 400 C 300 400, 250 500, 350 600 C 450 700, 600 700, 700 600 L 750 500 C 800 420, 900 420, 850 600 L 750 800 C 700 880, 500 880, 450 800 L 150 500 C 80 400, 80 200, 150 150 Z" />
-        
+        <path class="track-outline"
+          d="M 150 150 L 550 150 C 700 150, 750 300, 600 400 L 400 400 C 300 400, 250 500, 350 600 C 450 700, 600 700, 700 600 L 750 500 C 800 420, 900 420, 850 600 L 750 800 C 700 880, 500 880, 450 800 L 150 500 C 80 400, 80 200, 150 150 Z" />
+        <path class="track-line" id="trackActivePath"
+          d="M 150 150 L 550 150 C 700 150, 750 300, 600 400 L 400 400 C 300 400, 250 500, 350 600 C 450 700, 600 700, 700 600 L 750 500 C 800 420, 900 420, 850 600 L 750 800 C 700 880, 500 880, 450 800 L 150 500 C 80 400, 80 200, 150 150 Z" />
+
         <!-- Corner Nodes -->
         <g class="track-node" data-project="drs" transform="translate(150, 150)">
           <circle r="12" />
@@ -2995,12 +3012,16 @@
         <div class="briefing-step active" data-step="1">
           <div class="briefing-number">01 / 02</div>
           <h3 class="briefing-step-title">AERO DYNAMICS PANEL</h3>
-          <p class="briefing-text">Use the <strong>AERO CONFIG</strong> console on the top right to control the wind tunnel in real-time. Adjust the car's <strong>Angle of Attack</strong> to tilt the wireframe and bend streamlines, scale Wind Velocity, and toggle between Laminar and Turbulent flows.</p>
+          <p class="briefing-text">Use the <strong>AERO CONFIG</strong> console on the top right to control the wind
+            tunnel in real-time. Adjust the car's <strong>Angle of Attack</strong> to tilt the wireframe and bend
+            streamlines, scale Wind Velocity, and toggle between Laminar and Turbulent flows.</p>
         </div>
         <div class="briefing-step" data-step="2">
           <div class="briefing-number">02 / 02</div>
           <h3 class="briefing-step-title">TELEMETRY & TEAM STYLES</h3>
-          <p class="briefing-text">The <strong>TELEMETRY HUD</strong> at the bottom left displays live KPH velocity. Select a <strong>Team Profile</strong> in the HUD to recolor the entire page, and scroll down to interact with the <strong>Circuit Projects Map</strong>! Click the HUD header to minimize it.</p>
+          <p class="briefing-text">The <strong>TELEMETRY HUD</strong> at the bottom left displays live KPH velocity.
+            Select a <strong>Team Profile</strong> in the HUD to recolor the entire page, and scroll down to interact
+            with the <strong>Circuit Projects Map</strong>! Click the HUD header to minimize it.</p>
         </div>
       </div>
       <div class="briefing-footer">
@@ -3019,7 +3040,7 @@
       // --- F1 Team Theme Engine Setup ---
       const themeSelect = document.getElementById('hudThemeSelect');
       const savedTheme = localStorage.getItem('f1-portfolio-theme') || 'paddock';
-      
+
       function setTheme(theme) {
         if (theme === 'paddock') {
           document.documentElement.removeAttribute('data-theme');
@@ -3029,7 +3050,7 @@
         localStorage.setItem('f1-portfolio-theme', theme);
         if (themeSelect) themeSelect.value = theme;
       }
-      
+
       setTheme(savedTheme);
       if (themeSelect) {
         themeSelect.addEventListener('change', (e) => {
@@ -3325,7 +3346,7 @@
 
           const activeRGB = getThemeColorRGB();
           const rotatedObstacles = getRotatedObstacles();
-          
+
           const activeObstacles = [...rotatedObstacles];
           if (mouseActive && mouseX >= 0 && mouseX <= W && mouseY >= 0 && mouseY <= H) {
             activeObstacles.push({ x: mouseX, y: mouseY, r: 45, strength: 2.2 });
@@ -3664,7 +3685,7 @@
 
       document.querySelectorAll('.track-node').forEach(node => {
         const projKey = node.dataset.project;
-        
+
         node.addEventListener('mouseenter', () => {
           if (!trackTooltip || !trackTooltipName) return;
           const name = projectNamesMap[projKey] || 'PROJECT';
@@ -3936,7 +3957,7 @@
       function endBriefing() {
         if (briefingOverlay) briefingOverlay.classList.remove('active');
         document.querySelectorAll('.tutorial-highlight').forEach(el => el.classList.remove('tutorial-highlight'));
-        
+
         const aeroPanel = document.getElementById('aeroPanel');
         if (aeroPanel) aeroPanel.classList.remove('expanded');
 
@@ -3979,7 +4000,7 @@
         if (path && trackCar) {
           trackCar.style.display = 'block';
           const totalLength = path.getTotalLength();
-          
+
           // Increment progress along the path (1.4px/frame speed)
           trackCarProgress = (trackCarProgress + 1.4) % totalLength;
 
@@ -4004,10 +4025,10 @@
 
         const car = document.createElement('div');
         car.className = 'flyby-car';
-        
+
         // Grab current theme color RGB dynamic variables
         const activeRGB = (typeof getThemeColorRGB === 'function') ? getThemeColorRGB() : '232, 0, 45';
-        
+
         car.innerHTML = `
           <svg width="100" height="30" viewBox="0 0 100 30" fill="none">
             <path d="M5 22h10l5-3h40l3 3h20l7-5-5-2-15-1h-10l-5-4h-10l-3 4H15l-3 3H5v5z" stroke="rgba(${activeRGB}, 0.8)" stroke-width="1.5" fill="rgba(14,14,18,0.8)"/>
